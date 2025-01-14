@@ -6,22 +6,33 @@ __author__ = "Michael 'Worldspawn' Lozickii"
 from airtest.core.api import *
 auto_setup(__file__)
 
-# (TODO: REFACTOR WITH start_app cmd)
 # Start Test Window: Empty Google Page with no url
 # Mode: Incognito (No Yandex Profile)
 
+# DEBUG
+
+# We can't use clear_app for Web Projects
+# clear_app("com.android.chrome")
+start_app("com.android.chrome")
 
 # Hell Merge - Yandex (RU)
-touch(Template(r"tpl1736852394461.png", record_pos=(-0.094, -0.442), resolution=(1080, 2400)))
+sleep(5.0)
+touch(Template(r"tpl1736872552631.png", record_pos=(-0.167, -0.585), resolution=(1080, 2400)))
 text("https://yandex.ru/games/app/359515?lang=ru")
 keyevent("ENTER")
 
+if (exists(Template(r"tpl1736872631342.png", record_pos=(-0.004, 0.378), resolution=(1080, 2400)))):
+    touch(Template(r"tpl1736872665536.png", record_pos=(0.001, 0.47), resolution=(1080, 2400)))
+
 # Close Entry Interstitial
 sleep(5.0)
-touch(Template(r"tpl1736852577544.png", record_pos=(0.427, -0.967), resolution=(1080, 2400)))
+if (exists(Template(r"tpl1736872848834.png", record_pos=(0.42, -0.967), resolution=(1080, 2400)))):
+    touch(Template(r"tpl1736872848834.png", record_pos=(0.42, -0.967), resolution=(1080, 2400)))
+else:
+    touch(Template(r"tpl1736852577544.png", record_pos=(0.427, -0.967), resolution=(1080, 2400)))
 
 # Loading Screen Banner
-sleep(4.0)
+sleep(2.0)
 wait(Template(r"tpl1736852660900.png", record_pos=(0.032, -0.508), resolution=(1080, 2400)))
 
 # First Tutorial Window
@@ -31,16 +42,16 @@ assert_exists(Template(r"tpl1736852766557.png", record_pos=(-0.002, -0.039), res
 
 # Skip Dialog
 touch(Template(r"tpl1736858679598.png", record_pos=(0.324, -0.858), resolution=(1080, 2400)))
-sleep(7.0)
+sleep(8.0)
 touch(Template(r"tpl1736858679598.png", record_pos=(0.324, -0.858), resolution=(1080, 2400)))
 
 # Touch before Tutorial Pointer
-sleep(7.0)
+sleep(5.0)
 wait(Template(r"tpl1736858768883.png", record_pos=(-0.005, -0.041), resolution=(1080, 2400)))
 touch(Template(r"tpl1736858777773.png", record_pos=(0.002, -0.025), resolution=(1080, 2400)))
 
 # Tutorial Pointer
-sleep(5.0)
+sleep(4.0)
 assert_exists(Template(r"tpl1736858804654.png", record_pos=(0.369, 0.688), resolution=(1080, 2400)), "Tutorial Finger")
 touch(Template(r"tpl1736858804654.png", record_pos=(0.369, 0.688), resolution=(1080, 2400)))
 
@@ -49,9 +60,13 @@ sleep(5.0)
 assert_exists(Template(r"tpl1736858868805.png", record_pos=(0.001, 0.051), resolution=(1080, 2400)), "Merge Field")
 
 # Merge Tutorial Items
+sleep(3.0)
 swipe(Template(r"tpl1736866208284.png", record_pos=(-0.001, 0.047), resolution=(1080, 2400)), vector=[0.1515, 0.002])
+sleep(1.0)
 assert_exists(Template(r"tpl1736866406138.png", record_pos=(0.004, 0.05), resolution=(1080, 2400)), "Updated Merge Row.")
-swipe(Template(r"tpl1736866460503.png", record_pos=(-0.12, 0.041), resolution=(1080, 2400)), vector=[0.2475, 0.0037])
+swipe(Template(r"tpl1736874264407.png", record_pos=(-0.126, 0.043), resolution=(1080, 2400)), vector=[0.2452, 0.0052])
+
+sleep(1.0)
 assert_exists(Template(r"tpl1736866490558.png", record_pos=(0.12, 0.043), resolution=(1080, 2400)), "Selected New Item.")
 swipe(Template(r"tpl1736866490558.png", record_pos=(0.12, 0.045), resolution=(1080, 2400)), vector=[0.0041, 0.0593])
 assert_exists(Template(r"tpl1736866754994.png", record_pos=(0.116, 0.163), resolution=(1080, 2400)), "Tutorial Generator Appeared.")
@@ -63,7 +78,7 @@ for i in range(2):
 # Merge Tutorial Items
     
 assert_exists(Template(r"tpl1736867650921.png", record_pos=(-0.003, 0.042), resolution=(1080, 2400)), "Mask appeared.")
-swipe(Template(r"tpl1736869933581.png", record_pos=(0.119, 0.047), resolution=(1080, 2400)), vector=[-0.1247, -0.0533])
+swipe(Template(r"tpl1736875069745.png", record_pos=(0.0, 0.044), resolution=(1080, 2400)), vector=[-0.0009, -0.0434])
 assert_exists(Template(r"tpl1736867693623.png", record_pos=(0.0, -0.08), resolution=(1080, 2400)), "Mask upgraded.")
 swipe(Template(r"tpl1736867693623.png", record_pos=(0.001, -0.076), resolution=(1080, 2400)), vector=[-0.1221, 0.1115])
 assert_exists(Template(r"tpl1736867759189.png", record_pos=(-0.122, 0.165), resolution=(1080, 2400)), "Gloves appeared - Green Glow.")
@@ -105,13 +120,17 @@ for i in range(2):
     touch(Template(r"tpl1736869109559.png", record_pos=(0.119, 0.163), resolution=(1080, 2400)))
 
 # Tutorial Merge
-swipe(Template(r"tpl1736870144017.png", record_pos=(0.002, 0.044), resolution=(1080, 2400)), vector=[0.1174, 0.1142])
+swipe(Template(r"tpl1736875153338.png", record_pos=(0.104, 0.044), resolution=(1080, 2400)), vector=[-0.0027, 0.0954])
+sleep(1.0)
 assert_exists(Template(r"tpl1736870175024.png", record_pos=(0.12, 0.283), resolution=(1080, 2400)), "Next Level Merge Item Appeared.")
-swipe(Template(r"tpl1736870195012.png", record_pos=(0.119, 0.05), resolution=(1080, 2400)), vector=[-0.237, -0.0004])
+swipe(Template(r"tpl1736875185034.png", record_pos=(0.004, 0.044), resolution=(1080, 2400)), vector=[-0.1039, 0.0032])
+sleep(1.0)
 assert_exists(Template(r"tpl1736870216885.png", record_pos=(-0.12, 0.047), resolution=(1080, 2400)), "Next Level Merge Item Appeared.")
 swipe(Template(r"tpl1736870303672.png", record_pos=(0.118, 0.276), resolution=(1080, 2400)), vector=[-0.2283, -0.1021])
+sleep(1.0)
 assert_exists(Template(r"tpl1736870321652.png", record_pos=(-0.118, 0.042), resolution=(1080, 2400)), "Next Level Merge Item Appeared.")
 swipe(Template(r"tpl1736870321652.png", record_pos=(-0.119, 0.045), resolution=(1080, 2400)), vector=[0.1263, 0.0545])
+sleep(1.0)
 assert_exists(Template(r"tpl1736870356992.png", record_pos=(0.003, 0.16), resolution=(1080, 2400)), "Next Level Merge Item Appeared - Green Glow")
 assert_exists(Template(r"tpl1736870363772.png", record_pos=(0.357, 0.708), resolution=(1080, 2400)), "Pointer Back to the Main Scene")
 touch(Template(r"tpl1736870363772.png", record_pos=(0.353, 0.708), resolution=(1080, 2400)))
@@ -137,8 +156,7 @@ wait(Template(r"tpl1736870663511.png", record_pos=(0.004, -0.098), resolution=(1
 
 for i in range(2):
     touch(Template(r"tpl1736870737643.png", record_pos=(0.122, 0.163), resolution=(1080, 2400)))
-
-swipe(Template(r"tpl1736870816341.png", record_pos=(0.12, 0.037), resolution=(1080, 2400)), vector=[0.0015, 0.1712])
+swipe(Template(r"tpl1736875271523.png", record_pos=(0.105, 0.243), resolution=(1080, 2400)), vector=[-0.0011, 0.054])
 assert_exists(Template(r"tpl1736870836430.png", record_pos=(0.121, 0.406), resolution=(1080, 2400)), "Next Level Merge Item Appeared.")
 swipe(Template(r"tpl1736870836430.png", record_pos=(0.122, 0.404), resolution=(1080, 2400)), vector=[-0.1153, -0.0526])
 assert_exists(Template(r"tpl1736870878020.png", record_pos=(0.002, 0.285), resolution=(1080, 2400)), "Next Level Merge Item Appeared - Green Glow")
