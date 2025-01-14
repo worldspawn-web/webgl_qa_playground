@@ -1,13 +1,17 @@
 ## Airtest Naming
 
 ```ts
-airtest/<GameName>/<User>/<Android/iOS>-<Browser>-<Resolution>.air/...
+// Folder Structure:
+airtest/<GameName>/<Platform>/<Sub-Platform>/<User>/
+
+// Folder & File Naming:
+<Name>-<Android/iOS>-<Browser>-<Resolution>.air/...
 ```
 
 Example:
 
 ```
-airtest/Hell Merge/worldspawn/android-googlechrome-1080x2400.air/...
+airtest/Hell Merge/Web/Yandex/worldspawn/android-googlechrome-1080x2400.air/...
 ```
 
 ## Links
