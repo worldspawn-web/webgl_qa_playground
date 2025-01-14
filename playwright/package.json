@@ -1,0 +1,15 @@
+{
+  "name": "webgl-game-tests",
+  "version": "1.0.0",
+  "description": "Playwright tests for WebGL game",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^20.17.12",
+    "typescript": "^5.7.3"
+  }
+}
