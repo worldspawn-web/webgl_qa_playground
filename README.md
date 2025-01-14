@@ -1,7 +1,13 @@
 ## Airtest Naming
 
-```js
-<GameName>/<OS>-<Browser>-<Resolution>
+```ts
+airtest/<GameName>/<User>/<Android/iOS>-<Browser>-<Resolution>.air/...
+```
+
+Example:
+
+```
+airtest/Hell Merge/worldspawn/android-googlechrome-1080x2400.air/...
 ```
 
 ## Links
