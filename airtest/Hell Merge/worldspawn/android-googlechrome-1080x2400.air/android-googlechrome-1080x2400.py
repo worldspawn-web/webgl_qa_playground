@@ -74,13 +74,16 @@ assert_exists(Template(r"tpl1736866754994.png", record_pos=(0.116, 0.163), resol
 # Multiple Generator Taps
 for i in range(2):
     touch(Template(r"tpl1736866754994.png"))
+    sleep(1.0)
     
 # Merge Tutorial Items
     
 assert_exists(Template(r"tpl1736867650921.png", record_pos=(-0.003, 0.042), resolution=(1080, 2400)), "Mask appeared.")
-swipe(Template(r"tpl1736875069745.png", record_pos=(0.0, 0.044), resolution=(1080, 2400)), vector=[-0.0009, -0.0434])
+swipe(Template(r"tpl1736876546284.png", record_pos=(0.119, 0.042), resolution=(1080, 2400)), vector=[-0.1168, -0.0473])
+sleep(1.0)
 assert_exists(Template(r"tpl1736867693623.png", record_pos=(0.0, -0.08), resolution=(1080, 2400)), "Mask upgraded.")
 swipe(Template(r"tpl1736867693623.png", record_pos=(0.001, -0.076), resolution=(1080, 2400)), vector=[-0.1221, 0.1115])
+sleep(1.0)
 assert_exists(Template(r"tpl1736867759189.png", record_pos=(-0.122, 0.165), resolution=(1080, 2400)), "Gloves appeared - Green Glow.")
 
 # Tutorial Return to Main Scene
@@ -120,10 +123,10 @@ for i in range(2):
     touch(Template(r"tpl1736869109559.png", record_pos=(0.119, 0.163), resolution=(1080, 2400)))
 
 # Tutorial Merge
-swipe(Template(r"tpl1736875153338.png", record_pos=(0.104, 0.044), resolution=(1080, 2400)), vector=[-0.0027, 0.0954])
+swipe(Template(r"tpl1736876662279.png", record_pos=(-0.005, 0.052), resolution=(1080, 2400)), vector=[0.1265, 0.1045])
 sleep(1.0)
 assert_exists(Template(r"tpl1736870175024.png", record_pos=(0.12, 0.283), resolution=(1080, 2400)), "Next Level Merge Item Appeared.")
-swipe(Template(r"tpl1736875185034.png", record_pos=(0.004, 0.044), resolution=(1080, 2400)), vector=[-0.1039, 0.0032])
+swipe(Template(r"tpl1736876695082.png", record_pos=(0.12, 0.038), resolution=(1080, 2400)), vector=[-0.2389, 0.005])
 sleep(1.0)
 assert_exists(Template(r"tpl1736870216885.png", record_pos=(-0.12, 0.047), resolution=(1080, 2400)), "Next Level Merge Item Appeared.")
 swipe(Template(r"tpl1736870303672.png", record_pos=(0.118, 0.276), resolution=(1080, 2400)), vector=[-0.2283, -0.1021])
