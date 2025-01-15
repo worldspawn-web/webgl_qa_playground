@@ -3,14 +3,16 @@
 
 __author__ = "Michael 'Worldspawn' Lozickii"
 
+# Removes Debug Logs
+import logging
+logger = logging.getLogger("airtest")
+logger.setLevel(logging.ERROR)
+
 from airtest.core.api import *
 auto_setup(__file__)
 
 # Start Test Window: Empty Google Page with no url
 # Mode: Incognito (No Yandex Profile)
-
-# DEBUG
-
 # We can't use clear_app for Web Projects
 # clear_app("com.android.chrome")
 start_app("com.android.chrome")
