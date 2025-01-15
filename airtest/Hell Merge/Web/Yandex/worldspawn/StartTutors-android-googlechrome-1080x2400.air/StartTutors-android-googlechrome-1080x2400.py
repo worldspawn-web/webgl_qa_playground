@@ -3,6 +3,7 @@
 # Hell Merge (Yandex)
 # Start Test Window: Empty Google Page
 # Mode: Incognito (No Yandex Profile)
+# Version: 1.1.7
 
 __author__ = "Michael 'Worldspawn' Lozickii"
 
