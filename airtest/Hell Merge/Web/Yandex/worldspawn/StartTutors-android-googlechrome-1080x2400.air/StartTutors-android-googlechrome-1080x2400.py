@@ -1,6 +1,10 @@
 # -*- encoding=utf8 -*-
 # pylint: disable-all
 
+# Hell Merge (Yandex)
+# Start Test Window: Empty Google Page
+# Mode: Incognito (No Yandex Profile)
+
 __author__ = "Michael 'Worldspawn' Lozickii"
 
 # Removes Debug Logs
@@ -15,11 +19,37 @@ auto_setup(__file__)
 def random_touch():
     touch([300, 300])
 
-# Start Test Window: Empty Google Page with no url
-# Mode: Incognito (No Yandex Profile)
-# We can't use clear_app for Web Projects
-# clear_app("com.android.chrome")
+# Cache Reset Variations Class
+class BrowserCacheVariation:
+    def __init__(self, image, record_pos, resolution):
+        self.image = image
+        self.record_pos = record_pos
+        self.resolution = resolution
+        
+# Cache Resets Variations Define
+def init_browsers():
+    browser1 = BrowserCacheVariation("tpl1736944115125.png", (0.297, -0.955), (1080, 2400)) # dark panel
+    browser2 = BrowserCacheVariation("tpl1736945067386.png", (0.309, -0.954), (1080, 2400)) # white panel w/ no avatar
+    browser3 = BrowserCacheVariation("tpl1736945298223.png", (0.18, -0.954), (1080, 2400)) # only settings (tab viewer)
+    return [browser1, browser2, browser3]
+
+
+# Auto Cache Reset
+browsers = init_browsers()
 start_app("com.android.chrome")
+
+if not (exists(Template(r"tpl1736943901499.png", record_pos=(0.001, -0.693), resolution=(1080, 2400)))):
+    for browser in browsers:
+        if exists(Template(r"" + browser.image, record_pos=browser.record_pos, resolution=browser.resolution)):
+            touch(Template(r"" + browser.image, record_pos=browser.record_pos, resolution=browser.resolution, target_pos=6))
+            break
+
+    touch(Template(r"tpl1736945440708.png", record_pos=(0.119, -0.432), resolution=(1080, 2400)))
+    sleep(1.0)
+    wait(Template(r"tpl1736945481294.png", record_pos=(0.28, 0.566), resolution=(1080, 2400)))
+    touch(Template(r"tpl1736945481294.png", record_pos=(0.28, 0.566), resolution=(1080, 2400)))
+    sleep(3.0)
+    touch(Template(r"tpl1736945586374.png", record_pos=(-0.187, -0.956), resolution=(1080, 2400), target_pos=4))
 
 # Hell Merge - Yandex (RU)
 sleep(3.0)
