@@ -68,20 +68,30 @@ if not exists(Template(r"tpl1736959402954.png", record_pos=(0.239, -0.016), reso
     assert_exists(Template(r"tpl1736959944935.png", record_pos=(-0.002, -0.056), resolution=(1080, 2400)), "Please fill in the test point.")
     assert_exists(Template(r"tpl1736960023923.png", record_pos=(-0.145, -0.187), resolution=(1080, 2400)), "Please fill in the test point.")
     touch(Template(r"tpl1736959956034.png", record_pos=(0.146, -0.184), resolution=(1080, 2400)))
+    sleep(1.0)
     assert_exists(Template(r"tpl1736960039427.png", record_pos=(0.149, -0.188), resolution=(1080, 2400)), "Please fill in the test point.")
     touch(Template(r"tpl1736960052871.png", record_pos=(-0.143, -0.184), resolution=(1080, 2400)))
+    sleep(1.0)
     touch(Template(r"tpl1736960057993.png", record_pos=(0.296, -0.35), resolution=(1080, 2400)))
+    interstitial_check()
+    sleep(1.0)
 else:
     assert_exists(Template(r"tpl1736959402954.png", record_pos=(0.239, -0.016), resolution=(1080, 2400)), "Russian Language Icon.")
     touch(Template(r"tpl1736959402954.png", record_pos=(0.238, -0.019), resolution=(1080, 2400)))
+    sleep(1.0)
     assert_exists(Template(r"tpl1736960254062.png", record_pos=(-0.002, -0.051), resolution=(1080, 2400)), "Please fill in the test point.")
     assert_exists(Template(r"tpl1736960244233.png", record_pos=(0.151, -0.19), resolution=(1080, 2400)), "Please fill in the test point.")
     touch(Template(r"tpl1736960265512.png", record_pos=(-0.143, -0.184), resolution=(1080, 2400)))
+    sleep(1.0)
     assert_exists(Template(r"tpl1736960274150.png", record_pos=(-0.143, -0.187), resolution=(1080, 2400)), "Please fill in the test point.")
     touch(Template(r"tpl1736960285216.png", record_pos=(0.148, -0.187), resolution=(1080, 2400)))
+    sleep(1.0)
     touch(Template(r"tpl1736960057993.png", record_pos=(0.299, -0.349), resolution=(1080, 2400)))
+    interstitial_check()
+    sleep(1.0)
 
 touch(Template(r"tpl1736960580158.png", record_pos=(0.304, -0.356), resolution=(1080, 2400))) # quits settings menu *note for clearance*
+sleep(2.0)
 interstitial_check()
 
 # NoADs Offer
@@ -94,4 +104,5 @@ assert_exists(Template(r"tpl1736960864932.png", record_pos=(0.0, 0.178), resolut
 assert_exists(Template(r"tpl1736960904008.png", record_pos=(0.002, 0.505), resolution=(1080, 2400)), "Purchase Button.")
 assert_exists(Template(r"tpl1736961036433.png", record_pos=(0.44, -0.673), resolution=(1080, 2400)), "Please fill in the test point.")
 touch(Template(r"tpl1736961036433.png", record_pos=(0.437, -0.678), resolution=(1080, 2400)))
+sleep(1.0)
 
