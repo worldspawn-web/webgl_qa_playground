@@ -1,3 +1,5 @@
+![GitHub last commit](https://img.shields.io/github/last-commit/worldspawn-web/webgl_qa_playground) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/worldspawn-web/webgl_qa_playground)
+
 ## Airtest Naming
 
 ```ts
@@ -13,6 +15,13 @@ Example:
 ```
 airtest/Hell Merge/Web/Yandex/worldspawn/android-googlechrome-1080x2400.air/...
 ```
+
+## Code Coverage
+
+| Project      | Status    | Coverage Percent |
+| ------------ | --------- | ---------------- |
+| Hell Merge   | `In Work` | `20%`            |
+| Magic School | `In Work` | `0%`             |
 
 ## Links
 
