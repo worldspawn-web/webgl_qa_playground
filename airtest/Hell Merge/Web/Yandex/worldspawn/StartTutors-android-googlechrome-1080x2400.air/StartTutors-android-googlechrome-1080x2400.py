@@ -18,7 +18,7 @@ auto_setup(__file__)
 # Functions
 def random_touch():
     sleep(2.0)
-    touch([300, 300])
+    touch([500, 1020])
 
 # Cache Reset Variations Class
 class BrowserCacheVariation:
