@@ -19,10 +19,10 @@ def random_touch():
 # Note: Insert your own images or copy from "worldspawn/PastTutorsChecker-android-googlechrome-1080x2400.air/...""
 # Usage: Use right after every window close
 def interstitial_check():
-    sleep(3.0)
+    sleep(1.0)
     if (exists(Template(r"tpl1736872848834.png", record_pos=(0.42, -0.967), resolution=(1080, 2400)))):
         touch(Template(r"tpl1736872848834.png", record_pos=(0.42, -0.967), resolution=(1080, 2400)))
-    else:
+    if exists(Template(r"tpl1736852577544.png", record_pos=(0.427, -0.967), resolution=(1080, 2400))):
         touch(Template(r"tpl1736852577544.png", record_pos=(0.427, -0.967), resolution=(1080, 2400)))
 
 
