@@ -12,7 +12,6 @@ __author__ = "Michael 'Worldspawn' Lozickii"
 # import logging
 # logger = logging.getLogger("airtest")
 # logger.setLevel(logging.ERROR)
-# __author__ = "netsk"
 
 from airtest.core.api import *
 
@@ -140,6 +139,30 @@ def main():
     touch(Template(r"tpl1737036690530.png", record_pos=(0.429, -0.634), resolution=(1080, 2400)))
     interstitial_check()
     assert_exists(Template(r"tpl1737036727773.png", record_pos=(-0.002, -0.02), resolution=(1080, 2400)), "Main Scene.")
+    
+    # Current Location Panel Action
+    touch(Template(r"tpl1737039446656.png", record_pos=(0.007, -0.514), resolution=(1080, 2400)))
+    sleep(1.0)
+    assert_exists(Template(r"tpl1737039458524.png", record_pos=(-0.003, -0.324), resolution=(1080, 2400)), "Current Location Extended Panel.")
+    touch(Template(r"tpl1737039446656.png", record_pos=(0.007, -0.514), resolution=(1080, 2400)))
+    sleep(1.0)
+    assert_exists(Template(r"tpl1736958356734.png", record_pos=(-0.002, -0.52), resolution=(1080, 2400)), "Minimized Location Panel.")
+    
+    # Player Info Window
+    touch(Template(r"tpl1737039678341.png", record_pos=(-0.43, -0.687), resolution=(1080, 2400)))
+    wait(Template(r"tpl1737039688050.png", record_pos=(-0.001, -0.092), resolution=(1080, 2400)))
+    assert_exists(Template(r"tpl1737039698690.png", record_pos=(-0.206, -0.269), resolution=(1080, 2400)), "Current Level Icon.")
+    assert_exists(Template(r"tpl1737039704372.png", record_pos=(0.005, 0.269), resolution=(1080, 2400)), "Locked LevelUp Button.")
+    assert_exists(Template(r"tpl1737039714601.png", record_pos=(0.004, 0.042), resolution=(1080, 2400)), "Awards for the Next Level.")
+    touch(Template(r"tpl1737039720525.png", record_pos=(0.312, -0.457), resolution=(1080, 2400)))
+    interstitial_check()
+
+    
+    # New Zone Unlock
+    touch(Template(r"tpl1737039609327.png", record_pos=(-0.372, 0.451), resolution=(1080, 2400)))
+    sleep(5.0)
+    assert_exists(Template(r"tpl1737039646252.png", record_pos=(0.005, -0.028), resolution=(1080, 2400)), "New Quest Appeared.")
+
 
 if __name__ == "__main__":
     main()
