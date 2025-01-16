@@ -76,7 +76,6 @@ def main():
         sleep(1.0)
         touch(Template(r"tpl1736960057993.png", record_pos=(0.296, -0.35), resolution=(1080, 2400)))
         interstitial_check()
-        sleep(1.0)
     else:
         assert_exists(Template(r"tpl1736959402954.png", record_pos=(0.239, -0.016), resolution=(1080, 2400)), "Russian Language Icon.")
         touch(Template(r"tpl1736959402954.png", record_pos=(0.238, -0.019), resolution=(1080, 2400)))
@@ -90,10 +89,8 @@ def main():
         sleep(1.0)
         touch(Template(r"tpl1736960057993.png", record_pos=(0.299, -0.349), resolution=(1080, 2400)))
         interstitial_check()
-        sleep(1.0)
 
     touch(Template(r"tpl1736960580158.png", record_pos=(0.304, -0.356), resolution=(1080, 2400))) # quits settings menu *note for clearance*
-    sleep(2.0)
     interstitial_check()
 
     # NoADs Offer
@@ -106,7 +103,7 @@ def main():
     assert_exists(Template(r"tpl1736960904008.png", record_pos=(0.002, 0.505), resolution=(1080, 2400)), "Purchase Button.")
     assert_exists(Template(r"tpl1736961036433.png", record_pos=(0.44, -0.673), resolution=(1080, 2400)), "Please fill in the test point.")
     touch(Template(r"tpl1736961036433.png", record_pos=(0.437, -0.678), resolution=(1080, 2400)))
-    sleep(1.0)
+    interstitial_check()
 
 if __name__ == "__main__":
     main()
