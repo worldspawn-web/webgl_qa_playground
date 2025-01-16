@@ -2,6 +2,7 @@
 
 # Hell Merge (Yandex)
 # Import savedata.json before running the test.
+# Test starts on the first pop-up offer.
 # Source Config Name: HellMerge-plj90Vhd0wJ-BvlXhUhXW5RMy5aLFu6R0uUrYE2ctGw=
 # Mode: Authorized
 # Version: 1.1.7
@@ -94,7 +95,6 @@ def main():
 
     # NoADs Offer
     assert_exists(Template(r"tpl1736959001633.png", record_pos=(-0.429, -0.549), resolution=(1080, 2400)), "NoAds Offer Icon.")
-    sleep(1.0)
     touch(Template(r"tpl1736959001633.png", record_pos=(-0.425, -0.545), resolution=(1080, 2400)))
     sleep(3.0)
     assert_exists(Template(r"tpl1736960781169.png", record_pos=(-0.002, -0.028), resolution=(1080, 2400)), "NoAds Offer.")
@@ -108,7 +108,7 @@ def main():
     touch(Template(r"tpl1737035149615.png", record_pos=(-0.276, 0.591), resolution=(1080, 2400)))
     assert_exists(Template(r"tpl1737035160514.png", record_pos=(-0.269, -0.547), resolution=(1080, 2400)), "Soft Value Icon.")
     assert_exists(Template(r"tpl1737035167584.png", record_pos=(0.15, -0.552), resolution=(1080, 2400)), "Hard Value Icon.")
-    swipe((0.5, 0.5), (0, -0.1))
+    swipe((0.5, 0.5), (0.5, 0.1))
     sleep(5.0)
     assert_exists(Template(r"tpl1737035234160.png", record_pos=(-0.299, 0.347), resolution=(1080, 2400)), "'Day Specials' Decor (which means the container is rendered).")
     assert_exists(Template(r"tpl1737036156830.png", record_pos=(0.013, -0.267), resolution=(1080, 2400)), "Icons on 'Day Specials'")
@@ -131,7 +131,7 @@ def main():
     assert_exists(Template(r"tpl1737036581009.png", record_pos=(0.0, 0.08), resolution=(1080, 2400)), "Crystals Hard Icons #2.")
     assert_exists(Template(r"tpl1737036587307.png", record_pos=(0.006, 0.411), resolution=(1080, 2400)), "Soft Header.")
     swipe((0.5, 0.5), (0.5, 0.01))
-    sleep(5.0)
+    sleep(3.0)
     assert_exists(Template(r"tpl1737036670924.png", record_pos=(0.001, 0.065), resolution=(1080, 2400)), "Soft Icons #1")
     assert_exists(Template(r"tpl1737036678344.png", record_pos=(-0.003, 0.426), resolution=(1080, 2400)), "Soft Icons #2")
     sleep(1.0)
