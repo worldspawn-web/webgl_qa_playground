@@ -18,13 +18,21 @@ airtest/Hell Merge/Web/Yandex/worldspawn/android-googlechrome-1080x2400.air/...
 
 ## Code Coverage
 
-| Project      | Status    | Coverage Percent |
-| ------------ | --------- | ---------------- |
-| Hell Merge   | `In Work` | `20%`            |
-| Magic School | `In Work` | `0%`             |
+#### Hell Merge
+
+- [Hell Merge — Yandex Games](https://rmgames.atlassian.net/wiki/spaces/QW/database/4455104564)
+- [Hell Merge — OK]()
+- [Hell Merge - VK Play]()
+
+#### Magic School
+
+- [Magic School — Yandex Games]()
+- [Magic School — OK]()
+- [Magic School — VK Play]()
 
 ## Links
 
 - [Airtest Documentation](https://airtest.doc.io.netease.com/en/tutorial/1_quick_start_guide/)
 - [Playwright Documentation](https://playwright.dev/docs/writing-tests)
 - [Vysor](https://www.vysor.io/)
+- [AQA Wiki - RM](https://rmgames.atlassian.net/wiki/spaces/QW/pages/4455071803/Airtest)
