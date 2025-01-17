@@ -3,8 +3,9 @@
 # Hell Merge (Yandex)
 # Start Test Window: Empty Google Page
 # Mode: Incognito (No Yandex Profile)
+# Version: 1.1.7
 
-__author__ = "Andrew Ivanov"
+__author__ = "Andrew 'Xessaki' Ivanov"
 
 # Removes Debug Logs
 import logging
@@ -17,7 +18,7 @@ auto_setup(__file__)
 # Functions
 def random_touch():
     sleep(2.0)
-    touch([300, 300])
+    touch([500, 1020])
 
 # Cache Reset Variations Class
 class BrowserCacheVariation:
