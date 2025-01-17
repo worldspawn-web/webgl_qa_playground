@@ -50,7 +50,13 @@ def main():
         wait(Template(r"tpl1736945481294.png", record_pos=(0.28, 0.566), resolution=(1080, 2400)))
         touch(Template(r"tpl1736945481294.png", record_pos=(0.28, 0.566), resolution=(1080, 2400)))
         sleep(3.0)
-        touch(Template(r"tpl1736945586374.png", record_pos=(-0.187, -0.956), resolution=(1080, 2400), target_pos=4))
+        
+        #Проверяем на отличие интерфейса Google Chrome
+        if exists(Template(r"tpl1736945586374.png", record_pos=(-0.187, -0.956), resolution=(1080, 2400), target_pos=4)):
+            touch(Template(r"tpl1737115278280.png", record_pos=(-0.43, -0.964), resolution=(1080, 2400)))
+        else:
+            touch(Template(r"tpl1737115294754.png", record_pos=(-0.431, -0.967), resolution=(1080, 2400)))
+
 
     # Hell Merge - Yandex (RU)
     sleep(3.0)
