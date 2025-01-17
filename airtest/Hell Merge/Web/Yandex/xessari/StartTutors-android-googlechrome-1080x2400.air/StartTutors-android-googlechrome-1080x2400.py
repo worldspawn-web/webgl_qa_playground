@@ -49,7 +49,7 @@ def main():
         sleep(1.0)
         wait(Template(r"tpl1736945481294.png", record_pos=(0.28, 0.566), resolution=(1080, 2400)))
         touch(Template(r"tpl1736945481294.png", record_pos=(0.28, 0.566), resolution=(1080, 2400)))
-        sleep(3.0)
+        sleep(2.0)
         
         #Проверяем на отличие интерфейса Google Chrome
         if exists(Template(r"tpl1736945586374.png", record_pos=(-0.187, -0.956), resolution=(1080, 2400), target_pos=4)):
@@ -59,17 +59,17 @@ def main():
 
 
     # Hell Merge - Yandex (RU)
-    sleep(3.0)
+    sleep(2.0)
     touch(Template(r"tpl1736872552631.png", record_pos=(-0.167, -0.585), resolution=(1080, 2400)))
     text("https://yandex.ru/games/app/359515?lang=ru")
     keyevent("ENTER")
 
-    sleep(3.0)
+    sleep(2.0)
     if (exists(Template(r"tpl1736872631342.png", record_pos=(-0.004, 0.378), resolution=(1080, 2400)))):
         touch(Template(r"tpl1736872665536.png", record_pos=(0.001, 0.47), resolution=(1080, 2400)))
 
     # Close Entry Interstitial
-    sleep(5.0)
+    sleep(3.0)
     if (exists(Template(r"tpl1736872848834.png", record_pos=(0.42, -0.967), resolution=(1080, 2400)))):
         touch(Template(r"tpl1736872848834.png", record_pos=(0.42, -0.967), resolution=(1080, 2400)))
     else:
@@ -116,9 +116,8 @@ def main():
     assert_exists(Template(r"tpl1736866754994.png", record_pos=(0.116, 0.163), resolution=(1080, 2400)), "Tutorial Generator Appeared.")
 
     # Multiple Generator Taps
-    for i in range(2):
-        touch(Template(r"tpl1736866754994.png"))
-        sleep(1.0)
+    double_click(Template(r"tpl1736866754994.png"))
+    sleep(1.0)
     
     # Tutorial Volume Toggler
     assert_exists(Template(r"tpl1736869088108.png", record_pos=(0.202, -0.858), resolution=(1080, 2400)), "Volume toggler.")
