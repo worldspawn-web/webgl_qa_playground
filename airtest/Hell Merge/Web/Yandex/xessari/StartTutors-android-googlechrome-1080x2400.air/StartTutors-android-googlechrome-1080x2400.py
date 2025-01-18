@@ -62,6 +62,7 @@ def main():
     sleep(2.0)
     touch(Template(r"tpl1736872552631.png", record_pos=(-0.167, -0.585), resolution=(1080, 2400)))
     text("https://yandex.ru/games/app/359515?lang=ru")
+    sleep(1.0)
     keyevent("ENTER")
 
     sleep(2.0)
@@ -73,8 +74,8 @@ def main():
     
     if (exists(Template(r"tpl1737118278396.png", record_pos=(0.401, -0.83), resolution=(1080, 2400)))):
         touch(Template(r"tpl1736872848834.png", record_pos=(0.42, -0.967), resolution=(1080, 2400)))
-    #else:
-        #touch(Template(r"tpl1736852577544.png", record_pos=(0.427, -0.967), resolution=(1080, 2400)))
+    else:
+        touch(Template(r"tpl1736852577544.png", record_pos=(0.427, -0.967), resolution=(1080, 2400)))
 
     # Loading Screen Banner
     sleep(2.0)
@@ -93,7 +94,7 @@ def main():
     # Touch before Tutorial Pointer
     wait(Template(r"tpl1736858768883.png", record_pos=(-0.005, -0.041), resolution=(1080, 2400)))
     sleep(2.0)
-    touch((100, 100), times=1)
+    touch((500, 1020), times=1)
 
     # Tutorial Pointer
     sleep(4.0)
