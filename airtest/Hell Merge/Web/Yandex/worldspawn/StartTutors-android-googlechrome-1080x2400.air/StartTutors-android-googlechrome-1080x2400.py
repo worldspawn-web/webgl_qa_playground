@@ -96,7 +96,8 @@ def main():
     # Merge Field Exists
     sleep(5.0)
     assert_exists(Template(r"tpl1736858868805.png", record_pos=(0.001, 0.051), resolution=(1080, 2400)), "Merge Field")
-
+    assert_exists(Template(r"tpl1737308873014.png", record_pos=(-0.308, -0.656), resolution=(1080, 2400)), "Succubus Avatar.")
+    
     # Merge Tutorial Items
     sleep(3.0)
     swipe(Template(r"tpl1736866208284.png", record_pos=(-0.001, 0.047), resolution=(1080, 2400)), vector=[0.1515, 0.002])
@@ -110,10 +111,8 @@ def main():
     assert_exists(Template(r"tpl1736866754994.png", record_pos=(0.116, 0.163), resolution=(1080, 2400)), "Tutorial Generator Appeared.")
 
     # Multiple Generator Taps
-    for i in range(2):
-        touch(Template(r"tpl1736866754994.png"))
-        sleep(1.0)
-    
+    double_click(Template(r"tpl1737308525710.png", record_pos=(0.119, 0.169), resolution=(1080, 2400)))
+
     # Tutorial Volume Toggler
     assert_exists(Template(r"tpl1736869088108.png", record_pos=(0.202, -0.858), resolution=(1080, 2400)), "Volume toggler.")
 
