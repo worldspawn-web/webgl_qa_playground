@@ -20,6 +20,9 @@ import logging
 from airtest.core.api import *
 from utils import interstitial_check, autowin_toggle, complete_quest, random_touch
 
+# Logger Setup
+logger = logging.getLogger("airtest")
+
 # Airtest Setup
 auto_setup(__file__)
 logger.info("Setting up Airtest Game Environment")
@@ -255,7 +258,7 @@ def main():
     assert_exists(Template(r"tpl1737389255339.png", record_pos=(0.003, 0.573), resolution=(1080, 2400)), "Whole Loot Window.") # we can't directly check the images due to randomness
     interstitial_check() # weird but inter appeared
     touch(Template(r"tpl1737389314663.png", record_pos=(0.169, 0.572), resolution=(1080, 2400)))
-    sleep(1.0)
+    interstitial_check() # weird but inter appeared
     quit_window()
     touch(Template(r"tpl1737379837314.png", record_pos=(0.3, 0.602), resolution=(1080, 2400)))
     
