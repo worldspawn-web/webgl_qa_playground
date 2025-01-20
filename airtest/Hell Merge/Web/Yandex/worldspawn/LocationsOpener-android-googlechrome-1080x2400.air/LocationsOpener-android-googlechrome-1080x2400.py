@@ -17,7 +17,7 @@ __author__ = "Michael 'Worldspawn' Lozickii"
 from airtest.core.api import *
 auto_setup(__file__)
 
-from utils import interstitial_check, autowin_toggle
+from utils import interstitial_check, autowin_toggle, complete_quest, random_touch
 
     
 def main():
@@ -28,6 +28,7 @@ def main():
     assert_exists(Template(r"tpl1737372765056.png", record_pos=(0.002, -0.031), resolution=(1080, 2400)), "New Quest Appeared.")
 
     assert_exists(Template(r"tpl1737372797304.png", record_pos=(-0.407, 0.175), resolution=(1080, 2400)), "New Completed Quest is Visible.")
+    sleep(2.0)
     touch(Template(r"tpl1737372797304.png", record_pos=(-0.416, 0.186), resolution=(1080, 2400)))
     wait(Template(r"tpl1737372859053.png", record_pos=(-0.003, -0.08), resolution=(1080, 2400)))
     assert_exists(Template(r"tpl1737372876995.png", record_pos=(-0.002, -0.119), resolution=(1080, 2400)), "Requested Item.")
@@ -55,6 +56,8 @@ def main():
 
     # Wait for Cutscene
     sleep(10)
+    touch(Template(r"tpl1737372962523.png", record_pos=(0.351, -0.725), resolution=(1080, 2400)))
+    sleep(1.0)
 
     # New Level
     assert_exists(Template(r"tpl1737375340393.png", record_pos=(-0.426, -0.68), resolution=(1080, 2400)), "New Level Icon.")
@@ -69,6 +72,44 @@ def main():
     assert_exists(Template(r"tpl1737375540195.png", rgb=True, record_pos=(-0.002, 0.272), resolution=(1080, 2400)), "Button is Locked Now.")
     touch(Template(r"tpl1737375587281.png", record_pos=(0.31, -0.458), resolution=(1080, 2400)))
     interstitial_check()
+    
+    # Disable Auto-Win to prevent event blocker
+    autowin_toggle()
+    touch(Template(r"tpl1737378737571.png", record_pos=(0.0, -0.026), resolution=(1080, 2400)))
+    complete_quest()
+    
+    # Cutscene
+    sleep(10.0)
+    random_touch()
+    wait(Template(r"tpl1737380371756.png", record_pos=(0.187, -0.206), resolution=(1080, 2400)))
+    touch(Template(r"tpl1737380371756.png", record_pos=(0.187, -0.206), resolution=(1080, 2400)))
+    
+    # Chuck Event Tutorial
+    wait(Template(r"tpl1737379501423.png", record_pos=(-0.003, -0.069), resolution=(1080, 2400)))
+    assert_exists(Template(r"tpl1737379488201.png", record_pos=(0.007, -0.121), resolution=(1080, 2400)), "Event Required Item.")
+    random_touch()
+    wait(Template(r"tpl1737379533310.png", record_pos=(-0.006, 0.274), resolution=(1080, 2400)))
+    touch(Template(r"tpl1737379533310.png", record_pos=(-0.006, 0.274), resolution=(1080, 2400)))
+    sleep(1.0)
+    wait(Template(r"tpl1737379565742.png", record_pos=(-0.006, -0.013), resolution=(1080, 2400)))
+    
+    for i in range(2):
+           random_touch()
+    
+    wait(Template(r"tpl1737379615903.png", record_pos=(-0.005, -0.104), resolution=(1080, 2400)))
+    touch(Template(r"tpl1737379615903.png", record_pos=(-0.005, -0.104), resolution=(1080, 2400)))
+    sleep(3.0)
+    wait(Template(r"tpl1737379647393.png", record_pos=(-0.006, -0.048), resolution=(1080, 2400)))
+    touch(Template(r"tpl1737379665339.png", record_pos=(-0.002, 0.149), resolution=(1080, 2400)))
+    sleep(1.0)
+    assert_exists(Template(r"tpl1737379686093.png", record_pos=(0.005, 0.247), resolution=(1080, 2400)), "Event Tutorial Mascot.")
+    assert_exists(Template(r"tpl1737379696993.png", record_pos=(0.162, -0.585), resolution=(1080, 2400)), "Event Tutorial Fades.")
+    random_touch()
+    wait(Template(r"tpl1737379784131.png", record_pos=(0.001, -0.057), resolution=(1080, 2400)))
+    touch(Template(r"tpl1737379784131.png", record_pos=(0.001, -0.057), resolution=(1080, 2400)))
+    sleep(1.0)
+    touch(Template(r"tpl1737379837314.png", record_pos=(0.3, 0.602), resolution=(1080, 2400))) # leaving event early
+    wait(Template(r"tpl1737380546760.png", record_pos=(-0.003, -0.029), resolution=(1080, 2400)))
 
 if __name__ == "__main__":
     main()
