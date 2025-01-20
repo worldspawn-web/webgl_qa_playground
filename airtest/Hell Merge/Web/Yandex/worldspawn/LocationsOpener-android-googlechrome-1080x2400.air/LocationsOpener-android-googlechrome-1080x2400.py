@@ -21,6 +21,7 @@ from utils import interstitial_check, autowin_toggle, complete_quest, random_tou
 
     
 def main():
+
     # Location Unlock through Button
     assert_exists(Template(r"tpl1737372642596.png", record_pos=(-0.369, 0.455), resolution=(1080, 2400)), "New Location Available Button.")
     touch(Template(r"tpl1737372642596.png", record_pos=(-0.374, 0.452), resolution=(1080, 2400)))
@@ -44,6 +45,7 @@ def main():
     # Enable Auto-Win Cheat
     autowin_toggle()
 
+
     # Auto-Win Checker
     assert_exists(Template(r"tpl1737375153201.png", record_pos=(0.195, -0.192), resolution=(1080, 2400)), "Uncompleted Quest is Completed Now.")
     touch(Template(r"tpl1737375153201.png", record_pos=(0.194, -0.192), resolution=(1080, 2400)))
@@ -53,7 +55,7 @@ def main():
     assert_exists(Template(r"tpl1737375203483.png", record_pos=(0.004, 0.099), resolution=(1080, 2400)), "Reward.")
     assert_exists(Template(r"tpl1737375222086.png", record_pos=(-0.005, 0.272), resolution=(1080, 2400)), "Complete Button.")
     touch(Template(r"tpl1737375222086.png", record_pos=(0.001, 0.27), resolution=(1080, 2400)))
-
+    
     # Wait for Cutscene
     sleep(10)
     touch(Template(r"tpl1737372962523.png", record_pos=(0.351, -0.725), resolution=(1080, 2400)))
@@ -202,15 +204,70 @@ def main():
     sleep(1.0)
     interstitial_check() # weird, but inter appeared
     wait(Template(r"tpl1737382738926.png", record_pos=(0.006, -0.214), resolution=(1080, 2400)))
-    assert_exists(Template(r"tpl1737382752344.png", record_pos=(0.005, -0.458), resolution=(1080, 2400)), "Please fill in the test point.")
-    assert_exists(Template(r"tpl1737382758663.png", record_pos=(0.002, -0.073), resolution=(1080, 2400)), "Please fill in the test point.") # could be broken
+    assert_exists(Template(r"tpl1737382752344.png", record_pos=(0.005, -0.458), resolution=(1080, 2400)), "Award Header.")
+    assert_exists(Template(r"tpl1737382758663.png", record_pos=(0.002, -0.073), resolution=(1080, 2400)), "Award Icon + Count.") # could be broken
     random_touch()
     sleep(4.0)
     
     # Getting Rewards from Battlepass
     assert_exists(Template(r"tpl1737382851643.png", record_pos=(0.007, -0.274), resolution=(1080, 2400)), "Unlocked Rewards #1.")
     assert_exists(Template(r"tpl1737382859023.png", record_pos=(0.006, -0.044), resolution=(1080, 2400)), "Locked Rewards #2.")
+    touch(Template(r"tpl1737389103890.png", rgb=True, target_pos=8, record_pos=(-0.191, -0.282), resolution=(1080, 2400))) # rgb is essential
+    assert_exists(Template(r"tpl1737389147725.png", record_pos=(0.0, -0.221), resolution=(1080, 2400)), "Pre-Unboxing Chosen Crate.")
+    random_touch()
+    sleep(3.0)
+    assert_exists(Template(r"tpl1737389189832.png", record_pos=(-0.003, -0.499), resolution=(1080, 2400)), "Caller Progress Bar.")
+    wait(Template(r"tpl1737389203946.png", record_pos=(0.0, -0.044), resolution=(1080, 2400)))
+    
+    ## Skip all the loot preview from Crate
+    for i in range(7)
+        random_touch()
+        
+    assert_exists(Template(r"tpl1737389255339.png", record_pos=(0.003, 0.573), resolution=(1080, 2400)), "Whole Loot Window.") # we can't directly check the images due to randomness
+    touch(Template(r"tpl1737389314663.png", record_pos=(0.169, 0.572), resolution=(1080, 2400)))
+    sleep(1.0)
+    touch(Template(r"tpl1737389486120.png", record_pos=(0.322, -0.673), resolution=(1080, 2400)))
+    interstitial_check()
+    touch(Template(r"tpl1737379837314.png", record_pos=(0.3, 0.602), resolution=(1080, 2400)))
+    
+    # Collections Tutorial
+    wait(Template(r"tpl1737389711969.png", record_pos=(0.007, -0.032), resolution=(1080, 2400)))
+    wait(Template(r"tpl1737389719704.png", record_pos=(-0.143, 0.599), resolution=(1080, 2400)))
+    touch(Template(r"tpl1737389719704.png", record_pos=(-0.143, 0.599), resolution=(1080, 2400)))
+    wait(Template(r"tpl1737389752015.png", record_pos=(0.001, 0.544), resolution=(1080, 2400)))
+    wait(Template(r"tpl1737389777771.png", record_pos=(0.24, 0.102), resolution=(1080, 2400)))
+    touch(Template(r"tpl1737389777771.png", record_pos=(0.24, 0.102), resolution=(1080, 2400)))
+    wait(Template(r"tpl1737389803397.png", record_pos=(0.008, -0.515), resolution=(1080, 2400)))
+    random_touch()
+    wait(Template(r"tpl1737389823582.png", record_pos=(-0.007, -0.145), resolution=(1080, 2400)))
+    touch(Template(r"tpl1737389823582.png", record_pos=(-0.007, -0.145), resolution=(1080, 2400)))
+    assert_exists(Template(r"tpl1737389842924.png", record_pos=(-0.35, -0.656), resolution=(1080, 2400)), "Soft Counter.")
+    assert_exists(Template(r"tpl1737389858770.png", record_pos=(-0.229, 0.315), resolution=(1080, 2400)), "Boosted Generator Icon.")
+    assert_exists(Template(r"tpl1737389862189.png", record_pos=(-0.006, 0.231), resolution=(1080, 2400)), "Progress Bar.")
+    assert_exists(Template(r"tpl1737389867750.png", record_pos=(0.01, 0.558), resolution=(1080, 2400)), "Upgrade Button.")
+    wait(Template(r"tpl1737389912770.png", record_pos=(0.0, 0.555), resolution=(1080, 2400)))
+    touch(Template(r"tpl1737389912770.png", record_pos=(0.0, 0.555), resolution=(1080, 2400)))
+    sleep(2.0)
+    assert_exists(Template(r"tpl1737389950633.png", rgb=True, record_pos=(-0.003, 0.556), resolution=(1080, 2400)), "Button is Disabled.")
+    touch(Template(r"tpl1737389971418.png", record_pos=(0.423, -0.667), resolution=(1080, 2400)))
+    interstitial_check()
+    
+    # Buy Collection Cards for Hard Value
+    assert_exists(Template(r"tpl1737390037135.png", record_pos=(0.013, -0.541), resolution=(1080, 2400)), "Helper Window.")
+    assert_exists(Template(r"tpl1737390021210.png", record_pos=(-0.126, 0.569), resolution=(1080, 2400)), "Buy 11 Cards for 20 Hard Value.")
+    assert_exists(Template(r"tpl1737390027443.png", record_pos=(0.006, 0.469), resolution=(1080, 2400)), "Collection Level Progress.")
+    touch(Template(r"tpl1737390076711.png", rgb=True, target_pos=8, record_pos=(-0.124, 0.564), resolution=(1080, 2400)))
+    sleep(4.0) # delay is increased due to unusual lags
+    
+    while not exists(Template(r"tpl1737390456873.png", record_pos=(-0.122, 0.597), resolution=(1080, 2400))):
+        touch([500, 1020])
 
+    touch(Template(r"tpl1737390480469.png", record_pos=(0.447, -0.655), resolution=(1080, 2400)))
+    interstitial_check()
+    wait(Template(r"tpl1737390527875.png", record_pos=(-0.005, -0.054), resolution=(1080, 2400)))
+    random_touch()
+    
     
 if __name__ == "__main__":
     main()
+
