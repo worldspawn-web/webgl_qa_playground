@@ -14,7 +14,7 @@ def interstitial_check():
 
 def autowin_toggle():
     # Enable Auto-Win Cheat
-    touch(Template(r"tpl1737374718687.png", record_pos=(-0.432, -0.69), resolution=(1080, 2400)))
+    touch((76, 454))
 
     ## Cheat Opener Combination
     for i in range(3):
@@ -36,5 +36,9 @@ def autowin_toggle():
     interstitial_check()
     touch(Template(r"tpl1737374829415.png", record_pos=(0.313, -0.454), resolution=(1080, 2400)))
     interstitial_check()
+    
+def complete_quest():
+    assert_exists(Template(r"tpl1737378790269.png", record_pos=(0.0, 0.269), resolution=(1080, 2400)), "Please fill in the test point.")
+    touch(Template(r"tpl1737378790269.png", record_pos=(0.0, 0.269), resolution=(1080, 2400)))
 
-__all__ = ['random_touch', 'interstitial_check', 'autowin_toggle']
+__all__ = ['random_touch', 'interstitial_check', 'autowin_toggle', 'complete_quest']
