@@ -9,25 +9,66 @@
 
 __author__ = "Michael 'Worldspawn' Lozickii"
 
-# Removes Debug Logs (Turned Off)
+# Removes Debug Logs (Turned Off):
+#
 # import logging
 # logger = logging.getLogger("airtest")
 # logger.setLevel(logging.ERROR)
 
+# IMPORTS
+import logging
 from airtest.core.api import *
-auto_setup(__file__)
-
 from utils import interstitial_check, autowin_toggle, complete_quest, random_touch
 
-    
-def main():
+# Airtest Setup
+auto_setup(__file__)
+logger.info("Setting up Airtest Game Environment")
 
-    # Location Unlock through Button
+# Unlock New Location
+def new_location():
+    logger.info("Unlocking new location through button...")
     assert_exists(Template(r"tpl1737372642596.png", record_pos=(-0.369, 0.455), resolution=(1080, 2400)), "New Location Available Button.")
     touch(Template(r"tpl1737372642596.png", record_pos=(-0.374, 0.452), resolution=(1080, 2400)))
     sleep(3.0)
     assert_exists(Template(r"tpl1737372765056.png", record_pos=(0.002, -0.031), resolution=(1080, 2400)), "New Quest Appeared.")
 
+    
+def quit_window():
+    logger.info("Looking for a window to close...")
+    cross_templates = [
+        Template(r"tpl1737375587281.png", record_pos=(0.31, -0.458), resolution=(1080, 2400)),
+        Template(r"tpl1737381782191.png", record_pos=(0.306, -0.533), resolution=(1080, 2400)),
+        Template(r"tpl1737382243343.png", record_pos=(0.304, -0.436), resolution=(1080, 2400)),
+        Template(r"tpl1737389486120.png", record_pos=(0.322, -0.673), resolution=(1080, 2400))
+    ]
+
+    for _ in range(10):
+        for cross in cross_templates:
+            if exists(cross):
+                touch(cross)
+                interstitial_check()
+                return
+
+    raise Exception("Failed to find and close window")
+
+def yandex_pay():
+    logger.info("Attempting to pay with Yandex system...")
+    wait(Template(r"tpl1737382546543.png", record_pos=(-0.02, -0.444), resolution=(1080, 2400)))
+
+    if exists(Template(r"tpl1737382525010.png", record_pos=(-0.269, 0.882), resolution=(1080, 2400))):
+        touch(Template(r"tpl1737382509499.png", record_pos=(0.004, 0.335), resolution=(1080, 2400)))
+    else:
+        touch(Template(r"tpl1737382525010.png", record_pos=(-0.269, 0.882), resolution=(1080, 2400)))
+        touch(Template(r"tpl1737382509499.png", record_pos=(0.004, 0.335), resolution=(1080, 2400)))
+    
+    wait(Template(r"tpl1737382620542.png", record_pos=(0.0, 0.098), resolution=(1080, 2400)))
+    touch(Template(r"tpl1737382627723.png", record_pos=(0.002, 0.358), resolution=(1080, 2400)))
+    sleep(1.0)
+    
+def main():
+    # Location Unlock through Button
+    new_location()
+    
     assert_exists(Template(r"tpl1737372797304.png", record_pos=(-0.407, 0.175), resolution=(1080, 2400)), "New Completed Quest is Visible.")
     sleep(2.0)
     touch(Template(r"tpl1737372797304.png", record_pos=(-0.416, 0.186), resolution=(1080, 2400)))
@@ -41,10 +82,8 @@ def main():
     touch(Template(r"tpl1737372962523.png", record_pos=(0.351, -0.725), resolution=(1080, 2400)))
     sleep(1.0)
 
-
     # Enable Auto-Win Cheat
     autowin_toggle()
-
 
     # Auto-Win Checker
     assert_exists(Template(r"tpl1737375153201.png", record_pos=(0.195, -0.192), resolution=(1080, 2400)), "Uncompleted Quest is Completed Now.")
@@ -72,8 +111,7 @@ def main():
     sleep(3.0)
     assert_exists(Template(r"tpl1737375524410.png", rgb=True, record_pos=(-0.206, -0.238), resolution=(1080, 2400)), "Updated Level.")
     assert_exists(Template(r"tpl1737375540195.png", rgb=True, record_pos=(-0.002, 0.272), resolution=(1080, 2400)), "Button is Locked Now.")
-    touch(Template(r"tpl1737375587281.png", record_pos=(0.31, -0.458), resolution=(1080, 2400)))
-    interstitial_check()
+    quit_window()
     
     # Disable Auto-Win to prevent event blocker
     autowin_toggle()
@@ -158,8 +196,7 @@ def main():
     assert_exists(Template(r"tpl1737381689778.png", record_pos=(0.004, -0.212), resolution=(1080, 2400)), "Golden Ticket Image.")
     assert_exists(Template(r"tpl1737381699452.png", record_pos=(0.001, 0.506), resolution=(1080, 2400)), "Golden Ticket Buy Button.")
     assert_exists(Template(r"tpl1737381706209.png", record_pos=(0.004, -0.529), resolution=(1080, 2400)), "Golden Ticket Header.")
-    touch(Template(r"tpl1737381782191.png", record_pos=(0.306, -0.533), resolution=(1080, 2400)))
-    interstitial_check()
+    quit_window()
     
     sleep(1.0)
     wait(Template(r"tpl1737381813761.png", record_pos=(-0.002, -0.025), resolution=(1080, 2400)))
@@ -184,24 +221,14 @@ def main():
     assert_exists(Template(r"tpl1737382190946.png", record_pos=(0.01, 0.01), resolution=(1080, 2400)), "Tropheys Counter.")
     assert_exists(Template(r"tpl1737382196493.png", record_pos=(-0.005, 0.261), resolution=(1080, 2400)), "Drop Chances.")
     assert_exists(Template(r"tpl1737382203374.png", record_pos=(-0.003, -0.433), resolution=(1080, 2400)), "Window Header.")
-    touch(Template(r"tpl1737382243343.png", record_pos=(0.304, -0.436), resolution=(1080, 2400)))
-    interstitial_check()
+    quit_window()
     
     # Battlepass Buy
     touch(Template(r"tpl1737382330625.png", target_pos=6, record_pos=(-0.194, -0.438), resolution=(1080, 2400)))
     wait(Template(r"tpl1737382488475.png", record_pos=(-0.005, -0.003), resolution=(1080, 2400)))
     touch(Template(r"tpl1737382482118.png", record_pos=(-0.003, 0.541), resolution=(1080, 2400)))
-    wait(Template(r"tpl1737382546543.png", record_pos=(-0.02, -0.444), resolution=(1080, 2400))) # simple wait for Yandex value logo appear; no checks for the price
-
-    if exists(Template(r"tpl1737382525010.png", record_pos=(-0.269, 0.882), resolution=(1080, 2400))):
-        touch(Template(r"tpl1737382509499.png", record_pos=(0.004, 0.335), resolution=(1080, 2400)))
-    else:
-        touch(Template(r"tpl1737382525010.png", record_pos=(-0.269, 0.882), resolution=(1080, 2400)))
-        touch(Template(r"tpl1737382509499.png", record_pos=(0.004, 0.335), resolution=(1080, 2400)))
+    yandex_pay()
     
-    wait(Template(r"tpl1737382620542.png", record_pos=(0.0, 0.098), resolution=(1080, 2400)))
-    touch(Template(r"tpl1737382627723.png", record_pos=(0.002, 0.358), resolution=(1080, 2400)))
-    sleep(1.0)
     wait(Template(r"tpl1737382642179.png", record_pos=(-0.003, -0.001), resolution=(1080, 2400)))
     touch(Template(r"tpl1737382647884.png", record_pos=(0.002, 0.134), resolution=(1080, 2400)))
     sleep(1.0)
@@ -222,16 +249,14 @@ def main():
     assert_exists(Template(r"tpl1737389189832.png", record_pos=(-0.003, -0.499), resolution=(1080, 2400)), "Caller Progress Bar.")
     wait(Template(r"tpl1737389203946.png", record_pos=(0.0, -0.044), resolution=(1080, 2400)))
     
-    ## Skip all the loot preview from Crate
-    for i in range(6):
+    while not exists(Template(r"tpl1737389255339.png", record_pos=(0.003, 0.573), resolution=(1080, 2400))):
         random_touch()
 
     assert_exists(Template(r"tpl1737389255339.png", record_pos=(0.003, 0.573), resolution=(1080, 2400)), "Whole Loot Window.") # we can't directly check the images due to randomness
     interstitial_check() # weird but inter appeared
     touch(Template(r"tpl1737389314663.png", record_pos=(0.169, 0.572), resolution=(1080, 2400)))
     sleep(1.0)
-    touch(Template(r"tpl1737389486120.png", record_pos=(0.322, -0.673), resolution=(1080, 2400)))
-    interstitial_check()
+    quit_window()
     touch(Template(r"tpl1737379837314.png", record_pos=(0.3, 0.602), resolution=(1080, 2400)))
     
     # Collections Tutorial
@@ -253,8 +278,7 @@ def main():
     touch(Template(r"tpl1737389912770.png", record_pos=(0.0, 0.555), resolution=(1080, 2400)))
     sleep(2.0)
     assert_exists(Template(r"tpl1737389950633.png", rgb=True, record_pos=(-0.003, 0.556), resolution=(1080, 2400)), "Button is Disabled.")
-    touch(Template(r"tpl1737389971418.png", record_pos=(0.423, -0.667), resolution=(1080, 2400)))
-    interstitial_check()
+    quit_window()
     
     # Buy Collection Cards for Hard Value
     assert_exists(Template(r"tpl1737390037135.png", record_pos=(0.013, -0.541), resolution=(1080, 2400)), "Helper Window.")
@@ -264,10 +288,9 @@ def main():
     sleep(4.0) # delay is increased due to unusual lags
     
     while not exists(Template(r"tpl1737390456873.png", record_pos=(-0.122, 0.597), resolution=(1080, 2400))):
-        touch([500, 1020])
+        random_touch()
 
-    touch(Template(r"tpl1737390480469.png", record_pos=(0.447, -0.655), resolution=(1080, 2400)))
-    interstitial_check()
+    quit_window()
     wait(Template(r"tpl1737390527875.png", record_pos=(-0.005, -0.054), resolution=(1080, 2400)))
     random_touch()
     
@@ -313,17 +336,8 @@ def main():
     wait(Template(r"tpl1737393404651.png", record_pos=(0.0, -0.006), resolution=(1080, 2400)))
     assert_exists(Template(r"tpl1737393413306.png", record_pos=(0.006, -0.226), resolution=(1080, 2400)), "Cake Fever Golden Ticket Image.")
     touch(Template(r"tpl1737393431436.png", record_pos=(-0.002, 0.534), resolution=(1080, 2400)))
-    wait(Template(r"tpl1737382546543.png", record_pos=(-0.02, -0.444), resolution=(1080, 2400))) # simple wait for Yandex value logo appear; no checks for the price
-
-    if exists(Template(r"tpl1737382525010.png", record_pos=(-0.269, 0.882), resolution=(1080, 2400))):
-        touch(Template(r"tpl1737382509499.png", record_pos=(0.004, 0.335), resolution=(1080, 2400)))
-    else:
-        touch(Template(r"tpl1737382525010.png", record_pos=(-0.269, 0.882), resolution=(1080, 2400)))
-        touch(Template(r"tpl1737382509499.png", record_pos=(0.004, 0.335), resolution=(1080, 2400)))
+    yandex_pay()
     
-    wait(Template(r"tpl1737382620542.png", record_pos=(0.0, 0.098), resolution=(1080, 2400)))
-    touch(Template(r"tpl1737382627723.png", record_pos=(0.002, 0.358), resolution=(1080, 2400)))
-    sleep(1.0)
     assert_exists(Template(r"tpl1737393519130.png", record_pos=(-0.181, -0.434), resolution=(1080, 2400)), "Battlepass Purchased.")
     touch(Template(r"tpl1737393544503.png", record_pos=(0.304, -0.671), resolution=(1080, 2400)))
 
