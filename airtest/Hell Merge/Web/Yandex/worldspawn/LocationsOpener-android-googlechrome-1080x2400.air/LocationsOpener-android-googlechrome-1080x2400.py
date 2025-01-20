@@ -267,7 +267,61 @@ def main():
     wait(Template(r"tpl1737390527875.png", record_pos=(-0.005, -0.054), resolution=(1080, 2400)))
     random_touch()
     
+    # Cake Fever Event
+    wait(Template(r"tpl1737391633404.png", record_pos=(0.0, -0.038), resolution=(1080, 2400)))
+    assert_exists(Template(r"tpl1737391640581.png", record_pos=(0.001, -0.465), resolution=(1080, 2400)), "Cake Fever Header")
+    assert_exists(Template(r"tpl1737391647610.png", record_pos=(0.001, -0.122), resolution=(1080, 2400)), "Cake Fever Image.")
+    assert_exists(Template(r"tpl1737391652961.png", record_pos=(0.001, 0.426), resolution=(1080, 2400)), "Cake Fever Button.")
+    assert_not_exists(Template(r"tpl1737390480469.png", record_pos=(0.001, 0.426), resolution=(1080, 2400)), "There is no 'x' to escape the tutorial.")
+    touch(Template(r"tpl1737391652961.png", record_pos=(0.001, 0.426), resolution=(1080, 2400)))
     
+    sleep(8.0)
+    wait(Template(r"tpl1737391785118.png", record_pos=(-0.002, -0.15), resolution=(1080, 2400)))
+    assert_exists(Template(r"tpl1737391793755.png", record_pos=(-0.193, -0.436), resolution=(1080, 2400)), "Cake Fever Gold Ticket.")
+    assert_exists(Template(r"tpl1737391798615.png", record_pos=(0.175, -0.435), resolution=(1080, 2400)), "Cake Fever Standart Ticket.")
+    assert_exists(Template(r"tpl1737391805329.png", record_pos=(-0.002, 0.331), resolution=(1080, 2400)), "Locked Awards #18.")
+    assert_exists(Template(r"tpl1737391809567.png", record_pos=(-0.006, 0.093), resolution=(1080, 2400)), "Locked Awards #19.")
+    assert_exists(Template(r"tpl1737391814063.png", record_pos=(-0.008, -0.148), resolution=(1080, 2400)), "Locked Awards #20.")
+    wait(Template(r"tpl1737391826025.png", record_pos=(-0.007, 0.585), resolution=(1080, 2400))) 
+    touch(Template(r"tpl1737391826025.png", record_pos=(-0.007, 0.585), resolution=(1080, 2400)))
+    
+    assert_exists(Template(r"tpl1737391907284.png", record_pos=(-0.006, 0.627), resolution=(1080, 2400)), "Cake Fever Owen Temperature.")
+    assert_exists(Template(r"tpl1737391913245.png", record_pos=(0.01, -0.606), resolution=(1080, 2400)), "Cake Fever Level Progress.")
+    assert_exists(Template(r"tpl1737391920419.png", record_pos=(0.002, 0.421), resolution=(1080, 2400)), "Basic Cakes.")
+    swipe(Template(r"tpl1737391992558.png", record_pos=(-0.219, 0.423), resolution=(1080, 2400)), vector=[0.1575, -0.186]) # dangerous
+    swipe(Template(r"tpl1737392017509.png", record_pos=(0.001, 0.426), resolution=(1080, 2400)), vector=[-0.0567, -0.2472]) # dangerous x2
+    assert_exists(Template(r"tpl1737392053259.png", record_pos=(-0.063, -0.194), resolution=(1080, 2400)), "Cakes Combined.") # could be randomized, unchecked - dangerous x3
+    swipe((784, 1656), (750, 1195))
+    assert_exists(Template(r"tpl1737392192830.png", record_pos=(-0.183, 0.608), resolution=(1080, 2400)), "Higher Owen Temperature.")
+    
+    # We simply cannot check here:
+    # - which cakes are coming next
+    # - how cakes are combined
+    # - how cakes are acting when the field is full
+    
+    touch(Template(r"tpl1737392282750.png", record_pos=(0.313, -0.706), resolution=(1080, 2400)))
+    sleep(5.0)
+    interstitial_check()
+    assert_exists(Template(r"tpl1737392310384.png", record_pos=(0.426, -0.396), resolution=(1080, 2400)), "Cake Fever Icon on the Main Scene.")
+    touch(Template(r"tpl1737392310384.png", record_pos=(0.426, -0.396), resolution=(1080, 2400)))
+    wait(Template(r"tpl1737391785118.png", record_pos=(-0.002, -0.15), resolution=(1080, 2400)))
+    touch(Template(r"tpl1737391793755.png", record_pos=(-0.193, -0.436), resolution=(1080, 2400)))
+    wait(Template(r"tpl1737393404651.png", record_pos=(0.0, -0.006), resolution=(1080, 2400)))
+    assert_exists(Template(r"tpl1737393413306.png", record_pos=(0.006, -0.226), resolution=(1080, 2400)), "Cake Fever Golden Ticket Image.")
+    touch(Template(r"tpl1737393431436.png", record_pos=(-0.002, 0.534), resolution=(1080, 2400)))
+    wait(Template(r"tpl1737382546543.png", record_pos=(-0.02, -0.444), resolution=(1080, 2400))) # simple wait for Yandex value logo appear; no checks for the price
+
+    if exists(Template(r"tpl1737382525010.png", record_pos=(-0.269, 0.882), resolution=(1080, 2400))):
+        touch(Template(r"tpl1737382509499.png", record_pos=(0.004, 0.335), resolution=(1080, 2400)))
+    else:
+        touch(Template(r"tpl1737382525010.png", record_pos=(-0.269, 0.882), resolution=(1080, 2400)))
+        touch(Template(r"tpl1737382509499.png", record_pos=(0.004, 0.335), resolution=(1080, 2400)))
+    
+    wait(Template(r"tpl1737382620542.png", record_pos=(0.0, 0.098), resolution=(1080, 2400)))
+    touch(Template(r"tpl1737382627723.png", record_pos=(0.002, 0.358), resolution=(1080, 2400)))
+    sleep(1.0)
+    assert_exists(Template(r"tpl1737393519130.png", record_pos=(-0.181, -0.434), resolution=(1080, 2400)), "Battlepass Purchased.")
+    touch(Template(r"tpl1737393544503.png", record_pos=(0.304, -0.671), resolution=(1080, 2400)))
+
 if __name__ == "__main__":
     main()
-
