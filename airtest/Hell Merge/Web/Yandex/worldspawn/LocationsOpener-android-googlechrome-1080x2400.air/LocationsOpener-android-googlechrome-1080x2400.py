@@ -2,7 +2,7 @@
 
 # Hell Merge (Yandex)
 # Import savedata.json before running the test.
-# Test starts on the first pop-up offer.
+# Test starts on the first loaded scene (w/o offers)
 # Source Config Name: HellMerge-plj90Vhd0wJ-BvlXhUhXW5RMy5aLFu6R0uUrYE2ctGw=
 # Mode: Authorized
 # Version: 1.1.7
@@ -37,6 +37,7 @@ def main():
     assert_exists(Template(r"tpl1737372937860.png", record_pos=(-0.066, 0.35), resolution=(1080, 2400)), "Boss Mascot Appears.")
     assert_exists(Template(r"tpl1737372957532.png", record_pos=(0.348, -0.719), resolution=(1080, 2400)), "Skip Button & Volume Toggler.")
     touch(Template(r"tpl1737372962523.png", record_pos=(0.351, -0.725), resolution=(1080, 2400)))
+    sleep(1.0)
 
 
     # Enable Auto-Win Cheat
