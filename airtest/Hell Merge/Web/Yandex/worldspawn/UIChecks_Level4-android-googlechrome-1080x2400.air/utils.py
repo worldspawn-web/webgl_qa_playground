@@ -3,7 +3,7 @@ from airtest.core.api import *
 # Functions
 def random_touch():
     sleep(2.0)
-    touch([300, 300])
+    touch([500, 1020])
     
 # Checks for Interstitial
 # Call after every window close on the main scene!
