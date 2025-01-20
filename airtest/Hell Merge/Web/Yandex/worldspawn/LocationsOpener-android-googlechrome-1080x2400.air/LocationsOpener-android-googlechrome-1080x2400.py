@@ -84,6 +84,7 @@ def main():
     sleep(10.0)
     random_touch()
     wait(Template(r"tpl1737380371756.png", record_pos=(0.187, -0.206), resolution=(1080, 2400)))
+    sleep(1.0)
     touch(Template(r"tpl1737380371756.png", record_pos=(0.187, -0.206), resolution=(1080, 2400)))
     
     # Chuck Event Tutorial
@@ -158,6 +159,7 @@ def main():
     assert_exists(Template(r"tpl1737381699452.png", record_pos=(0.001, 0.506), resolution=(1080, 2400)), "Golden Ticket Buy Button.")
     assert_exists(Template(r"tpl1737381706209.png", record_pos=(0.004, -0.529), resolution=(1080, 2400)), "Golden Ticket Header.")
     touch(Template(r"tpl1737381782191.png", record_pos=(0.306, -0.533), resolution=(1080, 2400)))
+    interstitial_check()
     
     sleep(1.0)
     wait(Template(r"tpl1737381813761.png", record_pos=(-0.002, -0.025), resolution=(1080, 2400)))
@@ -170,12 +172,13 @@ def main():
     # Swipes till the end of the battlepass
     for i in range(8):
         swipe((321, 1523), (321, 790))
+        sleep(3.0)
         
     assert_exists(Template(r"tpl1737382124506.png", record_pos=(0.003, 0.178), resolution=(1080, 2400)), "Locked Awards #30.")
     assert_exists(Template(r"tpl1737382130186.png", record_pos=(0.004, -0.055), resolution=(1080, 2400)), "Locked Awards #29.")
     assert_exists(Template(r"tpl1737382133892.png", record_pos=(0.001, -0.299), resolution=(1080, 2400)), "Locked Awards #28.")
     
-    touch(Template(r"tpl1737382169345.png", record_pos=(0.194, 0.188), resolution=(1080, 2400)))
+    touch(Template(r"tpl1737382169345.png", rgb=True, record_pos=(0.194, 0.188), resolution=(1080, 2400)))
     wait(Template(r"tpl1737382177174.png", record_pos=(0.005, -0.038), resolution=(1080, 2400)))
     assert_exists(Template(r"tpl1737382186526.png", record_pos=(-0.005, -0.191), resolution=(1080, 2400)), "Big Capsule Image.")
     assert_exists(Template(r"tpl1737382190946.png", record_pos=(0.01, 0.01), resolution=(1080, 2400)), "Tropheys Counter.")
@@ -220,10 +223,11 @@ def main():
     wait(Template(r"tpl1737389203946.png", record_pos=(0.0, -0.044), resolution=(1080, 2400)))
     
     ## Skip all the loot preview from Crate
-    for i in range(7)
+    for i in range(6):
         random_touch()
-        
+
     assert_exists(Template(r"tpl1737389255339.png", record_pos=(0.003, 0.573), resolution=(1080, 2400)), "Whole Loot Window.") # we can't directly check the images due to randomness
+    interstitial_check() # weird but inter appeared
     touch(Template(r"tpl1737389314663.png", record_pos=(0.169, 0.572), resolution=(1080, 2400)))
     sleep(1.0)
     touch(Template(r"tpl1737389486120.png", record_pos=(0.322, -0.673), resolution=(1080, 2400)))
@@ -290,7 +294,7 @@ def main():
     assert_exists(Template(r"tpl1737391920419.png", record_pos=(0.002, 0.421), resolution=(1080, 2400)), "Basic Cakes.")
     swipe(Template(r"tpl1737391992558.png", record_pos=(-0.219, 0.423), resolution=(1080, 2400)), vector=[0.1575, -0.186]) # dangerous
     swipe(Template(r"tpl1737392017509.png", record_pos=(0.001, 0.426), resolution=(1080, 2400)), vector=[-0.0567, -0.2472]) # dangerous x2
-    assert_exists(Template(r"tpl1737392053259.png", record_pos=(-0.063, -0.194), resolution=(1080, 2400)), "Cakes Combined.") # could be randomized, unchecked - dangerous x3
+    assert_exists(Template(r"tpl1737392053259.png", record_pos=(-0.063, -0.194), resolution=(1080, 2400)), "Cakes Combined.") # RANDOMIZED!!! - dangerous x3
     swipe((784, 1656), (750, 1195))
     assert_exists(Template(r"tpl1737392192830.png", record_pos=(-0.183, 0.608), resolution=(1080, 2400)), "Higher Owen Temperature.")
     
