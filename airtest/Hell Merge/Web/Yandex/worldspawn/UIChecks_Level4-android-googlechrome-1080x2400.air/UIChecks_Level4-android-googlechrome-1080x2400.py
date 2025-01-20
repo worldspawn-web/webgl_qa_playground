@@ -15,22 +15,14 @@ __author__ = "Michael 'Worldspawn' Lozickii"
 # logger.setLevel(logging.ERROR)
 
 from airtest.core.api import *
+from utils import (
+    interstitial_check,
+    random_touch
+)
 
 auto_setup(__file__)
 
-# Functions
-def random_touch():
-    sleep(2.0)
-    touch([300, 300])
-    
-# Checks for Interstitial
-# Call after every window close on the main scene!
-def interstitial_check():
-    sleep(3.0)
-    if (exists(Template(r"tpl1736872848834.png", record_pos=(0.42, -0.967), resolution=(1080, 2400)))):
-        touch(Template(r"tpl1736872848834.png", record_pos=(0.42, -0.967), resolution=(1080, 2400)))
-    if exists(Template(r"tpl1736852577544.png", record_pos=(0.427, -0.967), resolution=(1080, 2400))):
-        touch(Template(r"tpl1736852577544.png", record_pos=(0.427, -0.967), resolution=(1080, 2400)))
+
 
 def main():
     # Close Popup Offer
@@ -47,7 +39,7 @@ def main():
     sleep(1.0)
     assert_exists(Template(r"tpl1736959017731.png", record_pos=(-0.092, -0.191), resolution=(1080, 2400)), "Completed Quest Icon.")
     sleep(1.0)
-    assert_exists(Template(r"tpl1736959042212.png", record_pos=(-0.432, -0.686), resolution=(1080, 2400)), "Currect Level.")
+    assert_exists(Template(r"tpl1736959042212.png", record_pos=(-0.432, -0.686), resolution=(1080, 2400)), "Correct Level.")
     sleep(1.0)
     assert_exists(Template(r"tpl1736959065913.png", record_pos=(0.44, -0.684), resolution=(1080, 2400)), "Settings Button.")
     sleep(1.0)
