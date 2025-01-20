@@ -40,5 +40,6 @@ def autowin_toggle():
 def complete_quest():
     assert_exists(Template(r"tpl1737378790269.png", record_pos=(0.0, 0.269), resolution=(1080, 2400)), "Complete Button.")
     touch(Template(r"tpl1737378790269.png", record_pos=(0.0, 0.269), resolution=(1080, 2400)))
+    interstitial_check()
 
 __all__ = ['random_touch', 'interstitial_check', 'autowin_toggle', 'complete_quest']
