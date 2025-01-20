@@ -15,6 +15,7 @@ def interstitial_check():
 def autowin_toggle():
     # Enable Auto-Win Cheat
     touch(Template(r"tpl1737374718687.png", record_pos=(-0.432, -0.69), resolution=(1080, 2400)))
+
     ## Cheat Opener Combination
     for i in range(3):
         swipe((318, 863), (318, 953))
@@ -36,3 +37,4 @@ def autowin_toggle():
     touch(Template(r"tpl1737374829415.png", record_pos=(0.313, -0.454), resolution=(1080, 2400)))
     interstitial_check()
 
+__all__ = ['random_touch', 'interstitial_check', 'autowin_toggle']
