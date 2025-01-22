@@ -49,9 +49,9 @@ def complete_quest():
 
 def autoquest():
     checkmarks = [
-        Template(r"tpl1737544148891.png", rgb=False),
-        Template(r"tpl1737553283307.png", record_pos=(0.0, -0.026)),
-        Template(r"tpl1737548274741.png", threshold=0.7, record_pos=(0.001, -0.038))
+        Template(r"tpl1737544148891.png", rgb=True),
+        Template(r"tpl1737553283307.png", rgb=True, record_pos=(0.0, -0.026)),
+        Template(r"tpl1737548274741.png", threshold=0.7, rgb=True, record_pos=(0.001, -0.038))
     ]
 
     quests_completed = False
