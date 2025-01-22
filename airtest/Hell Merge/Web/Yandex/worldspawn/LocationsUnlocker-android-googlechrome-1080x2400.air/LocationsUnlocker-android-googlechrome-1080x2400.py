@@ -42,6 +42,17 @@ def interstitial_check():
             touch(inter)
             break
 
+def lvlup_check():
+    lvl_checker = Template(r"tpl1737554076975.png", threshold=0.6, rgb=True, record_pos=(-0.434, -0.69), resolution=(1080, 2400))
+    lvlup_btn = Template(r"tpl1737554165456.png", rgb=True, record_pos=(-0.002, 0.272), resolution=(1080, 2400))
+    
+    if exists(lvl_checker):
+        touch(lvl_checker)
+        if exists(lvlup_btn):
+            touch(lvlup_btn)
+            touch(Template(r"tpl1737554332577.png", record_pos=(0.309, -0.453), resolution=(1080, 2400)))
+            # TODO: ADD EQUAL CHECKER
+
 def complete_quest():
     complete_btn = Template(r"tpl1737378790269.png", record_pos=(0.0, 0.269), resolution=(1080, 2400))
     touch(complete_btn)
@@ -59,7 +70,7 @@ def autoquest():
     while True:
         found_checkmark = None
         for checkmark in checkmarks:
-            if exists(checkmark): # sometimes clicks on ad banner
+            if exists(checkmark):
                 found_checkmark = checkmark
                 break
         if not found_checkmark:
