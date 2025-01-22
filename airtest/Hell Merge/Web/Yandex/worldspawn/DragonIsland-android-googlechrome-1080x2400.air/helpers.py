@@ -1,4 +1,8 @@
 from airtest.core.api import *
+import logging
+
+# Logger Setup
+logger = logging.getLogger("airtest")
 
 # Functions
 def random_touch():
@@ -9,9 +13,9 @@ def random_touch():
 # Functions (will be moved to a separate file later)
 def interstitial_check():
     inter_templates = [
-        Template(r"tpl1736872848834.png", record_pos=(0.42, -0.967), resolution=(1080, 2400)),
-        Template(r"tpl1736852577544.png", record_pos=(0.427, -0.967), resolution=(1080, 2400)),
-        Template(r"tpl1737548555454.png", record_pos=(-0.001, 0.913), resolution=(1080, 2400))
+        Template(r"tpl1736872848834.png", rgb=True, record_pos=(0.42, -0.967), resolution=(1080, 2400)),
+        Template(r"tpl1736852577544.png", rgb=True, record_pos=(0.427, -0.967), resolution=(1080, 2400)),
+        Template(r"tpl1737548555454.png", rgb=True, record_pos=(-0.001, 0.913), resolution=(1080, 2400))
     ]
 
     sleep(2.0)
