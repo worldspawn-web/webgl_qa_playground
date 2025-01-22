@@ -96,7 +96,7 @@ def quest_finder():
 
 def main():
     # Locations Opener
-#     swipe((878, 1242), (219, 1344))
+    swipe((878, 1242), (219, 1344))
     while True:
         if autoquest():
             logger.info("Quests Completed successfully.")
