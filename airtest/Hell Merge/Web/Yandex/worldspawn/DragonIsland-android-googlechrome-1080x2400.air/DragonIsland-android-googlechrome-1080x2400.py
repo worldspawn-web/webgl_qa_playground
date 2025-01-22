@@ -18,7 +18,7 @@ __author__ = "Michael 'Worldspawn' Lozickii"
 # IMPORTS
 import logging
 from airtest.core.api import *
-from utils import random_touch, autowin_toggle, interstitial_check, quit_window
+from helpers import random_touch, autowin_toggle, interstitial_check, quit_window
 
 # Logger Setup
 logger = logging.getLogger("airtest")
@@ -29,7 +29,7 @@ logger.info("Setting up Airtest Game Environment")
 
 def main():
     # Turn Autowin: ON
-    autowin_toggle()
+#     autowin_toggle()
     
     wait(Template(r"tpl1737554974809.png", threshold=0.6, record_pos=(-0.001, -0.028), resolution=(1080, 2400)))
     assert_exists(Template(r"tpl1737554997331.png", record_pos=(0.382, -0.723), resolution=(1080, 2400)), "Skip Button.")
@@ -43,9 +43,6 @@ def main():
     dragon_q_tutor = Template(r"tpl1737555225104.png", record_pos=(-0.414, 0.597), resolution=(1080, 2400))
     wait(dragon_q_tutor) # can be done with absolutes
     touch(dragon_q_tutor)
-    
-    wait(Template(r"tpl1737555314170.png", record_pos=(0.001, -0.019), resolution=(1080, 2400)))
-    random_touch()
     wait(Template(r"tpl1737555346064.png", record_pos=(-0.002, -0.537), resolution=(1080, 2400)))
     random_touch()
     
@@ -63,7 +60,7 @@ def main():
     assert_exists(Template(r"tpl1737555553031.png", record_pos=(-0.009, -0.56), resolution=(1080, 2400)), "Dragon Island Header.")
     assert_exists(Template(r"tpl1737555559554.png", record_pos=(-0.175, -0.409), resolution=(1080, 2400)), "Dragon Island Cover.")
     assert_exists(Template(r"tpl1737555565677.png", record_pos=(-0.103, -0.284), resolution=(1080, 2400)), "Dragon Island Progress.")
-    assert_exists(Template(r"tpl1737555571559.png", record_pos=(0.156, -0.459), resolution=(1080, 2400)), rgb=True, "Dragon Island Timer.")
+    assert_exists(Template(r"tpl1737555571559.png", rgb=True, record_pos=(0.156, -0.459), resolution=(1080, 2400)), "Dragon Island Timer.")
     assert_exists(Template(r"tpl1737555583843.png", record_pos=(-0.173, -0.154), resolution=(1080, 2400)), "Dragon Island Golden Ticket.")
     assert_exists(Template(r"tpl1737555588827.png", record_pos=(0.177, -0.148), resolution=(1080, 2400)), "Dragon Island Standart Ticket.")
     assert_exists(Template(r"tpl1737555594952.png", record_pos=(-0.19, 0.002), resolution=(1080, 2400)), "Dragon Island Locked Rewards.")
@@ -88,7 +85,7 @@ def main():
 #     interstitial_check()
     wait(Template(r"tpl1737556091461.png", record_pos=(-0.002, -0.518), resolution=(1080, 2400)))
     
-    for let i in range(2)
+    for i in range(2):
         random_touch()
         
     dragon_park_tutor = Template(r"tpl1737556142912.png", record_pos=(-0.007, -0.035), resolution=(1080, 2400))
