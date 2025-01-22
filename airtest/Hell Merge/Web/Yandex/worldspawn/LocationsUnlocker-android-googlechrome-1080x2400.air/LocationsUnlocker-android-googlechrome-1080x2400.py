@@ -26,48 +26,78 @@ logger = logging.getLogger("airtest")
 auto_setup(__file__)
 logger.info("Setting up Airtest Game Environment")
 
+# Variables
+inter_templates = [
+    Template(r"tpl1736872848834.png", record_pos=(0.42, -0.967), resolution=(1080, 2400)),
+    Template(r"tpl1736852577544.png", record_pos=(0.427, -0.967), resolution=(1080, 2400)),
+    Template(r"tpl1737548555454.png", record_pos=(-0.001, 0.913), resolution=(1080, 2400))
+]
+
 # Functions (will be moved to a separate file later)
 def interstitial_check():
-    sleep(3.0)
-    if (exists(Template(r"tpl1736872848834.png", record_pos=(0.42, -0.967), resolution=(1080, 2400)))):
-        touch(Template(r"tpl1736872848834.png", record_pos=(0.42, -0.967), resolution=(1080, 2400)))
-    if exists(Template(r"tpl1736852577544.png", record_pos=(0.427, -0.967), resolution=(1080, 2400))):
-        touch(Template(r"tpl1736852577544.png", record_pos=(0.427, -0.967), resolution=(1080, 2400)))
+    sleep(2.0)
+    
+    for inter in inter_templates:
+        if exists(inter):
+            touch(inter)
+            break
 
 def complete_quest():
     complete_btn = Template(r"tpl1737378790269.png", record_pos=(0.0, 0.269), resolution=(1080, 2400))
-    assert_exists(complete_btn, "Complete Button.")
     touch(complete_btn)
     sleep(1.0)
 
 def autoquest():
-    checkmark = Template(r"tpl1737544148891.png", record_pos=(-0.143, -0.045))
+    checkmark = Template(r"tpl1737544148891.png", rgb=False)
+    checkmark_mascot = Template(r"tpl1737548274741.png", threshold=0.7, record_pos=(0.001, -0.038))
+
+    quests_completed = False
     
-    while exists(checkmark):
-        touch(checkmark)
-        assert_exists(Template(r"tpl1737378790269.png", record_pos=(0.0, 0.269), resolution=(1080, 2400)), "Complete Button.")
+    while exists(checkmark) or exists (checkmark_mascot):
+        if exists(checkmark_mascot):
+            wait(checkmark_mascot)
+            touch(checkmark_mascot)
+        else:
+            wait(checkmark)
+            touch(checkmark)
+            
+        sleep(1.0)
         complete_quest()
         interstitial_check()
+        quests_completed = True
 
-    return False
+    return quests_completed
 
 def quest_finder():
     touch(Template(r"tpl1737544532460.png", record_pos=(-0.418, 0.599), resolution=(1080, 2400)))
     sleep(1.0)
-    touch(Template(r"tpl1737544571181.png", record_pos=(0.169, -0.307), resolution=(1080, 2400)))
-    sleep(4.0)
+    if exists(Template(r"tpl1737544571181.png", record_pos=(0.169, -0.307), resolution=(1080, 2400))):
+        touch(Template(r"tpl1737544571181.png", record_pos=(0.169, -0.307), resolution=(1080, 2400)))
+        interstitial_check()
+        return True
+    return False
 
 def main():
     # Locations Opener
-    swipe((878, 1242), (219, 1344))
+#     swipe((878, 1242), (219, 1344))
+    while True:
+        if autoquest():
+            logger.info("Quests Completed successfully.")
+        else:
+            logger.info("Looking for new quests...")
+            if quest_finder():
+                logger.info("Found new quests! Returning to auto quest complete...")
+            else:
+                logger.info("No new quests found. Zzz...")
+                break
+
     if not autoquest():
         try:
             quest_finder()
         except Exception as e:
             logger.error(f"No quests found.")
             
-    
-    
+
 if __name__ == "__main__":
     main()
 
