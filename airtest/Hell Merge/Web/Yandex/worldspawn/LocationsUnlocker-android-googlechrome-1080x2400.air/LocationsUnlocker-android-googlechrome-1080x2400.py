@@ -48,19 +48,25 @@ def complete_quest():
     sleep(1.0)
 
 def autoquest():
-    checkmark = Template(r"tpl1737544148891.png", rgb=False)
-    checkmark_mascot = Template(r"tpl1737548274741.png", threshold=0.7, record_pos=(0.001, -0.038))
+    checkmarks = [
+        Template(r"tpl1737544148891.png", rgb=False),
+        Template(r"tpl1737553283307.png", record_pos=(0.0, -0.026)),
+        Template(r"tpl1737548274741.png", threshold=0.7, record_pos=(0.001, -0.038))
+    ]
 
     quests_completed = False
     
-    while exists(checkmark) or exists (checkmark_mascot):
-        if exists(checkmark_mascot):
-            wait(checkmark_mascot)
-            touch(checkmark_mascot)
-        else:
-            wait(checkmark)
-            touch(checkmark)
-            
+    while True:
+        found_checkmark = None
+        for checkmark in checkmarks:
+            if exists(checkmark): # sometimes clicks on ad banner
+                found_checkmark = checkmark
+                break
+        if not found_checkmark:
+            break
+    
+        wait(found_checkmark)
+        touch(found_checkmark)
         sleep(1.0)
         complete_quest()
         interstitial_check()
