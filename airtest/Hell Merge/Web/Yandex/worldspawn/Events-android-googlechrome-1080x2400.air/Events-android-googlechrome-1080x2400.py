@@ -334,7 +334,7 @@ def main():
     interstitial_check()
     assert_exists(Template(r"tpl1737392310384.png", record_pos=(0.426, -0.396), resolution=(1080, 2400)), "Cake Fever Icon on the Main Scene.")
     touch(Template(r"tpl1737392310384.png", record_pos=(0.426, -0.396), resolution=(1080, 2400)))
-    wait(Template(r"tpl1737391785118.png", record_pos=(-0.002, -0.15), resolution=(1080, 2400)))
+    wait(Template(r"tpl1737391785118.png", record_pos=(-0.002, -0.15), resolution=(1080, 2400))) # TODO: Change to another with the first levels
     touch(Template(r"tpl1737391793755.png", record_pos=(-0.193, -0.436), resolution=(1080, 2400)))
     wait(Template(r"tpl1737393404651.png", record_pos=(0.0, -0.006), resolution=(1080, 2400)))
     assert_exists(Template(r"tpl1737393413306.png", record_pos=(0.006, -0.226), resolution=(1080, 2400)), "Cake Fever Golden Ticket Image.")
@@ -343,6 +343,6 @@ def main():
     
     assert_exists(Template(r"tpl1737393519130.png", record_pos=(-0.181, -0.434), resolution=(1080, 2400)), "Battlepass Purchased.")
     touch(Template(r"tpl1737393544503.png", record_pos=(0.304, -0.671), resolution=(1080, 2400)))
-
+    
 if __name__ == "__main__":
     main()
