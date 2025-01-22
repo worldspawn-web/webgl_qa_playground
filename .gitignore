@@ -1,0 +1,3 @@
+# Ignores MacOS Local Files in all Directories
+*.DS_Store
+*/*.DS_Store
