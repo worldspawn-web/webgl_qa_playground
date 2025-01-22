@@ -10,9 +10,6 @@
 __author__ = "Michael 'Worldspawn' Lozickii"
 
 # Removes Debug Logs (Turned Off):
-#
-# import logging
-# logger = logging.getLogger("airtest")
 # logger.setLevel(logging.ERROR)
 
 # IMPORTS
@@ -27,9 +24,25 @@ logger = logging.getLogger("airtest")
 auto_setup(__file__)
 logger.info("Setting up Airtest Game Environment")
 
+def tap_menu(menu):
+    menu_height = 0.763
+    menu_endpoints = {
+        'quests': 0.2,
+        'inventory': 0.34,
+        'shop': 0.66,
+        'switch': 0.8
+    }
+    
+    if menu not in menu_endpoints:
+        raise ValueError(f"Invalid menu option: {menu}")
+    
+    endpoint = menu_endpoints[menu]
+    touch((endpoint, menu_height))
+    sleep(1.0)
+
+
 def main():
-    # Turn Autowin: ON
-#     autowin_toggle()
+    dragon_complete_btn = Template(r"tpl1737556794407.png", record_pos=(0.171, 0.156), resolution=(1080, 2400))
     
     wait(Template(r"tpl1737554974809.png", threshold=0.6, record_pos=(-0.001, -0.028), resolution=(1080, 2400)))
     assert_exists(Template(r"tpl1737554997331.png", record_pos=(0.382, -0.723), resolution=(1080, 2400)), "Skip Button.")
@@ -46,14 +59,17 @@ def main():
     wait(Template(r"tpl1737555346064.png", record_pos=(-0.002, -0.537), resolution=(1080, 2400)))
     random_touch()
     
-    dragon_q_tutor2 = Template(r"tpl1737555431125.png", record_pos=(-0.303, 0.606), resolution=(1080, 2400))
-    wait(dragon_q_tutor2)
-    touch(dragon_q_tutor2)
     wait(Template(r"tpl1737555474787.png", record_pos=(0.001, -0.544), resolution=(1080, 2400)))
     
-    dragon_q_tutor3 = Template(r"tpl1737555486036.png", record_pos=(0.161, 0.157), resolution=(1080, 2400))
+    dragon_q_tutor3 = (Template(r"tpl1737559751439.png", record_pos=(0.167, 0.156), resolution=(1080, 2400)))
     wait(dragon_q_tutor3)
     touch(dragon_q_tutor3)
+
+    wait(Template(r"tpl1737560113313.png", record_pos=(-0.001, 0.047), resolution=(1080, 2400)))
+    random_touch()
+    sleep(1.0)
+    tap_menu('quests')
+    touch(dragon_complete_btn)
     random_touch()
     
     # Dragon Island Event Assertions
@@ -72,7 +88,6 @@ def main():
     touch(dragon_q_tutor4)
 
     sleep(3.0)
-    touch()
 
     assert_not_equal(dragon_q_tutor4, Template(r"tpl1737555808709.png", record_pos=(0.201, 0.007), resolution=(1080, 2400)), "Dragon Award Claimed.")
 
@@ -82,7 +97,7 @@ def main():
     touch(dragon_play_btn)
     sleep(1.0)
     touch(Template(r"tpl1737556062498.png", record_pos=(0.297, 0.602), resolution=(1080, 2400)))
-#     interstitial_check()
+    # interstitial_check() - uncom if inter appears
     wait(Template(r"tpl1737556091461.png", record_pos=(-0.002, -0.518), resolution=(1080, 2400)))
     
     for i in range(2):
@@ -90,7 +105,7 @@ def main():
         
     dragon_park_tutor = Template(r"tpl1737556142912.png", record_pos=(-0.007, -0.035), resolution=(1080, 2400))
     wait(dragon_park_tutor)
-    touch(dragon_park_tutor)
+    touch(dragon_park_tutor) # can fail the test idk why
     sleep(2.0)
     assert_exists(Template(r"tpl1737556186737.png", record_pos=(0.001, -0.035), resolution=(1080, 2400)), "Hover Effect.")
     assert_exists(Template(r"tpl1737556203136.png", record_pos=(0.006, -0.544), resolution=(1080, 2400)), "Mascot Dialog.")
@@ -114,14 +129,26 @@ def main():
     wait(Template(r"tpl1737556509493.png", record_pos=(-0.005, -0.216), resolution=(1080, 2400)))
     random_touch()
     
+    if exists(Template(r"tpl1737561761717.png", record_pos=(0.008, -0.136), resolution=(1080, 2400))):
+        touch(Template(r"tpl1737561769602.png", record_pos=(0.0, 0.433), resolution=(1080, 2400)))
+        sleep(3.0)
+        touch(Template(r"tpl1737561782308.png", record_pos=(0.003, 0.584), resolution=(1080, 2400)))
+        sleep(1.0)
+        interstitial_check()
+        touch(Template(r"tpl1737561813708.png", record_pos=(0.309, -0.706), resolution=(1080, 2400)))
+        sleep(5.0)
+
+    autowin_toggle()
     touch(Template(r"tpl1737556763278.png", record_pos=(-0.412, 0.591), resolution=(1080, 2400)))
     
-    dragon_complete_btn = Template(r"tpl1737556794407.png", record_pos=(0.171, 0.156), resolution=(1080, 2400))
+
     dragon_complete_toggle = True
     
     while dragon_complete_toggle:
         touch(dragon_complete_btn)
-        if exists(Template(r"tpl1737557076770.png", rgb=True, record_pos=(-0.192, -0.406), resolution=(1080, 2400))):
+        sleep(2.0)
+
+        if not exists(Template(r"tpl1737562066415.png", record_pos=(-0.004, -0.562), resolution=(1080, 2400))):
             dragon_complete_toggle = False
             break
     
@@ -130,8 +157,6 @@ def main():
     for i in range(2):
         quit_window()
     
-    touch(Template(r"tpl1737557501096.png", record_pos=(0.0, 0.147), resolution=(1080, 2400), rgb=True))
-    interstitial_check()
     
     # Decor Installation
     # ...
