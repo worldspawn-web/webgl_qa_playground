@@ -19,7 +19,7 @@ airtest/Hell Merge/Web/Yandex/worldspawn/android-googlechrome-1080x2400.air/...
 ## Code Coverage
 
 - [Hell Merge](https://rmgames.atlassian.net/wiki/spaces/QW/database/4455104564)
-- ...
+- [Magic School](https://rmgames.atlassian.net/wiki/spaces/QW/database/4470702117?atl_f=PAGETREE)
 
 ## Links
 
