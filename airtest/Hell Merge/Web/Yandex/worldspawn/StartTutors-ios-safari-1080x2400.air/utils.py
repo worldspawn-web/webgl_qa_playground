@@ -23,4 +23,4 @@ def inter_check():
             touch(inter)
             break
             
-__all__ = ['inter_check', 'fullscreen_window_check']
+__all__ = ['inter_check', 'fullscreen_window_check', 'random_touch']
