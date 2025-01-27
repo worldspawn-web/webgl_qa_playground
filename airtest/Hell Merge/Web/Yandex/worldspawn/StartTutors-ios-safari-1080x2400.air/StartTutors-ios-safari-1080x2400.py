@@ -16,7 +16,6 @@ logger.setLevel(logging.ERROR)
 from airtest.core.api import *
 from utils import (
     random_touch,
-    init_browsers
 )
 
 auto_setup(__file__)
@@ -41,8 +40,6 @@ def inter_check():
 
 def main():
     # Auto Cache Reset
-    browsers = init_browsers()
-
     if not (exists(Template(r"tpl1737975235780.png", record_pos=(-0.006, -0.634), resolution=(828, 1792)))):
         touch(Template(r"tpl1737977909426.png", target_pos=6, record_pos=(0.192, 0.944), resolution=(828, 1792)))
         sleep(3.0)
