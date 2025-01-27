@@ -100,15 +100,15 @@ def main():
     touch(Template(r"tpl1737035149615.png", record_pos=(-0.276, 0.591), resolution=(1080, 2400)))
     assert_exists(Template(r"tpl1737035160514.png", record_pos=(-0.269, -0.547), resolution=(1080, 2400)), "Soft Value Icon.")
     assert_exists(Template(r"tpl1737035167584.png", record_pos=(0.15, -0.552), resolution=(1080, 2400)), "Hard Value Icon.")
-    swipe((0.5, 0.5), (0.5, 0.1))
+    swipe((0.5, 0.5), (0.5, 0.14))
     sleep(5.0)
     assert_exists(Template(r"tpl1737035234160.png", record_pos=(-0.299, 0.347), resolution=(1080, 2400)), "'Day Specials' Decor (which means the container is rendered).")
     assert_exists(Template(r"tpl1737036156830.png", record_pos=(0.013, -0.267), resolution=(1080, 2400)), "Icons on 'Day Specials'")
     assert_exists(Template(r"tpl1737036166170.png", record_pos=(0.001, -0.13), resolution=(1080, 2400)), "'Day Specials' Prices.")
     assert_exists(Template(r"tpl1737036131630.png", record_pos=(0.006, 0.014), resolution=(1080, 2400)), "'On Sale' Container.")
-
-    assert_exists(Template(r"tpl1737036185730.png", record_pos=(-0.241, 0.27), resolution=(1080, 2400)), "Random Sales Item Icon")
-    swipe((0.5, 0.5), (0, -0.01))
+    # We cant check insides of a sale container, since it's randomly generated
+    
+    swipe((0.5, 0.5), (0.5, 0.14))
     sleep(5.0)
     assert_exists(Template(r"tpl1737037116041.png", record_pos=(0.007, -0.294), resolution=(1080, 2400)), "Loot Boxes Header.")
     assert_exists(Template(r"tpl1737036298846.png", record_pos=(0.002, -0.166), resolution=(1080, 2400)), "Loot Boxes Icons.")
@@ -116,13 +116,13 @@ def main():
     assert_exists(Template(r"tpl1737036314326.png", record_pos=(-0.231, 0.397), resolution=(1080, 2400)), "Summon Booster Icon.")
     assert_exists(Template(r"tpl1737036320289.png", record_pos=(-0.002, 0.394), resolution=(1080, 2400)), "Grow Booster Icon.")
     assert_exists(Template(r"tpl1737036325217.png", record_pos=(0.227, 0.385), resolution=(1080, 2400)), "Scissors Booster Icon.")
-    swipe((0.5, 0.5), (0.5, 0.1))
+    swipe((0.5, 0.5), (0.5, 0.3))
     sleep(5.0)
     assert_exists(Template(r"tpl1737036561947.png", record_pos=(-0.001, -0.444), resolution=(1080, 2400)), "Crystals Header.")
     assert_exists(Template(r"tpl1737036574653.png", record_pos=(-0.001, -0.282), resolution=(1080, 2400)), "Crystals Hard Icons #1.")
     assert_exists(Template(r"tpl1737036581009.png", record_pos=(0.0, 0.08), resolution=(1080, 2400)), "Crystals Hard Icons #2.")
     assert_exists(Template(r"tpl1737036587307.png", record_pos=(0.006, 0.411), resolution=(1080, 2400)), "Soft Header.")
-    swipe((0.5, 0.5), (0.5, 0.01))
+    swipe((0.5, 0.5), (0.5, 0.4))
     sleep(3.0)
     assert_exists(Template(r"tpl1737036670924.png", record_pos=(0.001, 0.065), resolution=(1080, 2400)), "Soft Icons #1")
     assert_exists(Template(r"tpl1737036678344.png", record_pos=(-0.003, 0.426), resolution=(1080, 2400)), "Soft Icons #2")
@@ -158,7 +158,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
-# Swipe Coordinate Helper:
-# x - left/right
-# y - up/down
