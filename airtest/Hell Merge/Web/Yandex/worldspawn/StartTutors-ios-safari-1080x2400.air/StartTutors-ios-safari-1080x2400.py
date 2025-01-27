@@ -15,28 +15,10 @@ logger.setLevel(logging.ERROR)
 
 from airtest.core.api import *
 from utils import (
-    random_touch,
+    fullscreen_window_check, inter_check
 )
 
 auto_setup(__file__)
-
-def fullscreen_window_check():
-    window = Template(r"tpl1737976810731.png", target_pos=3, record_pos=(-0.005, -0.684), resolution=(828, 1792))
-    if exists(window):
-        touch(window)
-        
-def inter_check():
-    templates = [
-        Template(r"tpl1736872848834.png", record_pos=(0.42, -0.967), resolution=(1080, 2400)),
-        Template(r"tpl1736852577544.png", record_pos=(0.427, -0.967), resolution=(1080, 2400))
-    ]
-    
-    sleep(3.0)
-    
-    for inter in templates:
-        if exists(inter):
-            touch(inter)
-            break
 
 def main():
     # Auto Cache Reset
@@ -59,7 +41,7 @@ def main():
         touch(Template(r"tpl1736872665536.png", record_pos=(0.001, 0.47), resolution=(1080, 2400)))
 
     # Close Entry Interstitial
-    sleep(3.0)
+    sleep(2.0)
     inter_check()
 
     # Loading Screen Banner
@@ -105,7 +87,7 @@ def main():
     swipe(Template(r"tpl1736866490558.png", record_pos=(0.12, 0.045), resolution=(1080, 2400)), vector=[0.0041, 0.0593])
 
     # Multiple Generator Taps
-    for i in range(3):
+    for i in range(2):
         touch((0.595, 0.551))
         sleep(2.0)
 
