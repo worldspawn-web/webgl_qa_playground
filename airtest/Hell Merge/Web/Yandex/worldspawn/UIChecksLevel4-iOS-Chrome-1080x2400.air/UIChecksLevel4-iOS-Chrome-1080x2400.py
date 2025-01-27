@@ -20,13 +20,15 @@ from utils import (
 auto_setup(__file__)
 
 def main():
+    # Sometimes a Shop could be opened on game start
+    quit_window()
+    
     # Close Popup Offer
     if exists(Template(r"tpl1736958318809.png", record_pos=(-0.002, -0.025), resolution=(1080, 2400))):
         touch(Template(r"tpl1736958340836.png", record_pos=(0.436, -0.674), resolution=(1080, 2400)))
         sleep(1.0)
 
-    # Sometimes a Shop could be opened on game start
-    # quit_window()
+
     
     # UI Checks
     assert_exists(Template(r"tpl1736958356734.png", record_pos=(-0.002, -0.52), resolution=(1080, 2400)), "Current Location Panel.")
