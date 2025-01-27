@@ -31,13 +31,17 @@ def quit_window():
         Template(r"tpl1736958340836.png", record_pos=(0.436, -0.674), resolution=(1080, 2400))
     ]
 
-    for _ in range(10):
+    for _ in range(5):
+        cross_found = False
         for cross in cross_templates:
             if exists(cross):
                 touch(cross)
                 interstitial_check()
-                return
-
-    raise Exception("Failed to find and close window")
+                return True
+        if not cross_found:
+            sleep(0.5)
+            
+    logger.warning("No window to close was found after 5 attempts.")
+    return False
 
 __all__ = ['random_touch', 'interstitial_check', 'quit_window']
