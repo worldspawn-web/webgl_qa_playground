@@ -44,17 +44,13 @@ def main():
     browsers = init_browsers()
 
     if not (exists(Template(r"tpl1737975235780.png", record_pos=(-0.006, -0.634), resolution=(828, 1792)))):
-        for browser in browsers:
-            if exists(Template(r"" + browser.image, record_pos=browser.record_pos, resolution=browser.resolution)):
-                touch(Template(r"" + browser.image, record_pos=browser.record_pos, resolution=browser.resolution, target_pos=6))
-                break
-
-        touch(Template(r"tpl1736945440708.png", record_pos=(0.119, -0.432), resolution=(1080, 2400)))
-        sleep(1.0)
-        wait(Template(r"tpl1736945481294.png", record_pos=(0.28, 0.566), resolution=(1080, 2400)))
-        touch(Template(r"tpl1736945481294.png", record_pos=(0.28, 0.566), resolution=(1080, 2400)))
+        touch(Template(r"tpl1737977909426.png", target_pos=6, record_pos=(0.192, 0.944), resolution=(828, 1792)))
         sleep(3.0)
-        touch(Template(r"tpl1736945586374.png", record_pos=(-0.187, -0.956), resolution=(1080, 2400), target_pos=4))
+        touch(Template(r"tpl1737978032033.png", record_pos=(-0.004, 0.938), resolution=(828, 1792)))
+        sleep(3.0)
+        touch(Template(r"tpl1737978052175.png", rgb=True, record_pos=(0.397, -0.877), resolution=(828, 1792)))
+        sleep(5.0)
+
 
     # Hell Merge - Yandex (RU)
     touch(Template(r"tpl1737975235780.png", record_pos=(-0.006, -0.634), resolution=(828, 1792)))
