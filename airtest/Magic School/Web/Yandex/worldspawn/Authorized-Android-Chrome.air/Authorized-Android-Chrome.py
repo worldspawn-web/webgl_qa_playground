@@ -16,7 +16,7 @@ from utils import (
 
 auto_setup(__file__)
 
-ST.SNAPSHOT_DIR = "./snapshots
+ST.SNAPSHOT_DIR = "./snapshots"
 
 #
 # Minor Utility Functions
@@ -40,6 +40,7 @@ def startup():
     
     offer_noads = Template(r"tpl1738071251829.png", record_pos=(-0.086, 0.06), resolution=(2400, 1080))
     if exists(offer_noads):
+        sleep(1.0)
         touch((0.7, 0.7))
 
     assert_exists(Template(r"tpl1738071315727.png", record_pos=(-0.076, 0.051), resolution=(2400, 1080)), "Game Loaded.")
@@ -51,15 +52,13 @@ def startup():
 def copyid():
     # Values
     id_field = Template(r"tpl1738077228917.png", target_pos=6, record_pos=(-0.049, 0.007), resolution=(2400, 1080))
-    name_field = Template(r"tpl1738077311428.png", record_pos=(-0.08, -0.02), resolution=(2400, 1080))
+    expected_id = "5cpiqJtaJykrCWLQchIkO2GCRazUFl4foA5smdAJ-qU="
     
     # Actions
     open_settings()
     assert_and_touch(id_field, "User ID Field.")
-    assert_and_touch(name_field, "Name Field.")
-    paste()
-    sleep(0.5)
-    assert_exists(Template(r"tpl1738077610637.png", rgb=True, record_pos=(-0.052, -0.022), resolution=(2400, 1080)), "Value Pasted.")
+    copied_id = get_clipboard()
+    assert_equal(copied_id, expected_id, "Copied correct ID.")
     close_window()
 
 #
@@ -136,7 +135,9 @@ def iap_checks():
     touch(Template(r"tpl1738080861476.png", record_pos=(0.195, 0.13), resolution=(2400, 1080)))
     assert_exists(Template(r"tpl1738080873340.png", record_pos=(0.016, 0.055), resolution=(2400, 1080)), "Confirm Payment Modal.")
     touch(Template(r"tpl1738080889792.png", record_pos=(0.018, 0.136), resolution=(2400, 1080)))
+    sleep(1.5)
     close_window()
+    values_after = Template(r"tpl1738079984594.png", record_pos=(0.312, -0.103), resolution=(2400, 1080))
     assert_not_equal(Template(r"tpl1738080949543.png", record_pos=(0.313, -0.102), resolution=(2400, 1080)), values_after, "Values Changed after Purchase.")
 
 

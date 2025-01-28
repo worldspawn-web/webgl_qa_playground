@@ -68,4 +68,3 @@ def yandex_pay(btn):
     sleep(2.5)
 
 __all__ = ['random_touch', 'multiple_touches', 'close_window', 'inter_check', 'assert_and_touch', 'yandex_pay']
-
