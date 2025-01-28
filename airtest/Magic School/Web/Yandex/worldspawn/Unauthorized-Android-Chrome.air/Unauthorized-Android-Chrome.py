@@ -1,6 +1,7 @@
+import asyncio
 from airtest.core.api import *
 import logging
-import utils import (
+from utils import (
     random_touch,
     multiple_touches,
     close_window,
@@ -42,7 +43,7 @@ def tutorials_checker():
     random_touch()
     
     ## Step 3
-    multiple_touches(3)
+    multiple_touches(4)
     
     tutorial_crate = Template(r"tpl1737993953422.png", record_pos=(-0.007, -0.072), resolution=(2400, 1080))
     wait(tutorial_crate)
@@ -78,7 +79,7 @@ def tutorials_checker():
     random_touch()
     assert_exists(Template(r"tpl1737994701679.png", record_pos=(-0.048, 0.024), resolution=(2400, 1080)), "New Level Rewards.")
     assert_exists(Template(r"tpl1737994708326.png", record_pos=(-0.052, -0.092), resolution=(2400, 1080)), "New Level Icon.")
-    random_touch()
+    touch((0.65, 0.65))
     sleep(3.0)
     assert_exists(Template(r"tpl1737994753154.png", record_pos=(-0.052, -0.026), resolution=(2400, 1080)), "New Quest (no image).")
     random_touch()
@@ -138,8 +139,6 @@ def tutorials_checker():
     assert_exists(Template(r"tpl1737996638139.png", record_pos=(-0.047, -0.026), resolution=(2400, 1080)), "Gnome Quest Completed.")
     multiple_touches(2)
     inter_check()
-    if exists(Template(r"tpl1737996922381.png", record_pos=(-0.049, -0.032), resolution=(2400, 1080))):
-        random_touch()
         
     ## Step 10 - Generators
     for i in range(2):
@@ -154,7 +153,8 @@ def tutorials_checker():
     touch((0.544, 0.432))
     sleep(2.0)
     assert_exists(Template(r"tpl1737997345748.png", record_pos=(-0.051, -0.025), resolution=(2400, 1080)), "Books Quest Completed.")
-    multiple_touches(2)
+    random_touch()
+    touch((0.66, 0.66))
     inter_check()
     
     assert_exists(mascot_dialog_img)
@@ -172,7 +172,7 @@ def tutorials_checker():
     sleep(2.0)
     touch(cook_btn)
     assert_exists(cooking_btn, "Cooking...")
-    wait(collect_btn)
+    sleep(10.0)
     touch(collect_btn)
     inter_check()
     touch(Template(r"tpl1737998492570.png", record_pos=(-0.052, -0.027), resolution=(2400, 1080)))
@@ -193,6 +193,8 @@ def tutorials_checker():
 def ui_checker():
     clear_console()
     logging.info('Starting UI Checks...')
+    
+    inter_check()
     
     # Buttons Definition
     pfp_img = Template(r"tpl1737999306534.png", record_pos=(-0.359, -0.177), resolution=(2400, 1080))
@@ -231,10 +233,43 @@ def ui_checker():
     
     for i in range(2):
         close_window()
+
+async def check_for_yagames():
+    cross = Template(r"tpl1738059416652.png", rgb=True, record_pos=(0.48, 0.152), resolution=(2400, 1080))
     
-def main():
+    while True:
+        if exists(cross):
+            touch(cross)
+        else:
+            logging.info("YaGames Banner Not Found.")
+        
+        await asyncio.sleep(60)
+        
+async def main_test_flow():
     tutorials_checker()
     ui_checker()
+    return True
+
+async def main():
+    yagames_task = asyncio.ensure_future(check_for_yagames())
+    main_test_task = asyncio.ensure_future(main_test_flow())
+    
+    main_test_complete = await main_test_task
+    
+    if main_test_complete:
+        yagames_task.cancel()
+        try:
+            await yagames_task
+        except asyncio.CancelledError:
+            pass
+        
+    return True
     
 if __name__ == "__main__":
-    main()
+    loop = asyncio.get_event_loop()
+    try:
+        loop.run_until_complete(main())
+    except KeyboardInterrupt:
+        pass
+    finally:
+        loop.close()

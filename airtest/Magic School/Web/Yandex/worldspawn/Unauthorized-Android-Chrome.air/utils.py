@@ -20,11 +20,16 @@ def random_touch():
 def multiple_touches(n):
     for i in range(n):
         random_touch()
-        sleep(2.5)
+        sleep(2.25)
         
 def inter_check():
     inters = [
-        (Template(r"tpl1737996707427.png", record_pos=(0.467, -0.201), resolution=(2400, 1080)))
+        Template(r"tpl1737996707427.png", record_pos=(0.467, -0.201), resolution=(2400, 1080)),
+        Template(r"tpl1738059416652.png", rgb=True, record_pos=(0.48, 0.152), resolution=(2400, 1080)),
+        Template(r"tpl1738062145169.png", rgb=True, target_pos=8, record_pos=(0.043, 0.004), resolution=(2400, 1080)),
+        Template(r"tpl1738062158043.png", rgb=True, target_pos=8, record_pos=(0.044, -0.005), resolution=(2400, 1080)),
+        Template(r"tpl1738062183836.png", rgb=True, target_pos=8, record_pos=(0.043, 0.004), resolution=(2400, 1080)),
+        Template(r"tpl1738062207685.png", rgb=True, target_pos=8, record_pos=(0.045, 0.005), resolution=(2400, 1080))
     ]
     
     for inter in inters:
@@ -55,5 +60,6 @@ def assert_and_touch(func, note):
     sleep(2.0)
 
 __all__ = ['random_touch', 'multiple_touches', 'close_window', 'inter_check', 'assert_and_touch', 'clear_console']
+
 
 
