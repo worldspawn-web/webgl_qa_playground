@@ -233,6 +233,101 @@ def ui_checker():
     
     for i in range(2):
         close_window()
+        
+    # Settings Window Button Equals Avatar Settings Window
+    touch(settings_btn)
+    assert_exists(settings_window, "Settings Window")
+    sleep(1.0)
+    close_window()
+    
+    # Receipts Extended
+    receipts_tabs_left = (0.33, 0.22)
+    receipts_tabs_mid = (0.45, 0.22)
+    receipts_tabs_right = (0.56, 0.22)
+    
+    touch(receipts_btn)
+    assert_exists(Template(r"tpl1738066249758.png", record_pos=(-0.05, -0.007), resolution=(2400, 1080)), "Receipts Window Remain the Same.")
+    sleep(1.0)
+    touch(receipts_tabs_mid)
+    assert_exists(Template(r"tpl1738066457672.png", record_pos=(-0.052, 0.015), resolution=(2400, 1080)), "Full Receipts List.")
+    sleep(1.0)
+    swipe((0.452, 0.752),(0.452, 0.331))
+    sleep(3.0)
+    assert_exists(Template(r"tpl1738066531632.png", record_pos=(-0.048, 0.015), resolution=(2400, 1080)), "Swipes Functionality.")
+    
+    touch(receipts_tabs_right)
+    assert_exists(Template(r"tpl1738066623275.png", record_pos=(-0.051, 0.017), resolution=(2400, 1080)), "Current Ingredients.")
+    sleep(1.0)
+    close_window()
+
+    # Quests Extended
+    touch(quests_btn)
+    assert_exists(Template(r"tpl1738066693125.png", record_pos=(-0.052, -0.003), resolution=(2400, 1080)), "Quests Window.")
+    assert_exists(Template(r"tpl1738066720577.png", rgb=True, record_pos=(-0.225, -0.113), resolution=(2400, 1080)), "Unlocked Levels..")
+    assert_exists(Template(r"tpl1738066750134.png", rgb=True, record_pos=(-0.048, 0.15), resolution=(2400, 1080)), "Progress Bar.")
+    
+    get_quest_reward = Template(r"tpl1738066782001.png", rgb=True, record_pos=(0.121, -0.046), resolution=(2400, 1080))
+    assert_exists(get_quest_reward)
+    touch(get_quest_reward)
+    sleep(0.5)
+    assert_exists(Template(r"tpl1738066822643.png", rgb=True, record_pos=(0.123, -0.048), resolution=(2400, 1080)), "Quest Completed, Reward Received.")
+    swipe((0.5, 0.725),(0.5, 0.313))
+    assert_exists(Template(r"tpl1738066909140.png", rgb=True, record_pos=(-0.051, 0.013), resolution=(2400, 1080)), "Swipes Functionality.")
+    touch(Template(r"tpl1738066934813.png", record_pos=(-0.26, -0.115), resolution=(2400, 1080)))
+    
+    for i in range(2):
+        touch(get_quest_reward)
+
+    close_window()
+    assert_exists(Template(r"tpl1738067047617.png", record_pos=(-0.356, 0.02), resolution=(2400, 1080)), "Current Quests are Displayed in-game.")
+
+    # Hard Offers
+    values_hard = Template(r"tpl1737999359908.png", target_pos=6, record_pos=(0.209, -0.202), scale_step=0.01, resolution=(2400, 1080))
+    touch(values_hard)
+    sleep(0.5)
+    assert_exists(Template(r"tpl1738067193379.png", record_pos=(-0.041, 0.03), resolution=(2400, 1080)), "Offers Modal.")
+    assert_exists(Template(r"tpl1738067220949.png", rgb=True, record_pos=(-0.054, -0.195), resolution=(2400, 1080)), "Modal Notes.")
+    assert_exists(Template(r"tpl1738067290465.png", rgb=True, record_pos=(-0.127, -0.1), resolution=(2400, 1080)), "24h.")
+    assert_exists(Template(r"tpl1738067303967.png", rgb=True, record_pos=(0.127, -0.099), resolution=(2400, 1080)), "48h.")
+    assert_exists(Template(r"tpl1738067318215.png", record_pos=(0.0, 0.073), resolution=(2400, 1080)), "72h.")
+    assert_exists(Template(r"tpl1738067325022.png", record_pos=(0.128, 0.073), resolution=(2400, 1080)), "96h.")
+    assert_exists(Template(r"tpl1738067338398.png", record_pos=(0.083, 0.046), resolution=(2400, 1080)), "Best Offer Note.")
+    
+    selected_offer = Template(r"tpl1738067528897.png", target_pos=8, record_pos=(-0.041, 0.114), resolution=(2400, 1080))
+    assert_exists(selected_offer, "Selected Offer Exists")
+    
+    #
+    # Payments are going to be checked in Authorized mode, another test file
+    #
+    
+    close_window()
+    
+    # More Settings Checks
+    touch(settings_btn)
+    sleep(1.0)
+    
+    ## Language Check
+    touch(settings_lang)
+    flag_en = Template(r"tpl1738067828349.png", record_pos=(-0.136, -0.021), resolution=(2400, 1080))
+    flag_ru = Template(r"tpl1738067847460.png", record_pos=(-0.079, -0.024), resolution=(2400, 1080))
+
+    base_flags = Template(r"tpl1738067799462.png", record_pos=(-0.052, 0.002), resolution=(2400, 1080))
+    upd_flags = Template(r"tpl1738067860303.png", record_pos=(-0.052, 0.001), resolution=(2400, 1080))
+    
+    assert_exists(Template(r"tpl1738067786698.png", record_pos=(-0.078, -0.021), resolution=(2400, 1080)), "Current Language is Russian.")
+    assert_exists(base_flags, "All the Flags.")
+    touch(flag_en)
+    assert_not_equal(base_flags, upd_flags, "Menus are not Equal.")
+    sleep(1.0)
+    touch(flag_ru)
+    close_window()
+    
+    # Name Change
+    touch(Template(r"tpl1738068207463.png", rgb=True, record_pos=(-0.054, -0.084), resolution=(2400, 1080)))
+    text("Fedor Shalyapin", enter=True)
+    assert_exists(Template(r"tpl1738068290227.png", rgb=True, record_pos=(-0.061, -0.085), resolution=(2400, 1080)), "New Nickname Appeared.")
+    close_window()
+
 
 async def check_for_yagames():
     cross = Template(r"tpl1738059416652.png", rgb=True, record_pos=(0.48, 0.152), resolution=(2400, 1080))
