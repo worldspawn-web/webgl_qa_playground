@@ -46,7 +46,7 @@ def inter_check(start = False):
         Template(r"tpl1738163148883.png", record_pos=(0.467, -0.201), resolution=(2400, 1080))
     ]
     
-    if (start == True):
+    if start:
         wait(Template(r"tpl1738163148883.png", record_pos=(0.467, -0.201), resolution=(2400, 1080)))
     
     for inter in templates:
@@ -58,7 +58,7 @@ def loading_checks():
     banner_logo = Template(r"tpl1738163369569.png", record_pos=(0.024, -0.038), resolution=(2400, 1080))
     assert_exists(Template(r"tpl1738163391631.png", threshold=0.5, rgb=True, record_pos=(0.013, 0.178), resolution=(2400, 1080)), "Loading Progress Bar.")
     
-    wait(banner_logo)
+    wait(banner_logo, timeout=40)
     assert_exists(banner_logo, "Loading Image.")
     assert_exists(Template(r"tpl1738163449339.png", threshold=0.6, rgb=True, record_pos=(0.209, 0.211), resolution=(2400, 1080)), "Loading Version.")
 
