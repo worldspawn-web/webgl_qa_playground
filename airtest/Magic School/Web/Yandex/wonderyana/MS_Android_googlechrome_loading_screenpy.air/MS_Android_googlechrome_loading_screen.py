@@ -43,3 +43,5 @@ assert_exists(Template(r"tpl1738072079270.png", record_pos=(0.002, -0.11), resol
 
 assert_exists(Template(r"tpl1738071758047.png", record_pos=(0.024, 0.194), resolution=(2340, 1080)), "Please fill in the test point.")
 assert_exists(Template(r"tpl1738149589491.png", record_pos=(0.147, 0.209), resolution=(2340, 1080)), "Please fill in the test point.")
+
+# ждусь исправлений
