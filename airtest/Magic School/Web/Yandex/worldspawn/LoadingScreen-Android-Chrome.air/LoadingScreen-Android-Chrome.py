@@ -47,7 +47,7 @@ def inter_check(start = False):
     ]
     
     if start:
-        wait(Template(r"tpl1738163148883.png", record_pos=(0.467, -0.201), resolution=(2400, 1080)))
+        wait(templates[0])
     
     for inter in templates:
         if exists(inter):
