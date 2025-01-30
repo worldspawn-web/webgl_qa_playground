@@ -9,7 +9,7 @@ def random_touch(n = 1):
         touch((0.5, 0.5))
         sleep(1.5)
 
-def dialog_skip(n):
+def dialog_skip(n = 1):
     for i in range(n):
         special_touch("mid", True)
         special_touch("mid", True) # skips dialog animation
@@ -19,7 +19,7 @@ def special_touch(coord, noad = False):
     
     xyz = {
      "mid": (0.5, 0.5),
-     "side": (0.8, 0.5), # right side
+     "side": (0.85, 0.5), # right side
     }
     
     x, y = xyz[coord]
@@ -34,6 +34,7 @@ def inter_check():
     inters = [
         Template(r"tpl1737996707427.png", record_pos=(0.467, -0.201), resolution=(2400, 1080)),
         Template(r"tpl1738059416652.png", rgb=True, record_pos=(0.48, 0.152), resolution=(2400, 1080)),
+        Template(r"tpl1738253397425.png", record_pos=(0.427, 0.152), resolution=(2400, 1080)),
         Template(r"tpl1738062145169.png", rgb=True, target_pos=8, record_pos=(0.043, 0.004), resolution=(2400, 1080)),
         Template(r"tpl1738062158043.png", rgb=True, target_pos=8, record_pos=(0.044, -0.005), resolution=(2400, 1080)),
         Template(r"tpl1738062183836.png", rgb=True, target_pos=8, record_pos=(0.043, 0.004), resolution=(2400, 1080)),
@@ -45,7 +46,7 @@ def inter_check():
             touch(inter)
             break
 
-def close_window():
+def close_window(noads = False):
     templates = [
         Template(r"tpl1737994827349.png", record_pos=(0.098, -0.105), resolution=(2400, 1080)),
         Template(r"tpl1738079004321.png", record_pos=(0.065, -0.062), resolution=(2400, 1080)),
@@ -57,7 +58,10 @@ def close_window():
         for cross in templates:
             if exists(cross):
                 touch(cross)
-                inter_check()
+                
+                if not noads:
+                    inter_check()
+                    
                 return True
         if not cross_found:
             sleep(0.5)
@@ -69,7 +73,7 @@ def assert_and_touch(img, note):
     touch(img)
     sleep(0.5)
     
-def yandex_pay(btn):
+def yandex_pay(btn, noads = False):
     buy_btn = Template(r"tpl1738079835101.png", record_pos=(-0.009, 0.083), resolution=(2400, 1080))
     success_modal = Template(r"tpl1738079873923.png", target_pos=8, record_pos=(-0.006, 0.043), resolution=(2400, 1080))
     
@@ -83,8 +87,12 @@ def yandex_pay(btn):
     wait(success_modal)
     assert_and_touch(success_modal, "Payment succeded.")
     sleep(2.5)
+    
+    if not noads:
+        inter_check()
+        
     wait(Template(r"tpl1738241746902.png", record_pos=(-0.073, -0.029), resolution=(2400, 1080)))
-    close_window()
+    close_window(noads)
     
 #                                       #
 #   Checks for Leafs on the Screen      #
@@ -121,32 +129,51 @@ def reload_page(fs = True):
 #   - has no energy left                        #
 #   - has no selected generators left           #
 #                                               #
-    
+
 def use_generators(color):
     generators = {
-        "blue": Template(r"tpl1738237396669.png", threshold=0.65, rgb=True, record_pos=(0.069, -0.007), resolution=(2400, 1080)),
-        "dark_blue": Template(r"tpl1738239092514.png", record_pos=(0.044, 0.102), resolution=(2400, 1080))
+        "blue": [
+            Template(r"tpl1738237396669.png", threshold=0.65, rgb=True, record_pos=(0.069, -0.007), resolution=(2400, 1080)),
+            Template(r"tpl1738239092514.png", rgb=True, record_pos=(0.044, 0.102), resolution=(2400, 1080)),
+            Template(r"tpl1738255361048.png", rgb=True, record_pos=(0.009, -0.004), resolution=(2400, 1080)),
+        ],
+        "dark_blue": [],
+        # ....
     }
     
     errors = {
-        "dark_blue": Template(r"tpl1738239340355.png", rgb=True, record_pos=(-0.134, 0.042), resolution=(2400, 1080)),
+        "blue": Template(r"tpl1738239340355.png", rgb=True, record_pos=(-0.134, 0.042), resolution=(2400, 1080)),
+        "dark_blue": Template(r"tpl1738239340355.png", rgb=True, record_pos=(-0.134, 0.042), resolution=(2400, 1080))
     }
     
     gen_energy = Template(r"tpl1738237465752.png", record_pos=(0.072, -0.05), resolution=(2400, 1080))
-
     
-    while exists(generators[color]):
-        touch(generators[color])
-        sleep(0.5)
+    while True:
+        generator_found = False
+        energy_found = False
         
-        # Stops if the field is full
-        if exists(errors[color]):
+        if exists(Template(r"tpl1738255561230.png", record_pos=(-0.101, 0.004), resolution=(2400, 1080))):
+            close_window(noads=True)
             return
         
-        while exists(gen_energy):
-            touch(gen_energy)
-            sleep(0.5)
-
-    close_window()
+        for generator in generators[color]:
+            if exists(generator):
+                touch(generator)
+                sleep(0.5)
+                generator_found = True
+                break
+                
+        if exists(gen_energy):
+            while exists(gen_energy):
+                touch(gen_energy)
+                sleep(0.5)
+            energy_found = True
+            
+        if exists(errors[color]):
+            return
+                
+        if not generator_found and not energy_found:
+            print("Haven't found anything...")
+            return
 
 __all__ = ['special_touch', 'inter_check', 'close_window', 'assert_and_touch', 'random_touch', 'dialog_skip', 'leafs_checker', 'reload_page', 'use_generators']
