@@ -11,9 +11,8 @@ def random_touch(n = 1):
 
 def dialog_skip(n):
     for i in range(n):
-        random_touch()
-        sleep(0.2)
-        random_touch() # skips dialog animation
+        special_touch("mid", True)
+        special_touch("mid", True) # skips dialog animation
 
 def special_touch(coord, noad = False):
     NOAD_OFFSET = 0.08
