@@ -176,4 +176,20 @@ def use_generators(color):
             print("Haven't found anything...")
             return
 
-__all__ = ['special_touch', 'inter_check', 'close_window', 'assert_and_touch', 'random_touch', 'dialog_skip', 'leafs_checker', 'reload_page', 'use_generators']
+def goto(scene):
+     # Go back to Main Scene -> Magic Forest
+    train_btn = Template(r"tpl1738259382782.png", record_pos=(0.454, 0.172), resolution=(2400, 1080))
+    destination = {
+        "main": Template(r"tpl1738259443754.png", target_pos=8, record_pos=(-0.136, 0.007), resolution=(2400, 1080)),
+        "forest": Template(r"tpl1738259493524.png", target_pos=8, record_pos=(0.042, 0.01), resolution=(2400, 1080)),
+        "dragon": Template(r"tpl1738259608185.png", target_pos=8, record_pos=(0.22, 0.05), resolution=(2400, 1080))
+    }
+    
+
+    assert_and_touch(train_btn, "Train Button Exists.")
+    sleep(1.0)
+    touch(destination[scene])
+    sleep(6.0)
+    wait(train_btn, interval=5, timeout=120)
+        
+__all__ = ['special_touch', 'inter_check', 'close_window', 'assert_and_touch', 'random_touch', 'dialog_skip', 'leafs_checker', 'reload_page', 'use_generators', 'goto']

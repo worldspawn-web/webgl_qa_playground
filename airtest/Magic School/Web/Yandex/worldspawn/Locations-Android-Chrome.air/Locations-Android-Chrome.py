@@ -17,7 +17,8 @@ from utils import (
     assert_and_touch,
     leafs_checker,
     reload_page,
-    use_generators
+    use_generators,
+    goto
 )
 
 auto_setup(__file__)
@@ -228,7 +229,13 @@ def swipes_for_tutor():
     assert_exists(Template(r"tpl1738242747525.png", record_pos=(0.025, 0.101), resolution=(2400, 1080)), "Golden Rewards Exist.")
     touch(Template(r"tpl1738242770261.png", target_pos=2, record_pos=(-0.022, 0.102), resolution=(2400, 1080)))
     assert_and_touch(Template(r"tpl1738242783202.png", record_pos=(0.039, -0.005), resolution=(2400, 1080)), "Golden Reward.")
-
+    
+def check_locations():
+    # Current is Dragon
+    locations = ["main", "forest", "dragon", "forest", "main"]
+    
+    for location in locations:
+        goto(location)
     
 #                           #
 #   Main Entry Function     #
@@ -242,7 +249,7 @@ def main():
     inter_check()
     use_generators("blue")
     swipes_for_tutor()
-    
+    check_locations()
     
 if __name__ == "__main__":
     main()
