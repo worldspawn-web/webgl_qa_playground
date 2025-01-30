@@ -83,5 +83,70 @@ def yandex_pay(btn):
     wait(success_modal)
     assert_and_touch(success_modal, "Payment succeded.")
     sleep(2.5)
+    wait(Template(r"tpl1738241746902.png", record_pos=(-0.073, -0.029), resolution=(2400, 1080)))
+    close_window()
+    
+#                                       #
+#   Checks for Leafs on the Screen      #
+#   ------------------------------      #
+#   It's an important regular check     #
+#   since leaf timers are random        #
+#   and they are blocking the view.     #
+#                                       #
+#   The best decision I came up with    #
+#   is tapping every leaf we see.       #
+#   Note: we still can't check drops    #
 
-__all__ = ['special_touch', 'inter_check', 'close_window', 'assert_and_touch', 'random_touch', 'dialog_skip']
+def leafs_checker():
+    universal_leaf = Template(r"tpl1738236310604.png", record_pos=(-0.026, -0.023), resolution=(2400, 1080))
+    
+    while exists(universal_leaf):
+        touch(universal_leaf)
+        sleep(0.3)
+        
+def reload_page(fs = True):
+    if fs:
+        assert_and_touch(Template(r"tpl1738235196505.png", rgb=True, record_pos=(-0.436, -0.202), resolution=(2400, 1080)), "Exit Fullscreen Mode.")
+    
+    assert_and_touch(Template(r"tpl1738235389865.png", rgb=True, target_pos=6, record_pos=(0.356, -0.158), resolution=(2400, 1080)), "Browser Panel (Settings).")
+    assert_and_touch(Template(r"tpl1738235428774.png", rgb=True, target_pos=6, record_pos=(0.349, -0.152), resolution=(2400, 1080)), "Reload Page.")
+    
+    wait(Template(r"tpl1738235490644.png", record_pos=(0.412, -0.1), resolution=(2400, 1080)))
+    inter_check()
+    sleep(6.0)
+    assert_and_touch(Template(r"tpl1738236758454.png", record_pos=(-0.434, -0.097), resolution=(2400, 1080)), "Enter Fullscreen Mode.")
+    
+#                                               #
+#   Touches Selected Generator Until Player:    #
+#   - has no energy left                        #
+#   - has no selected generators left           #
+#                                               #
+    
+def use_generators(color):
+    generators = {
+        "blue": Template(r"tpl1738237396669.png", threshold=0.65, rgb=True, record_pos=(0.069, -0.007), resolution=(2400, 1080)),
+        "dark_blue": Template(r"tpl1738239092514.png", record_pos=(0.044, 0.102), resolution=(2400, 1080))
+    }
+    
+    errors = {
+        "dark_blue": Template(r"tpl1738239340355.png", rgb=True, record_pos=(-0.134, 0.042), resolution=(2400, 1080)),
+    }
+    
+    gen_energy = Template(r"tpl1738237465752.png", record_pos=(0.072, -0.05), resolution=(2400, 1080))
+
+    
+    while exists(generators[color]):
+        touch(generators[color])
+        sleep(0.5)
+        
+        # Stops if the field is full
+        if exists(errors[color]):
+            return
+        
+        while exists(gen_energy):
+            touch(gen_energy)
+            sleep(0.5)
+
+    close_window()
+
+__all__ = ['special_touch', 'inter_check', 'close_window', 'assert_and_touch', 'random_touch', 'dialog_skip', 'leafs_checker', 'reload_page', 'use_generators']

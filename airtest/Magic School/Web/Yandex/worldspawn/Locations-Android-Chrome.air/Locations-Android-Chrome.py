@@ -14,25 +14,13 @@ from utils import (
     yandex_pay,
     random_touch,
     dialog_skip,
-    assert_and_touch
+    assert_and_touch,
+    leafs_checker,
+    reload_page,
+    use_generators
 )
 
 auto_setup(__file__)
-
-# def leafs_checker():
-#     leafs = [
-#         Template(r"tpl1738236305906.png", record_pos=(-0.105, -0.011), resolution=(2400, 1080)),
-#         Template(r"tpl1738236310604.png", record_pos=(-0.026, -0.023), resolution=(2400, 1080)),
-#         Template(r"tpl1738236314470.png", record_pos=(-0.145, -0.058), resolution=(2400, 1080)),
-#         Template(r"tpl1738236318567.png", record_pos=(0.105, -0.011), resolution=(2400, 1080))
-#     ]
-    
-#     for leaf in leafs:
-#         if exists(leaf):
-#             touch(leaf)
-#             break
-    
-#     # think about
 
 
 #                                       #
@@ -67,16 +55,12 @@ def startup():
     assert_exists(golden_ticket_btn, "Buy Button.")
     yandex_pay(golden_ticket_btn)
     inter_check()
-    assert_exists(Template(r"tpl1738171020272.png", record_pos=(0.019, 0.038), resolution=(2400, 1080)), "Successfull Payment.")
-    close_window()
     touch(Template(r"tpl1738171088382.png", record_pos=(0.165, -0.026), resolution=(2400, 1080)))
 
     # New Event Start (dynamic)
     sleep(3.0)
     wait(golden_ticket)
     close_window()  
-    
-    
     
 #                       #
 #   Dragon UI Checks    #
@@ -109,8 +93,8 @@ def dragon_ui():
     
     close_window()
     
-# Pinch (zoom) doens't work :(
-#     pinch('out', center=(540, 1080))
+    # Pinch (zoom) doens't work :(
+    # pinch('out', center=(540, 1080))
 
     touch(Template(r"tpl1738236849503.png", target_pos=6, record_pos=(-0.26, -0.202), resolution=(2400, 1080)))
     sleep(1.0)
@@ -121,7 +105,6 @@ def dragon_ui():
 
     close_window()
 
-    
 #                           #
 #   Dragon Event Tutorial   #
 #                           #
@@ -139,15 +122,7 @@ def dragon_tutorial():
     sleep(2.0)
     
     # Page Reload -> Save Check
-    assert_and_touch(Template(r"tpl1738235196505.png", rgb=True, record_pos=(-0.436, -0.202), resolution=(2400, 1080)), "Exit Fullscreen Mode.")
-    assert_and_touch(Template(r"tpl1738235389865.png", rgb=True, target_pos=6, record_pos=(0.356, -0.158), resolution=(2400, 1080)), "Browser Panel (Settings).")
-    assert_and_touch(Template(r"tpl1738235428774.png", rgb=True, target_pos=6, record_pos=(0.349, -0.152), resolution=(2400, 1080)), "Reload Page.")
-    
-    wait(Template(r"tpl1738235490644.png", record_pos=(0.412, -0.1), resolution=(2400, 1080)))
-    inter_check()
-    sleep(6.0)
-    assert_and_touch(Template(r"tpl1738236758454.png", record_pos=(-0.434, -0.097), resolution=(2400, 1080)), "Enter Fullscreen Mode.")
-
+    reload_page()
     wait(Template(r"tpl1738235523154.png", record_pos=(-0.105, 0.022), resolution=(2400, 1080)))
     special_touch("side", True)
 
@@ -159,7 +134,6 @@ def dragon_tutorial():
 
     # Go to UI Checks
     dragon_ui()
-    
 
 #                           #
 #   Checks for Dragon Modal #
@@ -177,41 +151,7 @@ def dragon_modal():
         dragon_tutorial()
     else:
         return
-    
-#                                               #
-#   Touches Selected Generator Until Player:    #
-#   - has no energy left                        #
-#   - has no selected generators left           #
-#                                               #
-    
-def use_generators(color):
-    generators = {
-        "blue": Template(r"tpl1738237396669.png", threshold=0.65, rgb=True, record_pos=(0.069, -0.007), resolution=(2400, 1080)),
-        "dark_blue": Template(r"tpl1738239092514.png", record_pos=(0.044, 0.102), resolution=(2400, 1080))
-    }
-    
-    errors = {
-        "dark_blue": Template(r"tpl1738239340355.png", rgb=True, record_pos=(-0.134, 0.042), resolution=(2400, 1080)),
-   
-    }
-    
-    gen_energy = Template(r"tpl1738237465752.png", record_pos=(0.072, -0.05), resolution=(2400, 1080))
 
-    
-    while exists(generators[color]):
-        touch(generators[color])
-        sleep(0.5)
-        
-        # Stops if the field is full
-        if exists(errors[color]):
-            return
-        
-        while exists(gen_energy):
-            touch(gen_energy)
-            sleep(0.5)
-
-    close_window()
-    
 #                                           #
 #   Complex Tutorial Checks with Swipes     #
 #                                           #
@@ -237,11 +177,9 @@ def swipes_for_tutor():
     dialog_skip(2)
     
     sleep(3.0)
-    assert_exists(Template(r"tpl1738238477036.png", record_pos=(0.053, 0.01), resolution=(2400, 1080)), "Tutorial Pointer.")
-    touch(Template(r"tpl1738238477036.png", target_pos=2, record_pos=(0.053, 0.01), resolution=(2400, 1080)))
-    sleep(3.0)
+    assert_and_touch(Template(r"tpl1738238477036.png", target_pos=2, record_pos=(0.053, 0.01), resolution=(2400, 1080)), "Tutorial Pointer.")
+    sleep(2.0)
     assert_and_touch(Template(r"tpl1738238547769.png", target_pos=8, record_pos=(0.131, 0.161), resolution=(2400, 1080)), "Tutorial Trade.")
-    
     wait(Template(r"tpl1738238605984.png", record_pos=(0.047, -0.03), resolution=(2400, 1080)))
     random_touch()
     
@@ -263,6 +201,25 @@ def swipes_for_tutor():
         assert_and_touch(Template(r"tpl1738239576077.png", rgb=True, record_pos=(0.129, 0.188), resolution=(2400, 1080)), "Trade Button.")
         assert_exists(Template(r"tpl1738239601353.png", record_pos=(-0.044, 0.01), resolution=(2400, 1080)), "Traded Items Appeared.")
         assert_exists(Template(r"tpl1738239605868.png", record_pos=(0.004, -0.01), resolution=(2400, 1080)), "Traded Items Appeared #2.")
+
+        
+    # Foster Rewards
+    assert_and_touch(Template(r"tpl1738241124244.png", record_pos=(-0.351, 0.093), resolution=(2400, 1080)), "Foster Rewards Button.")
+    assert_exists(Template(r"tpl1738241147738.png", record_pos=(0.051, -0.008), resolution=(2400, 1080)), "Foster Rewards Modal.")
+    assert_exists(Template(r"tpl1738241154251.png", record_pos=(0.163, 0.032), resolution=(2400, 1080)), "Premium Rewards.")
+    assert_exists(Template(r"tpl1738241158146.png", record_pos=(-0.032, 0.036), resolution=(2400, 1080)), "Basic Rewards.")
+    foster_buy_btn = Template(r"tpl1738241659077.png", record_pos=(0.159, 0.152), resolution=(2400, 1080))
+    assert_exists(foster_buy_btn, "Buy Button.")
+    yandex_pay(foster_buy_btn)
+
+    
+    # Golden Ticket
+    assert_and_touch(Template(r"tpl1738242499752.png", record_pos=(-0.352, 0.174), resolution=(2400, 1080)), "Battlepass Icon.")
+    assert_and_touch(Template(r"tpl1738242507420.png", target_pos=8, record_pos=(-0.133, 0.105), resolution=(2400, 1080)), "Golden Ticket.")
+    yandex_pay(Template(r"tpl1738242700943.png", record_pos=(0.047, 0.164), resolution=(2400, 1080))
+    assert_exists(Template(r"tpl1738242747525.png", record_pos=(0.025, 0.101), resolution=(2400, 1080)), "Golden Rewards Exist.")
+    touch(Template(r"tpl1738242770261.png", target_pos=2, record_pos=(-0.022, 0.102), resolution=(2400, 1080)))
+    assert_and_touch(Template(r"tpl1738242783202.png", record_pos=(0.039, -0.005), resolution=(2400, 1080)), "Golden Reward.")
 
     
 #                           #
