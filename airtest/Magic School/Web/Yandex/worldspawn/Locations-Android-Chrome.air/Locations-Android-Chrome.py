@@ -18,7 +18,8 @@ from utils import (
     leafs_checker,
     reload_page,
     use_generators,
-    goto
+    goto,
+    noads_close
 )
 
 auto_setup(__file__)
@@ -32,6 +33,7 @@ def startup():
     # Daily Reward Assertions
     # were checked in another test file
     # -> Authorized-Android-Chrome.air
+    
     assert_exists(Template(r"tpl1738167965657.png", record_pos=(-0.077, 0.051), resolution=(2400, 1080)), "Daily Reward Appeared.")
     special_touch("side")
     inter_check()
@@ -61,6 +63,7 @@ def startup():
     sleep(3.0)
     wait(golden_ticket)
     close_window(noads=True)  
+    noads_close()
     
 #                       #
 #   Dragon UI Checks    #
@@ -73,8 +76,6 @@ def dragon_ui():
     
     assert_exists(event_energy, "Event Energy.")
     assert_not_exists(main_energy, "Main Energy does not exist.")
-
-    # <- assert_not_exists "Main Energy"
     
     event_info_btn = Template(r"tpl1738235991451.png", record_pos=(-0.311, 0.186), resolution=(2400, 1080))
     assert_exists(event_info_btn, "Event Info Button.")
@@ -111,7 +112,21 @@ def dragon_ui():
 #   Dragon Event Tutorial   #
 #                           #
 
+def dragon_event_checker():
+    dragon_mascot = Template(r"tpl1738256710425.png", record_pos=(-0.283, 0.015), resolution=(2400, 1080))
+    sleep(15.0)
+    
+    if not exists(dragon_mascot):
+        train_btn = Template(r"tpl1738259382782.png", record_pos=(0.454, 0.172), resolution=(2400, 1080))touch
+        assert_and_touch(train_btn, "Scene Switcher Button.")
+        assert_exists(Template(r"tpl1738324732639.png", threshold=0.6, rgb=True, record_pos=(0.22, -0.054), resolution=(2400, 1080)), "Event Unlock Timer.")
+        return False
+    
+    return True
+
 def dragon_tutorial():
+    noads_close()
+    
     dragon_mascot = Template(r"tpl1738256710425.png", record_pos=(-0.283, 0.015), resolution=(2400, 1080))
 
     
@@ -230,6 +245,10 @@ def swipes_for_tutor():
     touch(Template(r"tpl1738242770261.png", target_pos=2, record_pos=(-0.022, 0.102), resolution=(2400, 1080)))
     assert_and_touch(Template(r"tpl1738242783202.png", record_pos=(0.039, -0.005), resolution=(2400, 1080)), "Golden Reward.")
     
+#                           #
+#   Checks Location Switch  #
+#                           #
+
 def check_locations():
     # Current is Dragon
     locations = ["main", "forest", "dragon", "forest", "main"]
@@ -238,18 +257,98 @@ def check_locations():
         goto(location)
     
 #                           #
+#   Checks Forest Location  #
+#                           #
+
+def forest_checks():
+#     noads_close()
+    goto("forest")
+    
+    # UI Checks
+    assert_exists(Template(r"tpl1738323198963.png", record_pos=(-0.356, 0.088), resolution=(2400, 1080)), "Suns Available.")
+    
+    storage_btn = Template(r"tpl1738323209352.png", record_pos=(-0.356, 0.178), resolution=(2400, 1080))
+    assert_exists(storage_btn, "Storage Button.")
+    crate_btn = Template(r"tpl1738323215477.png", record_pos=(-0.356, 0.015), resolution=(2400, 1080))
+    assert_exists(crate_btn, "Forest Crate Progress.")
+    assert_exists(Template(r"tpl1738323221648.png", record_pos=(-0.357, -0.168), resolution=(2400, 1080)), "Avatar & Forest Level.")
+    exchange_btn = Template(r"tpl1738323231402.png", record_pos=(0.456, 0.097), resolution=(2400, 1080))
+    assert_exists(exchange_btn, "Exchange Button.")
+    assert_exists(Template(r"tpl1738323240667.png", record_pos=(0.073, -0.208), resolution=(2400, 1080)), "Locked Zone.")
+    assert_exists(Template(r"tpl1738323248716.png", record_pos=(-0.013, 0.056), resolution=(2400, 1080)), "Available Sun on the Tree.")
+    assert_exists(Template(r"tpl1738323255474.png", record_pos=(-0.147, 0.067), resolution=(2400, 1080)), "Forest Mascot on the Field.")
+    sun_field = Template(r"tpl1738323263711.png", record_pos=(-0.151, -0.065), resolution=(2400, 1080))
+    assert_exists(sun_field, "Available Sun on the Field.")
+    
+    # Exchange
+    assert_and_touch(exchange_btn, "Exchange Button Exists.")
+    sleep(1.0)
+    assert_exists(Template(r"tpl1738323501818.png", record_pos=(0.049, 0.011), resolution=(2400, 1080)), "Exchange Window.")
+    assert_exists(Template(r"tpl1738323519532.png", record_pos=(-0.167, -0.038), resolution=(2400, 1080)), "Animal Panels.")
+    assert_exists(Template(r"tpl1738323529118.png", rgb=True, record_pos=(0.042, 0.194), resolution=(2400, 1080)), "Locked Trade Button.")
+    
+    assert_and_touch(Template(r"tpl1738323589857.png", record_pos=(-0.205, 0.08), resolution=(2400, 1080)), "Animal to Exchange.")
+    assert_exists(Template(r"tpl1738323613314.png", record_pos=(0.011, -0.091), resolution=(2400, 1080)), "Exchange Animal Equipped.")
+    assert_exists(Template(r"tpl1738323633530.png", record_pos=(0.199, 0.055), resolution=(2400, 1080)), "Available Animals Appeared.")
+    assert_and_touch(Template(r"tpl1738323654457.png", record_pos=(0.169, 0.015), resolution=(2400, 1080)), "Owl for Exchange.")
+    assert_exists(Template(r"tpl1738323682423.png", record_pos=(0.055, -0.091), resolution=(2400, 1080)), "Exchange is Ready.")
+    assert_and_touch(Template(r"tpl1738323698863.png", rgb=True, record_pos=(0.044, 0.193), resolution=(2400, 1080)), "Trade Button is Available.")
+    assert_exists(Template(r"tpl1738323727006.png", record_pos=(0.074, -0.03), resolution=(2400, 1080)), "Owl Received.")
+
+    # Storage Checks
+    assert_and_touch(storage_btn)
+    slots_storage = Template(r"tpl1738323839288.png", target_pos=6, record_pos=(-0.35, -0.192), resolution=(2400, 1080))
+    assert_exists(slots_storage, "Available Slots in Storage.")
+    assert_exists(Template(r"tpl1738323891089.png", record_pos=(-0.346, 0.012), resolution=(2400, 1080)), "Animals in Storage.")
+    swipe((0.16, 0.93), (0.16, 0.16))
+    assert_exists(Template(r"tpl1738323943111.png", record_pos=(-0.345, 0.018), resolution=(2400, 1080)), "Swipe Works.")
+    touch(Template(r"tpl1738323979989.png", record_pos=(-0.347, 0.015), resolution=(2400, 1080)))
+    assert_exists(Template(r"tpl1738324055599.png", record_pos=(0.045, 0.155), resolution=(2400, 1080)), "Animals of Selected Type.")
+    sleep(0.5)
+    touch(Template(r"tpl1738324092081.png", record_pos=(0.304, 0.156), resolution=(2400, 1080)))
+    sleep(0.5)
+    assert_and_touch(Template(r"tpl1738324099751.png", record_pos=(-0.121, 0.101), resolution=(2400, 1080)), "Remove Animal from Storage.")
+    close_window(noads=True)
+    
+    # Sun Checks
+    assert_and_touch(sun_field)
+    assert_exists(Template(r"tpl1738324270937.png", record_pos=(-0.355, 0.088), resolution=(2400, 1080)), "Box of Suns.")
+    assert_and_touch(Template(r"tpl1738324317002.png", record_pos=(-0.125, -0.066), resolution=(2400, 1080)), "Feed the Animal.")
+    assert_exists(Template(r"tpl1738324347279.png", rgb=True, record_pos=(-0.36, 0.035), resolution=(2400, 1080)), "Crate Progress Updated.")
+    
+    # Offer Checks
+    forest_offer_btn = Template(r"tpl1738324400538.png", record_pos=(0.461, -0.14), resolution=(2400, 1080))
+    
+    if exists(forest_offer_btn):
+        touch(forest_offer_btn)
+        assert_exists(Template(r"tpl1738324466768.png", record_pos=(0.043, 0.0), resolution=(2400, 1080)), "Please fill in the test point.")
+        touch(Template(r"tpl1738324478567.png", record_pos=(0.362, 0.0), resolution=(2400, 1080)))
+        assert_exists(Template(r"tpl1738324492040.png", record_pos=(-0.272, -0.002), resolution=(2400, 1080)), "Left Arrow Appeared.")
+        close_window(noads=True)
+
+#                           #
 #   Main Entry Function     #
 #                           #
     
 def main():
+    dragon_active = False
+    
     startup()
     dragon_modal()
-    dragon_tutorial()
-    dragon_ui()
-    inter_check()
-    use_generators("blue")
-    swipes_for_tutor()
-    check_locations()
+    dragon_active = dragon_event_checker()
+    
+    if dragon_active:
+        dragon_tutorial()
+        dragon_ui()
+        inter_check()
+        use_generators("blue")
+        swipes_for_tutor()
+        check_locations()
+    
+    # Page reload for consistency
+    reload_page()
+    forest_checks()
+    
     
 if __name__ == "__main__":
     main()

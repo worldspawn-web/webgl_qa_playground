@@ -73,11 +73,17 @@ def assert_and_touch(img, note):
     touch(img)
     sleep(0.5)
     
+def noads_close():
+    if exists(Template(r"tpl1738235523154.png", record_pos=(-0.105, 0.022), resolution=(2400, 1080))):
+        sleep(0.5)
+        special_touch("side", True)
+    
 def yandex_pay(btn, noads = False):
     buy_btn = Template(r"tpl1738079835101.png", record_pos=(-0.009, 0.083), resolution=(2400, 1080))
     success_modal = Template(r"tpl1738079873923.png", target_pos=8, record_pos=(-0.006, 0.043), resolution=(2400, 1080))
     
     assert_and_touch(btn, "Purchase Offer Button.")
+    inter_check()
     wait(Template(r"tpl1738079659812.png", record_pos=(0.339, -0.037), resolution=(2400, 1080)))
     
     if not exists(Template(r"tpl1738079679053.png", record_pos=(-0.287, 0.206), resolution=(2400, 1080))):
@@ -88,8 +94,8 @@ def yandex_pay(btn, noads = False):
     assert_and_touch(success_modal, "Payment succeded.")
     sleep(2.5)
     
-    if not noads:
-        inter_check()
+#     if not noads:
+#         inter_check()
         
     wait(Template(r"tpl1738241746902.png", record_pos=(-0.073, -0.029), resolution=(2400, 1080)))
     close_window(noads)
@@ -192,4 +198,4 @@ def goto(scene):
     sleep(6.0)
     wait(train_btn, interval=5, timeout=120)
         
-__all__ = ['special_touch', 'inter_check', 'close_window', 'assert_and_touch', 'random_touch', 'dialog_skip', 'leafs_checker', 'reload_page', 'use_generators', 'goto']
+__all__ = ['special_touch', 'inter_check', 'close_window', 'assert_and_touch', 'random_touch', 'dialog_skip', 'leafs_checker', 'reload_page', 'use_generators', 'goto', 'noads_close']
