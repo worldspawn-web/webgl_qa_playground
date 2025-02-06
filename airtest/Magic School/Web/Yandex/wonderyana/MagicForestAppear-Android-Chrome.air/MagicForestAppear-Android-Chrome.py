@@ -21,7 +21,7 @@ def main():
 
     inter_check()
 
-    new_mission = Template(r"tpl1738670669111.png", record_pos=(-0.058, -0.075), resolution=(2340, 1080))
+    new_mission = Template(r"tpl1738831435689.png", record_pos=(-0.086, 0.021), resolution=(2340, 1080))
     exists_and_touch(new_mission, 2, "Новое задание")
 
     red_cross = Template(r"tpl1738670764424.png", record_pos=(0.176, -0.152), resolution=(2340, 1080))
@@ -51,18 +51,20 @@ def main():
 
     repeat_touch(tutor_Ellaphir, 2, "Туторный Эллафир", 4)
 
-    assert_exists(Template(r"tpl1738671346678.png", record_pos=(-0.105, -0.026), resolution=(2340, 1080)), "Туторный указатель")
+    assert_exists(Template(r"tpl1738671346678.png", record_pos=(-0.105, -0.026), resolution=(2340, 1080)), "Туторный указатель со спящими тельцами")
 
-    swipe(Template(r"tpl1738671377394.png", record_pos=(-0.114, -0.017), resolution=(2340, 1080)), vector=[0.0265, -0.0451])
-    
-    sleep(2.0)
-    
-    swipe(Template(r"tpl1738674625527.png", record_pos=(-0.117, -0.034), resolution=(2340, 1080)), vector=[0.0322, -0.037])
-    
-    sleep(2.0)
-    
-    tutor_Ellaphir_MF = Template(r"tpl1738744637780.png", record_pos=(-0.277, -0.012), resolution=(2340, 1080))
-    exists_image(tutor_Ellaphir_MF, "Эллафир после мерджа")
+    swipe((0.388, 0.463), (0.411, 0.423))
+
+    sleep(0.02)
+
+    assert_exists(Template(r"tpl1738842755235.png", record_pos=(-0.051, -0.04), resolution=(2340, 1080)), "Туторный указатель с тельцами побольше")
+
+    swipe((0.417, 0.409), (0.444, 0.391))
+
+    sleep(0.02)
+
+    assert_exists(Template(r"tpl1738744637780.png", record_pos=(-0.277, -0.012), resolution=(2340, 1080)), "Эллафир после мерджа")
+
 
 if __name__ == "__main__":
     main()

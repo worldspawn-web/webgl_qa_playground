@@ -7,12 +7,9 @@ def exists_and_touch(img, time, note):
         touch(img)
         sleep(time)
         
-def exists_image(img, note):
-    return assert_exists(img, note)
-        
 def inter_check(starting=False):
     crosses = [
-        Template(r"tpl1738744401286.png", record_pos=(0.464, -0.201), resolution=(2340, 1080))
+        (Template(r"tpl1738837594397.png", record_pos=(0.466, -0.205), resolution=(2340, 1080)))
     ]
 
     if starting:
