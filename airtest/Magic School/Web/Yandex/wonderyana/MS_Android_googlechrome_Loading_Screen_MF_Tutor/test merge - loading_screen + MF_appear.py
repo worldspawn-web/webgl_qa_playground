@@ -1,17 +1,14 @@
 # -*- encoding=utf8 -*-
 # Magic School (Yandex)
-# Start Test Window: Main Location
+# Start Test Window: Home screen
 # Use json file "MagicFosrestAppear" from the folder
-# Version: 1.1.7
+# Version: 1.6.14
 
 __author__ = "syndi"
 
 import logging
 from airtest.core.api import *
 from utils import *
-
-logger = logging.getLogger("airtest")
-logger.setLevel(logging.ERROR)
 
 game_url = "https://yandex.ru/games/app/359422?lang=ru"
 
@@ -35,6 +32,8 @@ def main():
         touch(ya_play_btn)
 
     sleep(2)    
+    
+    # Проверка экрана загрузки
     assert_exists(Template(r"tpl1738148391338.png", record_pos=(0.039, -0.002), resolution=(2340, 1080)), "Проверка наличия экрана загрузки.")
     assert_exists(Template(r"tpl1738071922510.png", record_pos=(0.03, -0.03), resolution=(2340, 1080)), "Проверка наличия лого рус.")
     assert_exists(Template(r"tpl1738160756396.png", threshold=0.6, rgb=True, record_pos=(0.012, 0.181), resolution=(2340, 1080)), "Проверка наличия прогресс-бара")
@@ -49,6 +48,8 @@ def main():
     touch((0.722, 0.193))
     
     sleep(3)
+    
+    # Проверка появления тутора на Волшебный Лес
     
     touch(Template(r"tpl1738670401183.png", record_pos=(-0.05, 0.054), resolution=(2340, 1080)))
 
