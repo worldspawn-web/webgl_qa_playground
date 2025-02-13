@@ -119,6 +119,7 @@ def main():
 
     mascot_img.wait_for_appearance()
     assert_and_touch(wave_notify, "Wave Notification", True, 6.0)
+    rotation_input.wait_for_appearance()
     assert_and_touch(rotation_input, "Wagon Input Handler", True)
     
     # Handler Functionality
