@@ -55,6 +55,11 @@ def random_touch(delay = 1.0):
     sleep(delay)
     return
 
+def multiple_checker(obj):
+    for key, (el, note) in obj.items():
+            poco_exists(el, note)
+    return
+
 ###################
 #   TESTS START   #
 ###################
@@ -83,6 +88,9 @@ def main():
     victory_window = poco("VictoryWindow(Clone)").offspring("Background1")
     to_menu = poco(text="TO MAIN MENU")
     exit_wagons = poco(name="ExitButton")
+    pause_btn = poco(name="PauseButton")
+    pause_settings_btn = poco(text="Settings")
+    close_btn = poco(name="Close Button")
     
     #############
     #   START   #
@@ -114,8 +122,10 @@ def main():
     assert_and_touch(mascot_img, "Mascot", True, 3)
     assert_exists(Template(r"tpl1739459175444.png", record_pos=(-0.009, -0.172), resolution=(2400, 1080)), "City HP with Fade")
 
-    for i in range(3):
+    for i in range(2):
         random_touch()
+        
+    money_start = poco(text="350") # Money on Mission Start
 
     mascot_img.wait_for_appearance()
     assert_and_touch(wave_notify, "Wave Notification", True, 6.0)
@@ -130,6 +140,14 @@ def main():
 
     mascot_img.wait_for_appearance()
     random_touch(2.5)
+    
+    money_end = poco(text="365")
+    money_note = "Soft Money Change"
+    if money_start != money_end:
+        poco_logger(money_note)
+    else:
+        poco_exception(money_note)
+    
     assert_and_touch(skip_waiting, "Skip Waiting", True)
     wave_notify.wait_for_appearance()
     poco_exists(wave_notify, "Wave Notification after Skip")
@@ -152,12 +170,63 @@ def main():
     random_touch()
     
     # HUD (Wagons Menu) Checks
-    poco_exists(city_name, "City Name (Defend)")
-    poco_exists(goals_hud, "Goals Hud")
+    loco_icon = poco("TrainManagerWindow(Clone)").offspring("Content").child("WagonScrollViewItem(Clone)")[0].child("Background")
+    loco_hp_bar = poco("TrainManagerWindow(Clone)").offspring("Content").child("WagonScrollViewItem(Clone)")[0].child("Health")
+    poco_exists(loco_icon, "Locomotive Icon")
+    poco_exists(loco_hp_bar, "Locomotive HP Bar")
     exit_wagons.click()
     
     # HUD (Level) Checks
-    # TODO...
+    hp_bars = poco(name="TrainHp")
+    hp_bar_loco = poco("LocoHp Variant(Clone)")
+    poco_exists(hp_bars, "Train HP Widget")
+    poco_exists(hp_bar_loco, "Loco HP Bar")
+    poco_exists(city_name, "City Name (Defend)")
+    
+    main_goal = poco(text="Eliminate all waves enemies")
+    main_goal_icon = poco("Battle HUD").offspring("Icon")
+    main_goal_bar = poco("Battle HUD").offspring("ProgressBar")
+    main_goal_progress = poco("Battle HUD").offspring("Progress")
+    assert_and_touch(goals_hud, "Goals HUD", True, 2)
+    poco_exists(main_goal, "Main Goal Description")
+    poco_exists(main_goal_icon, "Main Goal Icon")
+    poco_exists(main_goal_bar, "Main Goal Progress Bar")
+    poco_exists(main_goal_progress, "Main Goal Progress Score")
+    
+    # Pause Checks
+    assert_and_touch(pause_btn, "Pause Button", True)
+    # <- TODO: Check that previous elements are not clickable through attr
+    pause_note = "Pause Menu"
+    
+    if exists(Template(r"tpl1739470762870.png", record_pos=(-0.001, -0.01), resolution=(2400, 1080))):
+        poco_logger(pause_note)
+    else:
+        poco_exception(pause_note)
+
+    # Pause Settings
+    settings_sound_h2 = poco(text="Sound")
+    ## Uncomment on localization fix
+    ## settings_gameplay_h2 = poco(text="Gameplay")
+    privacy_policy = poco(text="PRIVACY POLICY")
+    assert_and_touch(pause_settings_btn, "Pause Settings Button", True)
+    pause_settings_panel.wait_for_appearance()
+    poco_exists(pause_settings_panel, "Pause Setting Panel")
+    poco_exists(settings_sound_h2, "Sounds Header")
+    ## poco_exists(settings_gameplay_h2, "Gameplay Header")
+    
+    settings_icons = {
+        "volume": [poco(texture="b'S_icon_volume"), "Volume Icon"],
+        "music": [poco(texture="b'S_icon_music"), "Music Icon"],
+        "sounds": [poco(texture="b'S_icon_sounds"), "Sounds Icon"],
+        "graphics": [poco(texture="b'S_icon_graphics"), "Graphics Icon"],
+        "language": [poco(texture="b'S_icon_language"), "Language Icon"]
+    }
+    
+    multiple_checker(settings_icons)
+    
+    
+    assert_and_touch(close_btn, "Close Settings", True, 1.0)
+    assert_and_touch(close_btn, "Close Settings", True)
     
     # Tutorial Level Ending
     reward_image.wait_for_appearance()
