@@ -4,25 +4,48 @@ __branch__ = "aqa/unity_poco"
 
 from airtest.core.api import *
 from poco.drivers.unity3d import UnityPoco
+import logging
 
 auto_setup(__file__)
 poco = UnityPoco()
+
+logging.getLogger("airtest").setLevel(logging.ERROR)
+logging.getLogger("poco").setLevel(logging.ERROR)
+logging.getLogger("adb").setLevel(logging.ERROR)
 
 ########################
 #   HELPER FUNCTIONS   #
 ########################
 
-def assert_and_touch(img, note = "", poco = False, delay = 1.0):
-    if poco:
+def poco_exception(obj):
+    raise Exception(f"Requested Element has not been found! \n Element ID: {obj}")
+
+def poco_logger(obj):
+    print(f"- {obj}...OK!")
+    return
+
+def poco_exists(img, note = ""):
+    if img.exists():
+        poco_logger(note)
+    else:
+        poco_exception(note)
+
+def assert_and_touch(img, note = "", pocoInstance = False, delay = 1.0):
+    if pocoInstance:
         if img.exists():
             img.click()
-        print(note)
+            poco_logger(note)
+        else:
+            poco_exception(note)
         return
     
     if assert_exists(img, note):
         touch(img)
         sleep(delay)
-        return
+        poco_logger(note)
+    else:
+        poco_exception(note)
+    return
     
 def random_touch(delay = 1.0):
     touch((0.5, 0.5))
@@ -33,14 +56,103 @@ def random_touch(delay = 1.0):
 ###################
 
 def main():
-    assert_exists(Template(r"tpl1739382112852.png", record_pos=(-0.003, -0.001), resolution=(2400, 1080)), "Post-Loader Screen.")
-    assert_and_touch(poco(text="PLAY"), "Post Loader Play Button", True)
+    # Poco Variables
+    to_mission = poco(text="TO MISSION!")
+    loader_play = poco(text="PLAY")
+    start_mission = poco(text="START")
+    tutor_finger_0 = poco(name="TutorHand_0")
+    tutor_finger_2 = poco(name="TutorHand_2")
+    mascot_img = poco(name="Character Image")
+    mascot_header = poco(text="GENERAL")
+    wave_notify = poco(name="WaveNotify(Clone)")
+    rotation_input = poco(name="RotationInput")
+    skip_waiting = poco(name="SkipButton")
+    wagons_btn = poco(name="ProxyButton")
+    buy_wagon = poco(text="Buy")
+    city_name = poco(text="Defend the objective")
+    goals_hud = poco(name="GoalHud")
+    reward_image = poco("RenderImage")
+    victory_window = poco("VictoryWindow(Clone)").offspring("Background1")
+    to_menu = poco(text="TO MAIN MENU")
+    exit_wagons = poco(name="ExitButton")
     
-    # Main Scene Tutorial
-    assert_exists(Template(r"tpl1739383777982.png", record_pos=(-0.0, -0.0), resolution=(2400, 1080)), "Tutorial Mascot Appeared.")
+    # Tests Start
+#     assert_exists(Template(r"tpl1739382112852.png", record_pos=(-0.003, -0.001), resolution=(2400, 1080)), "Post-Loader Screen")
+#     assert_and_touch(loader_play, "Post Loader Play Button", True)
+    
+    assert_exists(Template(r"tpl1739383777982.png", record_pos=(-0.0, -0.0), resolution=(2400, 1080)), "Tutorial Mascot Appeared")
     random_touch()
     
-    assert_exists(Template(r"tpl1739383067899.png", record_pos=(-0.0, -0.001), resolution=(2400, 1080)), "Tutorial Finger.")
+    assert_exists(Template(r"tpl1739383067899.png", record_pos=(-0.0, -0.001), resolution=(2400, 1080)), "Tutorial Finger")
+    assert_and_touch(to_mission, "'To Mission' Button", True)
+    assert_exists(Template(r"tpl1739458153564.png", record_pos=(0.0, 0.0), resolution=(2400, 1080)), "Global Map Appeared")
+    
+    for i in range(4):
+        random_touch(3)
+        
+    poco_exists(tutor_finger_2, "Tutorial Finger 1")
+    poco_exists(tutor_finger_0, "Tutorial Finger 2")
+    
+    assert_and_touch(start_mission, "Start Mission Button", True, 1)
+    # <- TODO: add quick check for loader screen
+    
+    mascot_header.wait_for_appearance()
+    assert_exists(Template(r"tpl1739459007447.png", record_pos=(-0.001, 0.0), resolution=(2400, 1080)), "First Mission Tutorial")
+    assert_and_touch(mascot_img, "Mascot", True, 3)
+    assert_exists(Template(r"tpl1739459175444.png", record_pos=(-0.009, -0.172), resolution=(2400, 1080)), "City HP with Fade") # connect to fade with poco inspector
 
+    for i in range(3):
+        random_touch()
+
+    wait(Template(r"tpl1739459580113.png", record_pos=(-0.291, -0.088), resolution=(2400, 1080)), interval=5, timeout=60)
+    assert_and_touch(wave_notify, "Wave Notification", True)
+    
+    sleep(6.0)
+    assert_and_touch(rotation_input, "Wagon Input Handler", True)
+    
+    poco.swipe([0.863, 0.625], [0.859, 0.883])
+    poco.swipe([0.859, 0.833], [0.849, 0.769])
+    poco_logger("Handler Swipes")
+
+    wait(Template(r"tpl1739459580113.png", record_pos=(-0.291, -0.088), resolution=(2400, 1080)), interval=15, timeout=180)
+    random_touch(2.5)
+    assert_and_touch(skip_waiting, "Skip Waiting", True)
+    wave_notify.wait_for_appearance()
+    poco_exists(wave_notify, "Wave Notification after Skip")
+    
+    # poco skip waiting check -> click
+    
+    wait(Template(r"tpl1739459580113.png", record_pos=(-0.291, -0.088), resolution=(2400, 1080)), interval=15, timeout=180)
+    
+    for i in range(3):
+        random_touch(3)
+        
+    assert_and_touch(wagons_btn, "Wagons Button", True, 3.5)
+    
+    tutorial_open_wagons = poco("Cutscene").offspring("ProxyButton")
+    
+    assert_and_touch(tutorial_open_wagons, "Open Available Wagons Button", True)
+    tutorial_select_1st_wagon = poco("TrainManagerWindow(Clone)").offspring("Available Wagons View").offspring("Selection (1)")
+    assert_and_touch(tutorial_select_1st_wagon, "Select First Wagon by Tutorial", True)
+    
+    assert_and_touch(buy_wagon, "Buy Wagon Button", True, 2.5)
+    poco_exists(mascot_img, "Mascot Image")
+    random_touch()
+    
+    poco_exists(city_name, "City Name (Defend)")
+    poco_exists(goals_hud, "Goals Hud")
+    poco.click(exit_wagons)
+    
+    wait(Template(r"tpl1739460562560.png", record_pos=(0.004, 0.005), resolution=(2400, 1080)), interval=10, timeout=120)
+#     poco.wait_for_appearance(reward_image) # todo waiter
+    assert_exists(Template(r"tpl1739460562560.png", record_pos=(0.004, 0.005), resolution=(2400, 1080)), "Machinegun Dot")
+    assert_and_touch(reward_image, "Reward Received", True, 1.5)
+    poco_exists(mascot_img, "Mascot")
+    random_touch()
+    
+    poco_exists(victory_window, "Victory Window")
+    assert_and_touch(to_menu, "Back to the Menu Button", True, 3)
+    
 if __name__ == "__main__":
+    print("---------- RUNNING TESTS ----------")
     main()
