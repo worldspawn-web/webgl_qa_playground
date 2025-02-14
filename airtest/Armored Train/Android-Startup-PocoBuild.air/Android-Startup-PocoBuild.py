@@ -60,6 +60,14 @@ def multiple_checker(obj):
             poco_exists(el, note)
     return
 
+# def switch_device(id):
+#     try:
+#         set_current(id)
+#         print(f"Successfully connected to\n-{id}")
+#         return True
+#     except:
+#         raise Exception(f"Error while connecting to device with serial number:\n-{id}")
+
 ###################
 #   TESTS START   #
 ###################
@@ -204,6 +212,7 @@ def main():
         poco_exception(pause_note)
 
     # Pause Settings
+    pause_settings_panel = poco(name="Settings Panel")
     settings_sound_h2 = poco(text="Sound")
     ## Uncomment on localization fix
     ## settings_gameplay_h2 = poco(text="Gameplay")
@@ -240,5 +249,6 @@ def main():
     
 if __name__ == "__main__":
     print("---------- RUNNING TESTS ----------")
+    print("Current device: Redmi Note 13")
     main()
     print("---------- EVERYTHING IS COOL ----------")
