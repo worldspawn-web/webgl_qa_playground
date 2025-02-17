@@ -1,6 +1,7 @@
 # -*- encoding=utf8 -*-
 __author__ = "Michael 'Worldspawn' Lozickii"
 __branch__ = "aqa/unity_poco"
+__device__ = "Redmi Note 13"
 
 from airtest.core.api import *
 from poco.drivers.unity3d import UnityPoco
@@ -81,6 +82,14 @@ def close_ui():
             return
         raise Exception("Sorry, Boss, I haven't found any crossmark to touch.\nCheck your code, idk.\nZzz...")
         return
+    
+def snapshot_check(snap, note):
+    if exists(snap):
+        sleep(1.0)
+        poco_logger(note)
+        return True
+    else:
+        raise Exception(f"Snapshot has not been found T_T\nSnapshot Name: {note}")
 
 ###################
 #   TESTS START   #
@@ -91,6 +100,7 @@ def main():
     #####################
     #   Poco Variables  #
     #####################
+    
     # Tutorial
     to_mission = poco(text="TO MISSION!")
     loader_play = poco(text="PLAY")
@@ -129,11 +139,41 @@ def main():
     settings_sound_h2 = poco(text="Sound")
     # settings_gameplay_h2 = poco(text="Gameplay")
     privacy_policy = poco(text="PRIVACY POLICY")
-
+    
+    # Main Scene
+    pause_btn_menu = poco(name="Settings")
+    screwnuts_img = poco(texture="Nuts(Clone)")
+    active_stats_menu = poco(texture="S_tab_paper")
+    active_stats_deco = poco(texture="S_paper_deco_01")
+    active_stats_desc = poco(name="Desc")
+    # Stats Icons
+    stats_damage_icon = poco(texture="Damage(Clone)")
+    stats_armor_icon = poco(texture="Hp(Clone)")
+    stats_firerate_icon = poco(texture="GunReload(Clone)")
+    stats_guns_x_icon = poco(texture="Modernization(Clone)")
+    # Stat Checks
+    stat_name = poco(text="Number of guns")
+    stat_value = poco(name="Value")
+    stat_bg_slider = poco(name="Background")
+    stat_fill_slider = poco(name="Fill")
+    stat_handle_slider = poco(name="Handle")
+    # Main Scene Wagons
+    main_wagon_title = poco(name="WagonName")
+    main_loco = poco(texture="Locomotive_Icon(Clone)")
+    main_machinegun = poco(texture="Wagon_MachineGun_Icon(Clone)")
+    # Main Scene 3D Environment
+    main3d_depot = poco(name="SM_Depot")
+    main3d_mechanism = poco(name="SM_Mechanism")
+    main3d_loco = poco(name="SM_ArmoredTrain_01")
+    main3d_light = poco(name="SM_DepotLight")
+    main3d_door_l = poco(name="SM_Door_left")
+    main3d_door_r = poco(name="SM_Door_right")
     
     #############
     #   START   #
     #############
+    
+    print("---------- #1 — GAME STARTUP & FIRST LEVEL ----------")
     
     # Scenes
     assert_exists(Template(r"tpl1739382112852.png", record_pos=(-0.003, -0.001), resolution=(2400, 1080)), "Post-Loader Screen")
@@ -266,10 +306,54 @@ def main():
     
     victory_window.wait_for_appearance()
     poco_exists(victory_window, "Victory Window")
+    # <- TODO: ADD rewards checker before returning to the main scene
     assert_and_touch(to_menu, "Back to the Menu Button", True)
+    sleep(3.0)
+    
+    print("---------- #2 — MAIN SCENE CHECKS ----------")
+    screwnuts_start = poco(text="30")
+    
+    main_ui_checks = {
+        "screwnuts_icon": [screwnuts_img, "Screwnuts Icon"],
+        "settings_btn_menu": [pause_btn_menu, "Settings Button (Main Scene)"],
+        # Active Stats Panel Visual
+        "active_stats_panel": [active_stats_menu, "Active Stats Panel"],
+        "active_stats_deco": [active_stats_deco, "Active Stats Decoration"],
+        "active_stats_desc": [active_stats_desc, "Active Stats Description"],
+        # Stat Icons
+        "stats_damage_icon": [stats_damage_icon, "Stats Damage Icon"],
+        "stats_armor_icon": [stats_armor_icon, "Stats Armor Icon"],
+        "stats_firerate_icon": [stats_firerate_icon, "Stats Firerate Icon"],
+        "stats_guns_x_icon": [stats_guns_x_icon, "Stats Number of Guns Icon"],
+        # Stat Checks
+        "stat_name": [stat_name, "Stat Naming"],
+        "stat_value": [stat_value, "Stat Value"],
+        "stat_bg_slider": [stat_bg_slider, "Stat Background Slider"],
+        "stat_fill_slider": [stat_fill_slider, "Stat Fill Slider (Active)"],
+        "stat_handle_slider": [stat_handle_slider, "Stat Handle Slider (Separation)"],
+        # Available Wagons & Loco
+        "active_wagon_text": [main_wagon_title, "Active Wagon Title"],
+        "loco": [main_loco, "Main Scene Loco Icon"],
+        "wagon_mg": [main_machinegun, "Main Scene MachineGun Wagon Icon"],
+        # 3D Environment
+        "depot": [main3d_depot, "Main Scene Depot"],
+        "rotate_mech": [main3d_mechanism, "Depot Mechanism"],
+        "depot_loco": [main3d_loco, "Depot Loco"],
+        "depot_light": [main3d_light, "Depot Light"],
+        "depot_door_l": [main3d_door_l, "Depot Door (Left)"],
+        "depot_door_r": [main3d_door_r, "Depot Door (Right)"],   
+    }
+    
+    multiple_checker(main_ui_checks)
+
+    # Verification Snapshot
+    stats_note = "General Stats Appearance (Snapshot)"
+    stats_snap = Template(r"tpl1739793021032.png", record_pos=(-0.375, -0.025), resolution=(2400, 1080))
+    snapshot_check(stats_snap, stats_note)
+
     
 if __name__ == "__main__":
     print("---------- RUNNING TESTS ----------")
-    print("Current device: Redmi Note 13")
+    print(f"Active device: {__device__}")
     main()
     print("---------- EVERYTHING IS COOL ----------")
