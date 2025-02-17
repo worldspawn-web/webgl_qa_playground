@@ -98,8 +98,6 @@ def main():
     # Locomotive
     hp_bars = poco(name="TrainHp")
     hp_bar_loco = poco("LocoHp Variant(Clone)")
-    loco_icon = poco("TrainManagerWindow(Clone)").offspring("Content").child("WagonScrollViewItem(Clone)")[0].child("Background")
-    loco_hp_bar = poco("TrainManagerWindow(Clone)").offspring("Content").child("WagonScrollViewItem(Clone)")[0].child("Health")
     # Main Goal
     main_goal = poco(text="Eliminate all waves enemies")
     main_goal_icon = poco("Battle HUD").offspring("Icon")
@@ -198,6 +196,8 @@ def main():
     random_touch()
     
     # HUD (Wagons Menu) Checks
+    loco_icon = poco("TrainManagerWindow(Clone)").offspring("Content").child("WagonScrollViewItem(Clone)")[0].child("Background")
+    loco_hp_bar = poco("TrainManagerWindow(Clone)").offspring("Content").child("WagonScrollViewItem(Clone)")[0].child("Health")
     poco_exists(loco_icon, "Locomotive Icon")
     poco_exists(loco_hp_bar, "Locomotive HP Bar")
     exit_wagons.click()
@@ -206,6 +206,7 @@ def main():
     poco_exists(hp_bars, "Train HP Widget")
     poco_exists(hp_bar_loco, "Loco HP Bar")
     poco_exists(city_name, "City Name (Defend)")
+    
 
     assert_and_touch(goals_hud, "Goals HUD", True, 2)
     poco_exists(main_goal, "Main Goal Description")
