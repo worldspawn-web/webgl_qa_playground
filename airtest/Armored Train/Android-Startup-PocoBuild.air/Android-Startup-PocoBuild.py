@@ -232,11 +232,11 @@ def main():
     # poco_exists(settings_gameplay_h2, "Gameplay Header")
     
     settings_icons = {
-        "volume": [poco(texture="b'S_icon_volume"), "Volume Icon"],
-        "music": [poco(texture="b'S_icon_music"), "Music Icon"],
-        "sounds": [poco(texture="b'S_icon_sounds"), "Sounds Icon"],
-        "graphics": [poco(texture="b'S_icon_graphics"), "Graphics Icon"],
-        "language": [poco(texture="b'S_icon_language"), "Language Icon"]
+        "volume": [poco(texture="S_icon_volume"), "Volume Icon"],
+        "music": [poco(texture="S_icon_music"), "Music Icon"],
+        "sounds": [poco(texture="S_icon_sounds"), "Sounds Icon"],
+        "graphics": [poco(texture="S_icon_graphics"), "Graphics Icon"],
+        "language": [poco(texture="S_icon_language"), "Language Icon"]
     }
     
     multiple_checker(settings_icons)
