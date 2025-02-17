@@ -21,8 +21,8 @@ def poco_exception(obj):
     print("---------- ERROR ----------")
     raise Exception(f"Requested Element has not been found!\nElement ID: {obj}")
 
-def poco_logger(obj):
-    print(f"- {obj}...OK!")
+def poco_logger(note):
+    print(f"- {note}...OK!")
     return
 
 def poco_exists(img, note = ""):
@@ -67,6 +67,20 @@ def multiple_checker(obj):
 #         return True
 #     except:
 #         raise Exception(f"Error while connecting to device with serial number:\n-{id}")
+
+def close_ui():
+    btns = [
+        Template(r"tpl1739790881049.png", record_pos=(0.107, -0.079), resolution=(2400, 1080)),
+    ]
+    
+    for btn in btns:
+        if exists(btn):
+            touch(wait(btn))
+            sleep(1.4)
+            poco_logger("Close Button")
+            return
+        raise Exception("Sorry, Boss, I haven't found any crossmark to touch.\nCheck your code, idk.\nZzz...")
+        return
 
 ###################
 #   TESTS START   #
@@ -241,8 +255,8 @@ def main():
     
     multiple_checker(settings_icons)
     
-    assert_and_touch(close_btn, "Close Settings", True, 1.0)
-    assert_and_touch(close_btn, "Close Settings", True)
+    for i in range(2):
+        close_ui()
     
     # Tutorial Level Ending
     reward_image.wait_for_appearance()
