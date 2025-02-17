@@ -77,28 +77,47 @@ def main():
     #####################
     #   Poco Variables  #
     #####################
-    
+    # Tutorial
     to_mission = poco(text="TO MISSION!")
     loader_play = poco(text="PLAY")
     start_mission = poco(text="START")
     tutor_finger_0 = poco(name="TutorHand_0")
     tutor_finger_2 = poco(name="TutorHand_2")
+    # Mascot
     mascot_img = poco(name="Character Image")
     mascot_header = poco(text="GENERAL")
+    # Battle HUD
     wave_notify = poco(name="WaveNotify(Clone)")
     rotation_input = poco(name="RotationInput")
     skip_waiting = poco(name="SkipButton")
     wagons_btn = poco(name="ProxyButton")
+    exit_wagons = poco(name="ExitButton")
     buy_wagon = poco(text="Buy")
     city_name = poco(text="Defend the objective")
     goals_hud = poco(name="GoalHud")
+    # Locomotive
+    hp_bars = poco(name="TrainHp")
+    hp_bar_loco = poco("LocoHp Variant(Clone)")
+    loco_icon = poco("TrainManagerWindow(Clone)").offspring("Content").child("WagonScrollViewItem(Clone)")[0].child("Background")
+    loco_hp_bar = poco("TrainManagerWindow(Clone)").offspring("Content").child("WagonScrollViewItem(Clone)")[0].child("Health")
+    # Main Goal
+    main_goal = poco(text="Eliminate all waves enemies")
+    main_goal_icon = poco("Battle HUD").offspring("Icon")
+    main_goal_bar = poco("Battle HUD").offspring("ProgressBar")
+    main_goal_progress = poco("Battle HUD").offspring("Progress")
+    # Victory/Defeat
     reward_image = poco("RenderImage")
     victory_window = poco("VictoryWindow(Clone)").offspring("Background1")
     to_menu = poco(text="TO MAIN MENU")
-    exit_wagons = poco(name="ExitButton")
+    # Pause & Settings
     pause_btn = poco(name="PauseButton")
     pause_settings_btn = poco(text="Settings")
     close_btn = poco(name="Close Button")
+    pause_settings_panel = poco(name="Settings Panel")
+    settings_sound_h2 = poco(text="Sound")
+    # settings_gameplay_h2 = poco(text="Gameplay")
+    privacy_policy = poco(text="PRIVACY POLICY")
+
     
     #############
     #   START   #
@@ -151,6 +170,7 @@ def main():
     
     money_end = poco(text="365")
     money_note = "Soft Money Change"
+    
     if money_start != money_end:
         poco_logger(money_note)
     else:
@@ -178,23 +198,15 @@ def main():
     random_touch()
     
     # HUD (Wagons Menu) Checks
-    loco_icon = poco("TrainManagerWindow(Clone)").offspring("Content").child("WagonScrollViewItem(Clone)")[0].child("Background")
-    loco_hp_bar = poco("TrainManagerWindow(Clone)").offspring("Content").child("WagonScrollViewItem(Clone)")[0].child("Health")
     poco_exists(loco_icon, "Locomotive Icon")
     poco_exists(loco_hp_bar, "Locomotive HP Bar")
     exit_wagons.click()
     
     # HUD (Level) Checks
-    hp_bars = poco(name="TrainHp")
-    hp_bar_loco = poco("LocoHp Variant(Clone)")
     poco_exists(hp_bars, "Train HP Widget")
     poco_exists(hp_bar_loco, "Loco HP Bar")
     poco_exists(city_name, "City Name (Defend)")
-    
-    main_goal = poco(text="Eliminate all waves enemies")
-    main_goal_icon = poco("Battle HUD").offspring("Icon")
-    main_goal_bar = poco("Battle HUD").offspring("ProgressBar")
-    main_goal_progress = poco("Battle HUD").offspring("Progress")
+
     assert_and_touch(goals_hud, "Goals HUD", True, 2)
     poco_exists(main_goal, "Main Goal Description")
     poco_exists(main_goal_icon, "Main Goal Icon")
@@ -212,16 +224,11 @@ def main():
         poco_exception(pause_note)
 
     # Pause Settings
-    pause_settings_panel = poco(name="Settings Panel")
-    settings_sound_h2 = poco(text="Sound")
-    ## Uncomment on localization fix
-    ## settings_gameplay_h2 = poco(text="Gameplay")
-    privacy_policy = poco(text="PRIVACY POLICY")
     assert_and_touch(pause_settings_btn, "Pause Settings Button", True)
     pause_settings_panel.wait_for_appearance()
     poco_exists(pause_settings_panel, "Pause Setting Panel")
     poco_exists(settings_sound_h2, "Sounds Header")
-    ## poco_exists(settings_gameplay_h2, "Gameplay Header")
+    # poco_exists(settings_gameplay_h2, "Gameplay Header")
     
     settings_icons = {
         "volume": [poco(texture="b'S_icon_volume"), "Volume Icon"],
@@ -232,7 +239,6 @@ def main():
     }
     
     multiple_checker(settings_icons)
-    
     
     assert_and_touch(close_btn, "Close Settings", True, 1.0)
     assert_and_touch(close_btn, "Close Settings", True)
