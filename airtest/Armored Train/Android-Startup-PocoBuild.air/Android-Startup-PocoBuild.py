@@ -71,17 +71,19 @@ def multiple_checker(obj):
 
 def close_ui():
     btns = [
-        Template(r"tpl1739790881049.png", record_pos=(0.107, -0.079), resolution=(2400, 1080)),
+        Template(r"tpl1739790881049.png", rgb=True, record_pos=(0.107, -0.079), resolution=(2400, 1080)),
+        Template(r"tpl1739818435141.png", rgb=True, target_pos=6, record_pos=(0.363, -0.2), resolution=(2400, 1080)),
+        Template(r"tpl1739818808573.png", rgb=True, target_pos=6, record_pos=(0.037, -0.078), resolution=(2400, 1080))
     ]
     
     for btn in btns:
         if exists(btn):
-            touch(wait(btn))
-            sleep(1.4)
+            touch(btn)
+            sleep(1.0)
             poco_logger("Close Button")
-            return
-        raise Exception("Sorry, Boss, I haven't found any crossmark to touch.\nCheck your code, idk.\nZzz...")
-        return
+            return True
+        
+    raise Exception("Sorry, Boss, I haven't found any crossmark to touch.\nCheck your code, idk.\nZzz...")
     
 def snapshot_check(snap, note):
     if exists(snap):
@@ -91,15 +93,86 @@ def snapshot_check(snap, note):
     else:
         raise Exception(f"Snapshot has not been found T_T\nSnapshot Name: {note}")
         
-def value_matcher(x, y, note = ""):
-    if x = y:
-        poco_logger(note)
-        sleep(0.5)
+# def value_matcher(x, y, note = ""):
+#     if x == y:
+#         poco_logger(note)
+#         sleep(0.5)
+#         return
+#     else:
+#         poco_exception(note)
+        
+def cheats_toggle(cheat):
+    c_cross = Template(r"tpl1739816499641.png", record_pos=(0.467, -0.196), resolution=(2400, 1080))
+    c_value = 14355341
+    c_swipe_speed = 0.8
+    
+    pause_btn = poco(name="PauseButton")
+    pause_settings_btn = poco(text="Settings")
+    
+    def cheatmenu(toggle):
+        if toggle:
+            pause_btn.click()
+            pause_settings_btn.click()
+            for i in range(3):
+                poco.swipe([0.3, 0.3], [0.3, 0.6], duration=c_swipe_speed)
+            for i in range(2):
+                poco.swipe([0.3, 0.3], [0.1, 0.3], duration=c_swipe_speed)
+            for i in range(2):
+                poco.swipe([0.3, 0.3], [0.5, 0.3], duration=c_swipe_speed)
+            poco(name="CheatWindow(Clone)").wait_for_appearance()
+            poco_logger("Cheat Window Opened")
+            return
+        else:
+            if exists(c_cross):
+                touch(c_cross)
+                poco_logger("Cheat Window Closed")
+                for i in range(2):
+                    close_ui()
+                return
+            else:
+                raise Exception("Can't Close Cheat Window!")
+    def set_value(value):
+        poco("CheatWindow(Clone)").offspring("Give Resources").child("InputField (TMP)").focus().set_text(value)
+        poco("CheatWindow(Clone)").offspring("Give Resources").child("Button").click()
+
+    def kill_enemies():
+        cheatmenu(True)
+        poco("CheatWindow(Clone)").offspring("KillAllEnemies").child("Button").click()
+        cheatmenu(False)
+        
+    def add_gold(value):
+        cheatmenu(True)
+        set_value(value)
+        cheatmenu(False)
+        
+    def add_screwnuts(value):
+        cheatmenu(True)
+        poco("CheatWindow(Clone)").offspring("Give Resources").child("Dropdown").click()
+        poco("CheatWindow(Clone)").offspring("Scroll View").child("Viewport").offspring("Give Resources").offspring("Item 1: ScrewNuts").click()
+        set_value(value)
+        cheatmenu(False)
+        
+    def add_coal(value):
+        cheatmenu(True)
+        poco("CheatWindow(Clone)").offspring("Give Resources").child("Dropdown").click()
+        poco("CheatWindow(Clone)").offspring("Scroll View").child("Viewport").offspring("Give Resources").offspring("Item 2: Coal").click()
+        set_value(value)
+        cheatmenu(False)
+        
+    cheat_actions = {
+        "killall": kill_enemies(),
+        "gold": add_gold(c_value),
+        "screwnuts": add_screwnuts(c_value),
+        "coal": add_coal(c_value)
+    }
+    
+    if cheat in cheat_actions:
+        cheat_actions[cheat]()
+        print(f"Cheat '{cheat}' has been activated!")
         return
     else:
-        poco_exception(note)
+        raise Exception(f"Unknown cheat: '{cheat}'")
         
-
 ###################
 #   TESTS START   #
 ###################
@@ -122,7 +195,7 @@ def main():
     # Battle HUD
     wave_notify = poco(name="WaveNotify(Clone)")
     rotation_input = poco(name="RotationInput")
-    skip_waiting = poco(name="SkipButton")
+    skip_waiting = poco("SkipButton")
     wagons_btn = poco(name="ProxyButton")
     exit_wagons = poco(name="ExitButton")
     buy_wagon = poco(text="Buy")
@@ -226,7 +299,7 @@ def main():
     poco.swipe([0.863, 0.625], [0.859, 0.883])
     poco.swipe([0.859, 0.833], [0.849, 0.769])
     poco_logger("Handler Swipes")
-
+    
     mascot_img.wait_for_appearance()
     random_touch(2.5)
     money_end = poco("Text (TMP)").get_text()
@@ -236,6 +309,8 @@ def main():
     assert_and_touch(skip_waiting, "Skip Waiting", True)
     wave_notify.wait_for_appearance()
     poco_exists(wave_notify, "Wave Notification after Skip")
+    
+    cheats_toggle("killall")
     
     mascot_img.wait_for_appearance()
     
