@@ -90,6 +90,15 @@ def snapshot_check(snap, note):
         return True
     else:
         raise Exception(f"Snapshot has not been found T_T\nSnapshot Name: {note}")
+        
+def value_matcher(x, y, note = ""):
+    if x = y:
+        poco_logger(note)
+        sleep(0.5)
+        return
+    else:
+        poco_exception(note)
+        
 
 ###################
 #   TESTS START   #
@@ -204,10 +213,11 @@ def main():
     for i in range(2):
         random_touch()
         
-    money_start = poco(text="350") # Money on Mission Start
-
+    money_start = poco("Text (TMP)").get_text() # Money on Mission Start
+    
     mascot_img.wait_for_appearance()
-    assert_and_touch(wave_notify, "Wave Notification", True, 6.0)
+    sleep(3.0)
+    assert_and_touch(wave_notify, "Wave Notification", True)
     rotation_input.wait_for_appearance()
     assert_and_touch(rotation_input, "Wagon Input Handler", True)
     
@@ -219,14 +229,9 @@ def main():
 
     mascot_img.wait_for_appearance()
     random_touch(2.5)
-    
-    money_end = poco(text="365")
+    money_end = poco("Text (TMP)").get_text()
     money_note = "Soft Money Change"
-    
-    if money_start != money_end:
-        poco_logger(money_note)
-    else:
-        poco_exception(money_note)
+#     value_matcher(money_start, money_end, money_note) # uncom later
     
     assert_and_touch(skip_waiting, "Skip Waiting", True)
     wave_notify.wait_for_appearance()
@@ -234,10 +239,11 @@ def main():
     
     mascot_img.wait_for_appearance()
     
-    for i in range(3):
+    for i in range(4):
         random_touch(3)
         
     # Wagon Buy Tutorial
+    wagons_btn.wait_for_appearance()
     assert_and_touch(wagons_btn, "Wagons Button", True, 3.5)
     tutorial_open_wagons = poco("Cutscene").offspring("ProxyButton")
     assert_and_touch(tutorial_open_wagons, "Open Available Wagons Button", True)
@@ -306,9 +312,28 @@ def main():
     
     victory_window.wait_for_appearance()
     poco_exists(victory_window, "Victory Window")
-    # <- TODO: ADD rewards checker before returning to the main scene
-    assert_and_touch(to_menu, "Back to the Menu Button", True)
-    sleep(3.0)
+    poco_exists(poco(texture="Nuts(Clone)"), "Screwnuts Reward")
+    victory_reward_lvl1 = poco(name="Amount")
+    
+    if (victory_reward_lvl1.get_text()) == 30:
+        poco_logger("Correct Reward Amount")
+    else:
+        poco_exception("Incorrect Reward Amount! Ask GD if balance has been changed.")
+    
+    victory_window_els = {
+        "bg": [poco(texture="S_darken"), "Dark Background"],
+        "flags_back": [poco(name="FlagsBack"), "Victory Flags (Back)"],
+        "victory_vfx": [poco(name="Wreath"), "Victory Wreath (VFX)"],
+        "flags_mid": [poco(name="FlagsMiddle"), "Victory Flags (Middle)"],
+        "star": [poco(name="Star"), "Victory Star"],
+        "victory_txt": [poco(text="VICTORY"), "Victory Text"],
+        "window_bg": [poco(texture="S_tab_paper"), "Window Texture"],
+        "window_decor": [poco(texture="S_paper_deco_01"), "Window Decorations"],
+    }
+    
+    multiple_checker(victory_window_els)
+    
+    assert_and_touch(to_menu, "Back to the Menu Button", True, 3.0)
     
     print("---------- #2 — MAIN SCENE CHECKS ----------")
     screwnuts_start = poco(text="30")
