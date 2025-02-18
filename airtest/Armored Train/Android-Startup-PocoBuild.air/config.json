@@ -1,0 +1,16 @@
+{
+    "device": "Redmi Note 13",
+    "log_levels": {
+        "airtest": "ERROR",
+        "poco": "ERROR",
+        "adb": "ERROR"
+    },
+    "cheat_values": {
+        "resources": 14355341,
+        "swipe_speed": 0.8
+    },
+    "rewards": {
+        "level_1": 30,
+        "level_2": 65
+    }
+}
