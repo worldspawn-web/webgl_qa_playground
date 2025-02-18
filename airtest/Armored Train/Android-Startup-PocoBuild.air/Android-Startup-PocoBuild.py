@@ -390,7 +390,7 @@ def main():
     poco_exists(poco(texture="Nuts(Clone)"), "Screwnuts Reward")
     victory_reward_lvl1 = poco("VictoryWindow(Clone)").offspring("Amount")
     
-    if (victory_reward_lvl1.get_text() == 30):
+    if (victory_reward_lvl1.get_text() == str(30)):
         poco_logger("Correct Reward Amount")
     else:
         poco_exception("Incorrect Reward Amount! Ask GD if balance has been changed.")
