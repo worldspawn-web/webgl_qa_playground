@@ -161,6 +161,12 @@ def cheats_toggle(cheat):
             poco("CheatWindow(Clone)").offspring("Scroll View").child("Viewport").offspring("Give Resources").offspring(f"Item {resource}").click()
         set_value(value)
         
+    def end_battle(result):
+        if (result = "win"):
+            poco(name="VictoryButton").click()
+        else:
+            poco(name="DefeatButton").click()
+        
     def perform_cheat_action(action, *args):
         print(f"{c_tag}Performing {action.__name__}...")
         cheatmenu(True)
@@ -171,7 +177,9 @@ def cheats_toggle(cheat):
         "killall": lambda: perform_cheat_action(kill_enemies),
         "gold": lambda: perform_cheat_action(add_resource, "Gold", c_value),
         "screwnuts": lambda: perform_cheat_action(add_resource, "1: ScrewNuts", c_value),
-        "coal": lambda: perform_cheat_action(add_resource, "2: Coal", c_value)
+        "coal": lambda: perform_cheat_action(add_resource, "2: Coal", c_value),
+        "win": lambda: perform_cheat_action(end_battle, "win"),
+        "lose": lambda: perform_cheat_action(end_battle, "lose")
     }
     
     if cheat in cheat_actions:
@@ -202,7 +210,7 @@ def main():
     # Battle HUD
     wave_notify = poco(name="WaveNotify(Clone)")
     rotation_input = poco(name="RotationInput")
-    skip_waiting = poco("SkipButton")
+    skip_waiting = poco("Skip waiting")
     wagons_btn = poco(name="ProxyButton")
     exit_wagons = poco(name="ExitButton")
     buy_wagon = poco(text="Buy")
@@ -250,6 +258,7 @@ def main():
     main_wagon_title = poco(name="WagonName")
     main_loco = poco(texture="Locomotive_Icon(Clone)")
     main_machinegun = poco(texture="Wagon_MachineGun_Icon(Clone)")
+    main_wagon_tank = poco(texture="Wagon_TankTurret_Icon(Clone)")
     # Main Scene 3D Environment
     main3d_depot = poco(name="SM_Depot")
     main3d_mechanism = poco(name="SM_Mechanism")
@@ -257,6 +266,33 @@ def main():
     main3d_light = poco(name="SM_DepotLight")
     main3d_door_l = poco(name="SM_Door_left")
     main3d_door_r = poco(name="SM_Door_right")
+    main3d_wagon_tank = poco(name="SM_Wagon_TankGun_01")
+    # Global Map Elements
+    hud_top = poco(name="Top")
+    hud_bot = poco(name="Bottom")
+    hud_map = poco(texture="Global_Map 1")
+    hud_currency_n = poco(name="Currency Counter")
+    hud_missionview = poco(name="MapMissionView")
+    hud_mission_flag = poco(texture="Flag_Red")
+    hud_mission_medal = poco(texture="S_icon_Main_mission 1")
+    hud_mission_icon = poco(texture="Stalingrad(Clone)")
+    hud_mission_pointer = poco(texture="S_pointer")
+    hud_mission_2 = poco("Stalingrad")
+    hud_difficulty_text = poco("Difficulty:")
+    hud_difficulty_easy = poco(texture="S_icon_difficulty_1_star_active")
+    hud_difficulty_medium = poco(texture="S_icon_difficulty_2_star_closed")
+    hud_difficulty_hard = poco(texture="S_icon_difficulty_3_star_closed")
+    hud_back_btn = poco("Back")
+    hud_preview = poco(name="MissionPreview")
+    hud_preview_header = poco(text="STALINGRAD")
+    hud_preview_bg = poco(texture="S_tab_paper")
+    hud_preview_deco = poco(texture="S_paper_deco_01")
+    hud_preview_h_deco = poco(texture="S_paper_deco_02")
+    hud_preview_desc = poco(name="MissionDescription")
+    hud_preview_tasks = poco(name="MissionInfo")
+    hud_preview_enemies = poco(name="EnemiesInfo")
+    hud_preview_reward = poco(name="Reward")
+    
     
     #############
     #   START   #
@@ -459,6 +495,107 @@ def main():
     stats_note = "General Stats Appearance (Snapshot)"
     stats_snap = Template(r"tpl1739793021032.png", record_pos=(-0.375, -0.025), resolution=(2400, 1080))
     snapshot_check(stats_snap, stats_note)
+
+    print("\n---------- #3 — MAP CHECKS ----------\n")
+    to_mission.click()
+    mascot_img.wait_for_appearance()
+    
+    # Skip Dialog
+    for i in range(7):
+        random_touch(3.35)
+    
+    global_map_tutor = Template(r"tpl1739890579440.png", record_pos=(0.001, -0.001), resolution=(2400, 1080))
+    snapshot_check(global_map_tutor, "Global Map Appearance")
+    
+    global_map_checks = {
+        "screwnuts": [screwnuts_img, "Global Map - Screwnuts"],
+        "hud_top": [hud_top, "Global Map - Top HUD"],
+        "hud_bot": [hud_bot, "Global Map - Bot HUD"],
+        "hud_map": [hud_map, "Global Map - Map Texture"],
+        "hud_currency": [hud_currency_n, "Global Map - Currency HUD"],
+        "hud_missionview": [hud_missionview, "Global Map - Mission View"],
+        "hud_mission_flag": [hud_mission_flag, "Global Map - Mission Flag"],
+        "hud_mission_medal": [hud_mission_medal, "Global Map - Mission Medal"],
+        "hud_mission_icon": [hud_mission_icon, "Global Map - Mission Icon"],
+        "hud_mission_pointer": [hud_mission_pointer, "Global Map - Mission Pointer"],
+        "hud_mission_2": [hud_mission_2, "Global Map - 'Stalingrad' Mission"],
+        "hud_difficulty_text": [hud_difficulty_text, "Global Map - Difficulty Text"],
+        "hud_difficulty_easy": [hud_difficulty_easy, "Global Map - Easy Difficulty (Unlocked)"],
+        "hud_difficulty_mid": [hud_difficulty_medium, "Global Map - Medium Difficulty (Locked)"],
+        "hud_difficulty_hard": [hud_difficulty_hard, "Global Map - Hard Difficulty (Locked)"],
+        "hud_back_btn": [hud_back_btn, "Global Map - Back Button"],
+        "hud_preview": [hud_preview, "Global Map - Mission Preview Panel"],
+        "hud_preview_h": [hud_preview_header, "Global Map - Mission Preview Header"],
+        "hud_preview_bg": [hud_preview_bg, "Global Map - Mission Preview Background"],
+        "hud_preview_deco": [hud_preview_deco, "Global Map - Mission Preview Decoration"],
+        "hud_preview_h_deco": [hud_preview_h_deco, "Global Map - Mission Header Deco"],
+        "hud_preview_desc": [hud_preview_desc, "Global Map - Mission Preview Description"],
+        "hud_preview_tasks": [hud_preview_tasks, "Global Map - Mission Preview Tasks"],
+        "hud_preview_enemies": [hud_preview_enemies, "Global Map - Mission Preview Enemies"],
+        "hud_preview_reward": [hud_preview_reward, "Global Map - Mission Preview Reward"],
+        "tutorial_finger_1": [tutor_finger_0, "Global Map - Tutorial Pointer 1"],
+        "tutorial_finger_2": [tutor_finger_2, "Global Map - Tutorial Pointer 2"]
+    }
+
+    multiple_checker(global_map_checks)
+    # Mission Checks (Stalingrad)
+    start_mission.click()
+    mascot_img.wait_for_appearance()
+    
+    for i in range(3): # 3 - ???
+        random_touch(3)
+        
+    # Checks if InputBlocker Works
+    input_blocker = poco(name="InputBlocker")
+    if (input_blocker.attr("visible")):
+        poco_logger("Input Blocker")
+    else:
+        poco_exception("Input Blocker")
+        
+    # Follows Tutorial Fades & Pointer
+    # in ATT, every tutorial step is "ProxyButton"
+    # Since it's a dynamic element, we can't separate it
+    # and we have to use it like that...
+    for i in range(2):
+        poco("Cutscene").offspring("ProxyButton").click()
+    
+    mascot_img.wait_for_appearance()
+    random_touch()
+    
+    sleep(5.0)
+    cheats_toggle("killall")
+    
+    skip_waiting.click()
+    wave_notify.wait_for_appearance()
+    
+    sleep(10.0)
+    # Win through Cheats
+    cheats_toggle("win")
+    poco_exists(reward_image, "Mission Reward")
+    
+    # Skips 2 Rewards
+    for i in range(2):
+        random_touch(1.5)
+        
+    victory_window.wait_for_appearance()
+    
+    # Checks for correct rewards (snap)
+    rewards_mission2 = Template(r"tpl1739894861328.png", record_pos=(-0.0, 0.05), resolution=(2400, 1080))
+    rewards_mission2_note = "Correct Rewards - Mission 2"
+    snapshot_check(rewards_mission2, rewards_mission2_note)
+    
+    to_menu.click()
+    main3d_depot.wait_for_appearance() # making sure main scene loaded
+    poco_exists(main_wagon_tank, "Tank Wagon Unlocked")
+    main_wagon_tank.click()
+    sleep(1.0)
+    poco_exists(main_wagon_tank, "Tank Wagon (3D)")
+
+    # TODO: refactor
+    if (poco("Text (TMP)".get_text() == str(65)):
+        poco_logger("Screwnuts updated to - 65")
+    else:
+        poco_exception("Something is wrong with rewards system!")
 
     
 if __name__ == "__main__":
