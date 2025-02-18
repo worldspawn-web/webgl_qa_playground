@@ -188,6 +188,12 @@ def cheats_toggle(cheat):
     else:
         raise Exception(f"{log_tags['error']}Unknown cheat: '{cheat}'")
         
+def screw_check(value):
+    if (poco("Text (TMP)".get_text() == str(value)):
+        poco_logger(f"Screwnuts updated to {value}")
+    else:
+        poco_exception("Something is wrong with rewards system!")
+        
 ###################
 #   TESTS START   #
 ###################
@@ -591,11 +597,8 @@ def main():
     sleep(1.0)
     poco_exists(main_wagon_tank, "Tank Wagon (3D)")
 
-    # TODO: refactor
-    if (poco("Text (TMP)".get_text() == str(65)):
-        poco_logger("Screwnuts updated to - 65")
-    else:
-        poco_exception("Something is wrong with rewards system!")
+    # TODO: separate hardcoded values to json
+    screw_check(65)
 
     
 if __name__ == "__main__":
