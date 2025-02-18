@@ -18,12 +18,18 @@ logging.getLogger("adb").setLevel(logging.ERROR)
 #   HELPER FUNCTIONS   #
 ########################
 
+log_tags = {
+    "error": "- [ERROR]: ",
+    "assert": "- [ASSERTION]: ",
+    "cheats": "- [CHEATS]: "
+}
+
 def poco_exception(obj):
-    print("---------- ERROR ----------")
-    raise Exception(f"Requested Element has not been found!\nElement ID: {obj}")
+    print("\n---------- ERROR ----------\n")
+    raise Exception(f"{log_tags['error']}Requested Element has not been found!\nElement ID: {obj}")
 
 def poco_logger(note):
-    print(f"- {note}...OK!")
+    print(f"{log_tags['assert']}{note}...OK!")
     return
 
 def poco_exists(img, note = ""):
@@ -83,7 +89,7 @@ def close_ui():
             poco_logger("Close Button")
             return True
         
-    raise Exception("Sorry, Boss, I haven't found any crossmark to touch.\nCheck your code, idk.\nZzz...")
+    raise Exception(f"{log_tags['error']}Sorry, Boss, I haven't found any crossmark to touch.\nCheck your code, idk.\nZzz...")
     
 def snapshot_check(snap, note):
     if exists(snap):
@@ -91,15 +97,18 @@ def snapshot_check(snap, note):
         poco_logger(note)
         return True
     else:
-        raise Exception(f"Snapshot has not been found T_T\nSnapshot Name: {note}")
+        raise Exception(f"{log_tags['error']}Snapshot has not been found!\nSnapshot Name: {note}")
         
-# def value_matcher(x, y, note = ""):
-#     if x == y:
-#         poco_logger(note)
-#         sleep(0.5)
-#         return
-#     else:
-#         poco_exception(note)
+def value_diff(x, y, note = ""):
+    x = str(x)
+    y = str(y)
+    
+    if x != y:
+        poco_logger(note)
+        sleep(0.5)
+        return
+    else:
+        poco_exception(note)
         
 def cheats_toggle(cheat):
     c_cross = Template(r"tpl1739816499641.png", record_pos=(0.467, -0.196), resolution=(2400, 1080))
@@ -108,7 +117,7 @@ def cheats_toggle(cheat):
     # Cheat Opener Speed (Experimental)
     c_swipe_speed = 0.8
     # Logger
-    c_tag = "- [CHEATS]: "
+    c_tag = log_tags['cheats']
     
     pause_btn = poco(name="PauseButton")
     pause_settings_btn = poco(text="Settings")
@@ -136,7 +145,7 @@ def cheats_toggle(cheat):
                     close_ui()
                 return True
             else:
-                raise Exception("Can't Close Cheat Window!")
+                raise Exception(f"{log_tags['error']}Can't Close Cheat Window!")
             return True
                 
     def set_value(value):
@@ -153,7 +162,7 @@ def cheats_toggle(cheat):
         set_value(value)
         
     def perform_cheat_action(action, *args):
-        print(f"{c_tag}Performing: {action.__name__}")
+        print(f"{c_tag}Performing {action.__name__}...")
         cheatmenu(True)
         action(*args)
         cheatmenu(False)
@@ -167,9 +176,9 @@ def cheats_toggle(cheat):
     
     if cheat in cheat_actions:
         cheat_actions[cheat]() # calls lambda now, don't touch them
-        print(f"Cheat '{cheat}' has been activated!")
+        print(f"{c_tag}Cheat has been activated!")
     else:
-        raise Exception(f"Unknown cheat: '{cheat}'")
+        raise Exception(f"{log_tags['error']}Unknown cheat: '{cheat}'")
         
 ###################
 #   TESTS START   #
@@ -253,7 +262,7 @@ def main():
     #   START   #
     #############
     
-    print("---------- #1 — GAME STARTUP & FIRST LEVEL ----------")
+    print("\n---------- #1 — GAME STARTUP & FIRST LEVEL ----------\n")
     
     # Scenes
     assert_exists(Template(r"tpl1739382112852.png", record_pos=(-0.003, -0.001), resolution=(2400, 1080)), "Post-Loader Screen")
@@ -302,7 +311,7 @@ def main():
     random_touch(2.5)
     money_end = poco("Text (TMP)").get_text()
     money_note = "Soft Money Change"
-#     value_matcher(money_start, money_end, money_note) # uncom later
+    value_diff(money_start, money_end, money_note)
     
     assert_and_touch(skip_waiting, "Skip Waiting", True)
     wave_notify.wait_for_appearance()
@@ -410,7 +419,7 @@ def main():
     
     assert_and_touch(to_menu, "Back to the Menu Button", True, 3.0)
     
-    print("---------- #2 — MAIN SCENE CHECKS ----------")
+    print("\n---------- #2 — MAIN SCENE CHECKS ----------\n")
     screwnuts_start = poco(text="30")
     
     main_ui_checks = {
@@ -453,7 +462,7 @@ def main():
 
     
 if __name__ == "__main__":
-    print("---------- RUNNING TESTS ----------")
+    print("\n---------- RUNNING TESTS ----------\n")
     print(f"Active device: {__device__}")
     main()
-    print("---------- EVERYTHING IS COOL ----------")
+    print("\n---------- EVERYTHING IS COOL ----------\n")
