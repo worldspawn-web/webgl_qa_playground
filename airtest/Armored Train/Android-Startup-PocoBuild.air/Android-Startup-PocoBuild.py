@@ -103,8 +103,12 @@ def snapshot_check(snap, note):
         
 def cheats_toggle(cheat):
     c_cross = Template(r"tpl1739816499641.png", record_pos=(0.467, -0.196), resolution=(2400, 1080))
+    # Gold/Screw/Coal Future Value
     c_value = 14355341
+    # Cheat Opener Speed (Experimental)
     c_swipe_speed = 0.8
+    # Logger
+    c_tag = "- [CHEATS]: "
     
     pause_btn = poco(name="PauseButton")
     pause_settings_btn = poco(text="Settings")
@@ -113,63 +117,57 @@ def cheats_toggle(cheat):
         if toggle:
             pause_btn.click()
             pause_settings_btn.click()
-            for i in range(3):
-                poco.swipe([0.3, 0.3], [0.3, 0.6], duration=c_swipe_speed)
-            for i in range(2):
-                poco.swipe([0.3, 0.3], [0.1, 0.3], duration=c_swipe_speed)
-            for i in range(2):
-                poco.swipe([0.3, 0.3], [0.5, 0.3], duration=c_swipe_speed)
+            swipes = [([0.3, 0.3], [0.3, 0.6], 3),
+                      ([0.3, 0.3], [0.1, 0.3], 2),
+                      ([0.3, 0.3], [0.5, 0.3], 2)]
+            
+            for start, end, i in swipes:
+                for _ in range(i):
+                    poco.swipe(start, end, duration=c_swipe_speed)
             poco(name="CheatWindow(Clone)").wait_for_appearance()
             poco_logger("Cheat Window Opened")
-            return
+            return True
+
         else:
             if exists(c_cross):
                 touch(c_cross)
                 poco_logger("Cheat Window Closed")
-                for i in range(2):
+                for _ in range(2):
                     close_ui()
-                return
+                return True
             else:
                 raise Exception("Can't Close Cheat Window!")
+            return True
+                
     def set_value(value):
-        poco("CheatWindow(Clone)").offspring("Give Resources").child("InputField (TMP)").focus().set_text(value)
+        poco("CheatWindow(Clone)").offspring("Give Resources").child("InputField (TMP)").focus().set_text(str(value))
         poco("CheatWindow(Clone)").offspring("Give Resources").child("Button").click()
-
+        
     def kill_enemies():
-        cheatmenu(True)
         poco("CheatWindow(Clone)").offspring("KillAllEnemies").child("Button").click()
-        cheatmenu(False)
         
-    def add_gold(value):
-        cheatmenu(True)
+    def add_resource(resource, value):
+        if resource != "Gold":
+            poco("CheatWindow(Clone)").offspring("Give Resources").child("Dropdown").click()
+            poco("CheatWindow(Clone)").offspring("Scroll View").child("Viewport").offspring("Give Resources").offspring(f"Item {resource}").click()
         set_value(value)
-        cheatmenu(False)
         
-    def add_screwnuts(value):
+    def perform_cheat_action(action, *args):
+        print(f"{c_tag}Performing: {action.__name__}")
         cheatmenu(True)
-        poco("CheatWindow(Clone)").offspring("Give Resources").child("Dropdown").click()
-        poco("CheatWindow(Clone)").offspring("Scroll View").child("Viewport").offspring("Give Resources").offspring("Item 1: ScrewNuts").click()
-        set_value(value)
-        cheatmenu(False)
-        
-    def add_coal(value):
-        cheatmenu(True)
-        poco("CheatWindow(Clone)").offspring("Give Resources").child("Dropdown").click()
-        poco("CheatWindow(Clone)").offspring("Scroll View").child("Viewport").offspring("Give Resources").offspring("Item 2: Coal").click()
-        set_value(value)
+        action(*args)
         cheatmenu(False)
         
     cheat_actions = {
-        "killall": kill_enemies(),
-        "gold": add_gold(c_value),
-        "screwnuts": add_screwnuts(c_value),
-        "coal": add_coal(c_value)
+        "killall": lambda: perform_cheat_action(kill_enemies),
+        "gold": lambda: perform_cheat_action(add_resource, "Gold", c_value),
+        "screwnuts": lambda: perform_cheat_action(add_resource, "1: ScrewNuts", c_value),
+        "coal": lambda: perform_cheat_action(add_resource, "2: Coal", c_value)
     }
     
     if cheat in cheat_actions:
-        cheat_actions[cheat]()
+        cheat_actions[cheat]() # calls lambda now, don't touch them
         print(f"Cheat '{cheat}' has been activated!")
-        return
     else:
         raise Exception(f"Unknown cheat: '{cheat}'")
         
@@ -380,6 +378,8 @@ def main():
         close_ui()
     
     # Tutorial Level Ending
+    sleep(10.0)
+    cheats_toggle("killall")
     reward_image.wait_for_appearance()
     assert_and_touch(reward_image, "Reward Received", True, 2)
     poco_exists(mascot_img, "Mascot")
@@ -388,9 +388,9 @@ def main():
     victory_window.wait_for_appearance()
     poco_exists(victory_window, "Victory Window")
     poco_exists(poco(texture="Nuts(Clone)"), "Screwnuts Reward")
-    victory_reward_lvl1 = poco(name="Amount")
+    victory_reward_lvl1 = poco("VictoryWindow(Clone)").offspring("Amount")
     
-    if (victory_reward_lvl1.get_text()) == 30:
+    if (victory_reward_lvl1.get_text() == 30):
         poco_logger("Correct Reward Amount")
     else:
         poco_exception("Incorrect Reward Amount! Ask GD if balance has been changed.")
