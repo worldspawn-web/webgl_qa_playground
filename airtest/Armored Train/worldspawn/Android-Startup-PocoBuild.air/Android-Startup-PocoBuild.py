@@ -1,4 +1,8 @@
 # -*- encoding=utf8 -*-
+
+# NOTE: IF YOU NEED A SIMPLE VERSION, USE:
+#       -   "Simplified-Startup.py"
+
 from airtest.core.api import *
 
 from poco.drivers.unity3d import UnityPoco
