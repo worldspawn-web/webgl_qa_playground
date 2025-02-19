@@ -8,6 +8,7 @@ from airtest.core.api import *
 from poco.drivers.unity3d import UnityPoco
 from cheats import cheats_toggle
 from ui_elements import UIElements
+from assets import Assets3D
 from helpers import (
     config, poco, poco_exception, poco_logger, poco_exists,
     assert_and_touch, random_touch, multiple_checker, close_ui,
@@ -20,6 +21,7 @@ poco = UnityPoco()
 
 # Global Variables Definition (modify in main())
 ui = None
+assets = None
 
 # Logger Settings. Currently sets everything to "error/warning-only"
 for logger, level in config['log_levels'].items():
@@ -186,7 +188,7 @@ def game_startup():
 def main_checks():
     head_log("MAIN SCENE CHECKS")
     
-    main_ui_checks = {
+    main_checks = {
         "screwnuts_icon": [ui.screwnuts_img, "Screwnuts Icon"],
         "settings_btn_menu": [ui.pause_btn_menu, "Settings Button (Main Scene)"],
         "active_stats_panel": [ui.active_stats_menu, "Active Stats Panel"],
@@ -204,15 +206,15 @@ def main_checks():
         "active_wagon_text": [ui.main_wagon_title, "Active Wagon Title"],
         "loco": [ui.main_loco, "Main Scene Loco Icon"],
         "wagon_mg": [ui.main_machinegun, "Main Scene MachineGun Wagon Icon"],
-        "depot": [ui.main3d_depot, "Main Scene Depot"],
-        "rotate_mech": [ui.main3d_mechanism, "Depot Mechanism"],
-        "depot_loco": [ui.main3d_loco, "Depot Loco"],
-        "depot_light": [ui.main3d_light, "Depot Light"],
-        "depot_door_l": [ui.main3d_door_l, "Depot Door (Left)"],
-        "depot_door_r": [ui.main3d_door_r, "Depot Door (Right)"],   
+        "depot": [assets.depot, "Main Scene Depot"],
+        "rotate_mech": [assets.mechanism, "Depot Mechanism"],
+        "depot_loco": [assets.loco, "Depot Loco"],
+        "depot_light": [assets.depot_light, "Depot Light"],
+        "depot_door_l": [assets.depot_door_l, "Depot Door (Left)"],
+        "depot_door_r": [assets.depot_door_r, "Depot Door (Right)"],   
     }
     
-    multiple_checker(main_ui_checks)
+    multiple_checker(main_checks)
 
     # Verification Snapshot
     stats_note = "General Stats Appearance (Snapshot)"
@@ -306,17 +308,19 @@ def mission_2():
     snapshot_check(rewards_mission2, rewards_mission2_note)
     
     ui.to_menu.click()
-    ui.main3d_depot.wait_for_appearance() # making sure main scene loaded
+    assets.depot.wait_for_appearance() # making sure main scene loaded
     poco_exists(ui.main_wagon_tank, "Tank Wagon Unlocked")
     ui.main_wagon_tank.click()
     sleep(1.0)
-    poco_exists(ui.main3d_wagon_tank, "Tank Wagon (3D)")
+    poco_exists(assets.wagon_tank, "Tank Wagon (3D)")
 
     screw_check(config['rewards']['level_2'])
 
 def main():
-    global ui
+    global ui, assets
     ui = UIElements()
+    assets = Assets3D()
+    
     game_startup()
     main_checks()
     map_checks()

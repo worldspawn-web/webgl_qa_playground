@@ -77,20 +77,11 @@ class UIElements:
         self.stat_fill_slider = poco(name="Fill")
         self.stat_handle_slider = poco(name="Handle")
         
-        # Main Scene Wagons
+        # Main Scene Wagon Icons
         self.main_wagon_title = poco(name="WagonName")
         self.main_loco = poco(texture="Locomotive_Icon(Clone)")
         self.main_machinegun = poco(texture="Wagon_MachineGun_Icon(Clone)")
         self.main_wagon_tank = poco(texture="Wagon_TankTurret_Icon(Clone)")
-        
-        # Main Scene 3D Environment
-        self.main3d_depot = poco(name="SM_Depot")
-        self.main3d_mechanism = poco(name="SM_Mechanism")
-        self.main3d_loco = poco(name="SM_ArmoredTrain_01")
-        self.main3d_light = poco(name="SM_DepotLight")
-        self.main3d_door_l = poco(name="SM_Door_left")
-        self.main3d_door_r = poco(name="SM_Door_right")
-        self.main3d_wagon_tank = poco(name="SM_Wagon_TankGun_01")
         
         # Global Map Elements
         self.hud_top = poco(name="Top")
