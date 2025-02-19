@@ -27,7 +27,7 @@ class UIElements:
         # Battle HUD
         self.wave_notify = poco(name="WaveNotify(Clone)")
         self.rotation_input = poco(name="RotationInput")
-        self.skip_waiting = poco(text="Skip waiting")
+        self.skip_waiting = poco("Text (TMP)")
         self.wagons_btn = poco(name="ProxyButton")
         self.exit_wagons = poco(name="ExitButton")
         self.buy_wagon = poco(text="Buy")
@@ -103,7 +103,7 @@ class UIElements:
         self.hud_mission_icon = poco(texture="Stalingrad(Clone)")
         self.hud_mission_pointer = poco(texture="S_pointer")
         self.hud_mission_2 = poco("Stalingrad")
-        self.hud_difficulty_text = poco("Difficulty:")
+        self.hud_difficulty_text = poco("MapWindow Variant(Clone)").offspring("Bottom").child("Difficulty").child("Text (TMP)")
         self.hud_difficulty_easy = poco(texture="S_icon_difficulty_1_star_active")
         self.hud_difficulty_medium = poco(texture="S_icon_difficulty_2_star_closed")
         self.hud_difficulty_hard = poco(texture="S_icon_difficulty_3_star_closed")

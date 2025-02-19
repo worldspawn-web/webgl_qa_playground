@@ -72,10 +72,11 @@ def main():
     money_end = poco("Text (TMP)").get_text()
     value_diff(money_start, money_end, "Soft Money Change")
     
-#     assert_and_touch(ui.skip_waiting, "Skip Waiting", True)
+    assert_and_touch(ui.skip_waiting, "Skip Waiting", True)
     ui.wave_notify.wait_for_appearance()
     poco_exists(ui.wave_notify, "Wave Notification after Skip")
     
+    sleep(3.0)
     cheats_toggle("killall")
     
     ui.mascot_img.wait_for_appearance()
@@ -176,7 +177,6 @@ def main():
     assert_and_touch(ui.to_menu, "Back to the Menu Button", True, 3.0)
     
     print("\n---------- #2 — MAIN SCENE CHECKS ----------\n")
-    screwnuts_start = poco(text=str(config['rewards']['level_1']))
     
     main_ui_checks = {
         "screwnuts_icon": [ui.screwnuts_img, "Screwnuts Icon"],
@@ -221,7 +221,7 @@ def main():
     
     global_map_tutor = Template(r"tpl1739890579440.png", record_pos=(0.001, -0.001), resolution=(2400, 1080))
     snapshot_check(global_map_tutor, "Global Map Appearance")
-    
+        
     global_map_checks = {
         "screwnuts": [ui.screwnuts_img, "Global Map - Screwnuts"],
         "hud_top": [ui.hud_top, "Global Map - Top HUD"],
@@ -270,6 +270,7 @@ def main():
     # Follows Tutorial Fades & Pointer
     for _ in range(2):
         poco("Cutscene").offspring("ProxyButton").click()
+        sleep(2.0)
     
     ui.mascot_img.wait_for_appearance()
     random_touch()
@@ -277,7 +278,6 @@ def main():
     sleep(5.0)
     cheats_toggle("killall")
     
-#     ui.skip_waiting.click()
     ui.wave_notify.wait_for_appearance()
     
     sleep(10.0)

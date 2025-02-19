@@ -66,7 +66,8 @@ def cheats_toggle(cheat):
         print(f"{c_tag}Performing {action.__name__}...")
         cheatmenu(True)
         action(*args)
-        cheatmenu(False)
+        if (action != end_battle):
+            cheatmenu(False)
     
     # List of all cheat actions
     # NOTE: lambda's essential, or every cheat will be executed
