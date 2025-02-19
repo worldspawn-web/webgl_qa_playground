@@ -156,13 +156,13 @@ def cheats_toggle(cheat):
         poco("CheatWindow(Clone)").offspring("KillAllEnemies").child("Button").click()
         
     def add_resource(resource, value):
-        if resource != "Gold":
+        if (resource != "Gold"):
             poco("CheatWindow(Clone)").offspring("Give Resources").child("Dropdown").click()
             poco("CheatWindow(Clone)").offspring("Scroll View").child("Viewport").offspring("Give Resources").offspring(f"Item {resource}").click()
         set_value(value)
         
     def end_battle(result):
-        if (result = "win"):
+        if (result == "win"):
             poco(name="VictoryButton").click()
         else:
             poco(name="DefeatButton").click()
@@ -189,7 +189,7 @@ def cheats_toggle(cheat):
         raise Exception(f"{log_tags['error']}Unknown cheat: '{cheat}'")
         
 def screw_check(value):
-    if (poco("Text (TMP)".get_text() == str(value)):
+    if (poco("Text (TMP)".get_text() == str(value))):
         poco_logger(f"Screwnuts updated to {value}")
     else:
         poco_exception("Something is wrong with rewards system!")
