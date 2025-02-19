@@ -1,7 +1,7 @@
 # -*- encoding=utf8 -*-
 
 # NOTE: IF YOU NEED A SIMPLE VERSION, USE:
-#       -   "Simplified-Startup.py"
+#       -   "Simplified-Startup.py" (could possibly be outdated)
 
 from airtest.core.api import *
 
@@ -11,20 +11,22 @@ from ui_elements import UIElements
 from helpers import (
     config, poco, poco_exception, poco_logger, poco_exists,
     assert_and_touch, random_touch, multiple_checker, close_ui,
-    snapshot_check, value_diff, screw_check
+    snapshot_check, value_diff, screw_check, head_log
 )
 import logging
 
 auto_setup(__file__)
 poco = UnityPoco()
 
+# Global Variables Definition (modify in main())
+ui = None
+
+# Logger Settings. Currently sets everything to "error/warning-only"
 for logger, level in config['log_levels'].items():
     logging.getLogger(logger).setLevel(getattr(logging, level))
 
-def main():
-    ui = UIElements()
-    
-    print("\n---------- #1 — GAME STARTUP & FIRST LEVEL ----------\n")
+def game_startup():
+    head_log("GAME STARTUP & FIRST LEVEL")
     
     # Scenes
     assert_exists(Template(r"snapshots/tpl1739382112852.png", record_pos=(-0.003, -0.001), resolution=(2400, 1080)), "Post-Loader Screen")
@@ -174,9 +176,15 @@ def main():
     }
     multiple_checker(victory_window_els)
     
+    if (ui.victory_txt.get_text() == "VICTORY"):
+        poco_logger("Correct Victory Header")
+    else:
+        poco_exception("Victory Header")
+    
     assert_and_touch(ui.to_menu, "Back to the Menu Button", True, 3.0)
     
-    print("\n---------- #2 — MAIN SCENE CHECKS ----------\n")
+def main_checks():
+    head_log("MAIN SCENE CHECKS")
     
     main_ui_checks = {
         "screwnuts_icon": [ui.screwnuts_img, "Screwnuts Icon"],
@@ -210,8 +218,10 @@ def main():
     stats_note = "General Stats Appearance (Snapshot)"
     stats_snap = Template(r"snapshots/tpl1739793021032.png", record_pos=(-0.375, -0.025), resolution=(2400, 1080))
     snapshot_check(stats_snap, stats_note)
+    
+def map_checks():
+    head_log("MAP CHECKS")
 
-    print("\n---------- #3 — MAP CHECKS ----------\n")
     ui.to_mission.click()
     ui.mascot_img.wait_for_appearance()
     
@@ -254,11 +264,13 @@ def main():
     }
     multiple_checker(global_map_checks)
     
-    # Mission Checks (Stalingrad)
+def mission_2():
+    head_log("MISSION 2 - STALINGRAD")
+    
     ui.start_mission.click()
     ui.mascot_img.wait_for_appearance()
     
-    for _ in range(3):
+    for _ in range(4):
         random_touch(3)
         
     # Checks if InputBlocker Works
@@ -268,12 +280,14 @@ def main():
     else:
         poco_exception("Input Blocker")
         
+    sleep(3.0)
+            
     # Follows Tutorial Fades & Pointer
-    for _ in range(2):
-        poco("Cutscene").offspring("ProxyButton").click()
+    for _ in range(3):
+        click_pos = poco("Cutscene").offspring("ProxyButton")
+        click_pos.click()
         sleep(2.0)
     
-    ui.mascot_img.wait_for_appearance()
     random_touch()
     
     sleep(5.0)
@@ -306,8 +320,17 @@ def main():
 
     screw_check(config['rewards']['level_2'])
 
+def main():
+    global ui
+    ui = UIElements()
+    game_startup()
+    main_checks()
+    map_checks()
+    mission_2()
+
 if __name__ == "__main__":
-    print("\n---------- RUNNING TESTS ----------\n")
+    head_log("RUNNING TESTS")
     print(f"Active device: {config['device']}")
     main()
-    print("\n---------- EVERYTHING IS COOL ----------\n")
+    head_log("EVERYTHING IS COOL")
+

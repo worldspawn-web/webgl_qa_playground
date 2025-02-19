@@ -15,9 +15,13 @@ log_tags = {
     "cheats": "- [CHEATS]: "
 }
 
+def head_log(msg):
+    strings = "----------"
+    print(f"\n{strings} {msg.upper()} {strings}\n")
+
 # Raises an Exception if some element is not on the screen
 def poco_exception(obj):
-    print("\n---------- ERROR ----------\n")
+    head_log("ERROR")
     raise Exception(f"{log_tags['error']}Requested Element has not been found!\nElement ID: {obj}")
 
 # Prints current assertions to console

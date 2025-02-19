@@ -124,6 +124,6 @@ class UIElements:
         self.victory_vfx = poco(name="Wreath")
         self.victory_flags_mid = poco(name="FlagsMiddle")
         self.victory_star = poco(name="Star")
-        self.victory_txt = poco(name="VICTORY")
+        self.victory_txt = poco("VictoryWindow(Clone)").offspring("Text")
         self.victory_window_bg = poco(texture="S_tab_paper")
         self.victory_window_decor = poco(texture="S_paper_deco_01")
