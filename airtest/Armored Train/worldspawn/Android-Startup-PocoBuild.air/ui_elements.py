@@ -117,3 +117,13 @@ class UIElements:
         self.hud_preview_tasks = poco(name="MissionInfo")
         self.hud_preview_enemies = poco(name="EnemiesInfo")
         self.hud_preview_reward = poco(name="Reward")
+        
+        # Victory / Defeat Window
+        self.victory_bg = poco(texture="S_darken")
+        self.victory_flags_back = poco(name="FlagsBack")
+        self.victory_vfx = poco(name="Wreath")
+        self.victory_flags_mid = poco(name="FlagsMiddle")
+        self.victory_star = poco(name="Star")
+        self.victory_txt = poco(name="VICTORY")
+        self.victory_window_bg = poco(texture="S_tab_paper")
+        self.victory_window_decor = poco(texture="S_paper_deco_01")

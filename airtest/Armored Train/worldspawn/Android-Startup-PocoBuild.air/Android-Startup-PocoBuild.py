@@ -161,17 +161,17 @@ def main():
     else:
         poco_exception("Incorrect Reward Amount! Ask GD if balance has been changed.")
     
+    # Victory Window UI Checks
     victory_window_els = {
-        "bg": [poco(texture="S_darken"), "Dark Background"],
-        "flags_back": [poco(name="FlagsBack"), "Victory Flags (Back)"],
-        "victory_vfx": [poco(name="Wreath"), "Victory Wreath (VFX)"],
-        "flags_mid": [poco(name="FlagsMiddle"), "Victory Flags (Middle)"],
-        "star": [poco(name="Star"), "Victory Star"],
-        "victory_txt": [poco(text="VICTORY"), "Victory Text"],
-        "window_bg": [poco(texture="S_tab_paper"), "Window Texture"],
-        "window_decor": [poco(texture="S_paper_deco_01"), "Window Decorations"],
+        "bg": [ui.victory_bg, "Dark Background"],
+        "flags_back": [ui.victory_flags_back, "Victory Flags (Back)"],
+        "victory_vfx": [ui.victory_vfx, "Victory Wreath (VFX)"],
+        "flags_mid": [ui.victory_flags_mid, "Victory Flags (Middle)"],
+        "star": [ui.victory_star, "Victory Star"],
+        "victory_txt": [ui.victory_txt, "Victory Text"],
+        "window_bg": [ui.victory_window_bg, "Window Texture"],
+        "window_decor": [ui.victory_window_decor, "Window Decorations"],
     }
-    
     multiple_checker(victory_window_els)
     
     assert_and_touch(ui.to_menu, "Back to the Menu Button", True, 3.0)
@@ -222,6 +222,7 @@ def main():
     global_map_tutor = Template(r"tpl1739890579440.png", record_pos=(0.001, -0.001), resolution=(2400, 1080))
     snapshot_check(global_map_tutor, "Global Map Appearance")
         
+    # Global Map UI Checks
     global_map_checks = {
         "screwnuts": [ui.screwnuts_img, "Global Map - Screwnuts"],
         "hud_top": [ui.hud_top, "Global Map - Top HUD"],
@@ -251,8 +252,8 @@ def main():
         "tutorial_finger_1": [ui.tutor_finger_0, "Global Map - Tutorial Pointer 1"],
         "tutorial_finger_2": [ui.tutor_finger_2, "Global Map - Tutorial Pointer 2"]
     }
-
     multiple_checker(global_map_checks)
+    
     # Mission Checks (Stalingrad)
     ui.start_mission.click()
     ui.mascot_img.wait_for_appearance()
