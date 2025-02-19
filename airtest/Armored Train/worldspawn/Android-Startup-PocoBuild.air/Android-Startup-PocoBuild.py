@@ -288,14 +288,8 @@ def mission_2():
         click_pos.click()
         sleep(2.0)
     
-    random_touch()
+    random_touch(2.0)
     
-    sleep(5.0)
-    cheats_toggle("killall")
-    
-    ui.wave_notify.wait_for_appearance()
-    
-    sleep(10.0)
     # Win through Cheats
     cheats_toggle("win")
     poco_exists(ui.reward_image, "Mission Reward")
