@@ -80,9 +80,9 @@ def multiple_checker(obj):
 
 def close_ui():
     btns = [
-        Template(r"tpl1739790881049.png", rgb=True, record_pos=(0.107, -0.079), resolution=(2400, 1080)),
-        Template(r"tpl1739818435141.png", rgb=True, target_pos=6, record_pos=(0.363, -0.2), resolution=(2400, 1080)),
-        Template(r"tpl1739818808573.png", rgb=True, target_pos=6, record_pos=(0.037, -0.078), resolution=(2400, 1080))
+        Template(r"snapshots/tpl1739790881049.png", rgb=True, record_pos=(0.107, -0.079), resolution=(2400, 1080)),
+        Template(r"snapshots/tpl1739818435141.png", rgb=True, target_pos=6, record_pos=(0.363, -0.2), resolution=(2400, 1080)),
+        Template(r"snapshots/tpl1739818808573.png", rgb=True, target_pos=6, record_pos=(0.037, -0.078), resolution=(2400, 1080))
     ]
     
     for btn in btns:
@@ -114,7 +114,7 @@ def value_diff(x, y, note = ""):
         poco_exception(note)
         
 def cheats_toggle(cheat):
-    c_cross = Template(r"tpl1739816499641.png", record_pos=(0.467, -0.196), resolution=(2400, 1080))
+    c_cross = Template(r"snapshots/tpl1739816499641.png", record_pos=(0.467, -0.196), resolution=(2400, 1080))
     # Gold/Screw/Coal Future Value
     c_value = 14355341
     # Cheat Opener Speed (Experimental)
@@ -310,13 +310,13 @@ def main():
     print("\n---------- #1 — GAME STARTUP & FIRST LEVEL ----------\n")
     
     # Scenes
-    assert_exists(Template(r"tpl1739382112852.png", record_pos=(-0.003, -0.001), resolution=(2400, 1080)), "Post-Loader Screen")
+    assert_exists(Template(r"snapshots/tpl1739382112852.png", record_pos=(-0.003, -0.001), resolution=(2400, 1080)), "Post-Loader Screen")
     assert_and_touch(loader_play, "Post Loader Play Button", True)
-    assert_exists(Template(r"tpl1739383777982.png", record_pos=(-0.0, -0.0), resolution=(2400, 1080)), "Tutorial Mascot Appeared")
+    assert_exists(Template(r"snapshots/tpl1739383777982.png", record_pos=(-0.0, -0.0), resolution=(2400, 1080)), "Tutorial Mascot Appeared")
     random_touch()
-    assert_exists(Template(r"tpl1739383067899.png", record_pos=(-0.0, -0.001), resolution=(2400, 1080)), "Tutorial Finger")
+    assert_exists(Template(r"snapshots/tpl1739383067899.png", record_pos=(-0.0, -0.001), resolution=(2400, 1080)), "Tutorial Finger")
     assert_and_touch(to_mission, "'To Mission' Button", True)
-    assert_exists(Template(r"tpl1739458153564.png", record_pos=(0.0, 0.0), resolution=(2400, 1080)), "Global Map Appeared")
+    assert_exists(Template(r"snapshots/tpl1739458153564.png", record_pos=(0.0, 0.0), resolution=(2400, 1080)), "Global Map Appeared")
     
     # Skip Dialog
     for i in range(4):
@@ -331,9 +331,9 @@ def main():
     
     # Waiting for Mascot (General)
     mascot_header.wait_for_appearance()
-    assert_exists(Template(r"tpl1739459007447.png", record_pos=(-0.001, 0.0), resolution=(2400, 1080)), "First Mission Tutorial")
+    assert_exists(Template(r"snapshots/tpl1739459007447.png", record_pos=(-0.001, 0.0), resolution=(2400, 1080)), "First Mission Tutorial")
     assert_and_touch(mascot_img, "Mascot", True, 3)
-    assert_exists(Template(r"tpl1739459175444.png", record_pos=(-0.009, -0.172), resolution=(2400, 1080)), "City HP with Fade")
+    assert_exists(Template(r"snapshots/tpl1739459175444.png", record_pos=(-0.009, -0.172), resolution=(2400, 1080)), "City HP with Fade")
 
     for i in range(2):
         random_touch()
@@ -406,7 +406,7 @@ def main():
     # <- TODO: Check that previous elements are not clickable through attr
     pause_note = "Pause Menu"
     
-    if exists(Template(r"tpl1739470762870.png", record_pos=(-0.001, -0.01), resolution=(2400, 1080))):
+    if exists(Template(r"snapshots/tpl1739470762870.png", record_pos=(-0.001, -0.01), resolution=(2400, 1080))):
         poco_logger(pause_note)
     else:
         poco_exception(pause_note)
@@ -502,7 +502,7 @@ def main():
 
     # Verification Snapshot
     stats_note = "General Stats Appearance (Snapshot)"
-    stats_snap = Template(r"tpl1739793021032.png", record_pos=(-0.375, -0.025), resolution=(2400, 1080))
+    stats_snap = Template(r"snapshots/tpl1739793021032.png", record_pos=(-0.375, -0.025), resolution=(2400, 1080))
     snapshot_check(stats_snap, stats_note)
 
     print("\n---------- #3 — MAP CHECKS ----------\n")
@@ -513,7 +513,7 @@ def main():
     for i in range(7):
         random_touch(3.35)
     
-    global_map_tutor = Template(r"tpl1739890579440.png", record_pos=(0.001, -0.001), resolution=(2400, 1080))
+    global_map_tutor = Template(r"snapshots/tpl1739890579440.png", record_pos=(0.001, -0.001), resolution=(2400, 1080))
     snapshot_check(global_map_tutor, "Global Map Appearance")
     
     global_map_checks = {
@@ -589,7 +589,7 @@ def main():
     victory_window.wait_for_appearance()
     
     # Checks for correct rewards (snap)
-    rewards_mission2 = Template(r"tpl1739894861328.png", record_pos=(-0.0, 0.05), resolution=(2400, 1080))
+    rewards_mission2 = Template(r"snapshots/tpl1739894861328.png", record_pos=(-0.0, 0.05), resolution=(2400, 1080))
     rewards_mission2_note = "Correct Rewards - Mission 2"
     snapshot_check(rewards_mission2, rewards_mission2_note)
     

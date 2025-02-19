@@ -3,7 +3,7 @@ from helpers import poco, config, log_tags, poco_logger, close_ui
 
 # This function toggles any desired cheat
 def cheats_toggle(cheat):
-    c_cross = Template(r"tpl1739816499641.png", record_pos=(0.467, -0.196), resolution=(2400, 1080))
+    c_cross = Template(r"snapshots/tpl1739816499641.png", record_pos=(0.467, -0.196), resolution=(2400, 1080))
     c_value = config['cheat_values']['resources']
     c_swipe_speed = config['cheat_values']['swipe_speed']
     c_tag = log_tags['cheats']

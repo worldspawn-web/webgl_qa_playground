@@ -73,9 +73,9 @@ def multiple_checker(obj):
 #       Because of that, we are currently using good old Airtest snapshot method.
 def close_ui():
     btns = [
-        Template(r"tpl1739790881049.png", rgb=True, record_pos=(0.107, -0.079), resolution=(2400, 1080)),
-        Template(r"tpl1739818435141.png", rgb=True, target_pos=6, record_pos=(0.363, -0.2), resolution=(2400, 1080)),
-        Template(r"tpl1739818808573.png", rgb=True, target_pos=6, record_pos=(0.037, -0.078), resolution=(2400, 1080))
+        Template(r"snapshots/tpl1739790881049.png", rgb=True, record_pos=(0.107, -0.079), resolution=(2400, 1080)),
+        Template(r"snapshots/tpl1739818435141.png", rgb=True, target_pos=6, record_pos=(0.363, -0.2), resolution=(2400, 1080)),
+        Template(r"snapshots/tpl1739818808573.png", rgb=True, target_pos=6, record_pos=(0.037, -0.078), resolution=(2400, 1080))
     ]
     
     for btn in btns:

@@ -1,5 +1,6 @@
 {
     "device": "Redmi Note 13",
+    "snapshot_dir": "snapshots/",
     "log_levels": {
         "airtest": "ERROR",
         "poco": "ERROR",
