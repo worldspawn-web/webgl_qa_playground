@@ -158,6 +158,7 @@ def game_startup():
     ui.reward_image.wait_for_appearance()
     assert_and_touch(ui.reward_image, "Reward Received", True, 2)
     poco_exists(ui.mascot_img, "Mascot")
+    sleep(2.0)
     random_touch()
     
     ui.victory_window.wait_for_appearance()
@@ -192,6 +193,8 @@ def game_startup():
     
 def main_checks():
     head_log("MAIN SCENE CHECKS")
+    
+    assets.depot.wait_for_appearance(timeout=30)
     
     main_checks = {
         "screwnuts_icon": [ui.screwnuts_img, "Screwnuts Icon"],
@@ -428,7 +431,7 @@ def mission_4():
     ui.start_mission.click()
     
     ui.mascot_img.wait_for_appearance()
-    for i in range(3):
+    for _ in range(3):
         random_touch(3)
     
     # Checking defeat window appearance
@@ -453,26 +456,35 @@ def mission_4():
     
     assets.depot.wait_for_appearance()
     
-    # Second launch but with win result
-    ui.to_mission.click()
+    # Getting more coal
+    # cheats_toggle("coal")
     
-    sleep(2.0)
+    ## NEED MORE COAL HERE
+    ## TEMPORARILY CANT DO THAT
     
-    if poco_exists(ui.hud_mission_main, "Kerch (Map)"):
-        ui.hud_mission_main.click()
+    ## Second launch but with win result
+    # ui.to_mission.click()
+    
+    # sleep(2.0)
+    
+    # if poco_exists(ui.hud_mission_main, "Kerch (Map)"):
+    #     ui.hud_mission_main.click()
         
-    ui.start_mission.click()
-    ui.wave_notify.wait_for_appearance(duration=30)
+    # ui.start_mission.click()
+    # ui.wave_notify.wait_for_appearance(timeout=30)
     
-    if (ui.mascot_img.exists()):
-        poco_exception("BUG! Tutorial Repeated Itself!")
+    # if (ui.mascot_img.exists()):
+    #     poco_exception("BUG! Tutorial Repeated Itself!")
     
-    cheats_toggle("win")
+    # cheats_toggle("win")
     
-    ui.victory_window.wait_for_appearance()
-    ui.to_menu.click()
+    # ui.victory_window.wait_for_appearance()
+    # ui.to_menu.click()
     
-    assets.depot.wait_for_appearance()
+    # assets.depot.wait_for_appearance()
+
+# def mission_5():
+#     head_log("MISSION 5 - ")
     
 def main():
     global ui, assets, mission_basechecks
@@ -496,10 +508,16 @@ def main():
     mission_3_side()
     mission_3()
     mission_4()
+    # mission_5()
 
 if __name__ == "__main__":
     head_log("RUNNING TESTS")
     print(f"Active device: {config['device']}")
     main()
     head_log("EVERYTHING IS COOL")
+
+
+
+
+
 

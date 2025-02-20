@@ -9,13 +9,24 @@ def cheats_toggle(cheat):
     c_tag = log_tags['cheats']
     
     pause_btn = poco(name="PauseButton")
+    pause_btn_menu = poco(name="Settings")
     pause_settings_btn = poco(text="Settings")
     
     # Opens cheat menu with swipes, if toggle = True
     def cheatmenu(toggle):
+        isDepot = False
+        
         if toggle:
-            pause_btn.click()
-            pause_settings_btn.click()
+            
+            # IN-GAME
+            try:
+                pause_btn.click()
+                pause_settings_btn.click()
+            # IN DEPOT
+            except:
+                pause_btn_menu.click()
+                isDepot = True
+                
             swipes = [([0.3, 0.3], [0.3, 0.6], 3),
                       ([0.3, 0.3], [0.1, 0.3], 2),
                       ([0.3, 0.3], [0.5, 0.3], 2)]
@@ -32,7 +43,13 @@ def cheats_toggle(cheat):
             if exists(c_cross):
                 touch(c_cross)
                 poco_logger("Cheat Window Closed", "cheats")
-                for _ in range(2):
+                
+                n_windows = 2
+                
+                if isDepot:
+                    n_windows = 1
+                
+                for _ in range(n_windows):
                     close_ui()
                 return True
             else:
@@ -41,9 +58,19 @@ def cheats_toggle(cheat):
     # Sets desired value for gold/coal/screwnuts input field
     # Usually uses pre-defined variable c_value
     def set_value(value):
-        poco("CheatWindow(Clone)").offspring("Give Resources").child("InputField (TMP)").focus().set_text(str(value))
+        poco("CheatWindow(Clone)").offspring("Give Resources").offspring("Text").click()
+        
+        # STILL DOESNT WORK
+        # KEYEVENT NOW OPENS PHONE CALL WTF???
+        # TODO
+        for digit in str(value):
+            keyevent(digit)
+            sleep(0.5)
+            
+        touch((0.6, 0.1))
+        sleep(1.5)
+        
         poco("CheatWindow(Clone)").offspring("Give Resources").child("Button").click()
-        poco_logger(f"Setted Value: {value}", "cheats")
     
     # Simply, kills all enemies
     def kill_enemies():
