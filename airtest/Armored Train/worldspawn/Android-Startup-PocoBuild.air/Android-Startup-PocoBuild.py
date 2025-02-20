@@ -321,9 +321,9 @@ def mission_2():
     
 def mission_3_side():
     head_log("MISSION 3 - COAL TUTORIAL (SIDE)")
-    to_mission.click()
+    ui.to_mission.click()
     
-    mascot_img.wait_for_appearance()
+    ui.mascot_img.wait_for_appearance()
     sleep(3.0)
     random_touch(2)
     
@@ -357,11 +357,11 @@ def mission_3_side():
     cheats_toggle("win")
     sleep(3.0)
     
-    poco_exists(ui.icons_reward_coal, "Mission Reward - Coal")
-    poco_exists(ui.icons_reward_nuts, "Mission Reward - Screwnuts")
-    to_menu.click()
+    poco_exists(ui.icon_reward_coal, "Mission Reward - Coal")
+    poco_exists(ui.icon_reward_nuts, "Mission Reward - Screwnuts")
+    ui.to_menu.click()
     
-    asset.depot.wait_for_appearance()
+    assets.depot.wait_for_appearance()
     
 def mission_3():
     head_log("MISSION 3 - KALININ")
@@ -371,7 +371,7 @@ def mission_3():
     poco("MapWindow Variant(Clone)").offspring("MapMissionView").click()
     
     mission_3_preview_checks = {
-        "kalinin_header": [poco("KALININ"), "Kalinin Header"],
+        "kalinin_header": [poco(text="KALININ"), "Kalinin Header"],
         "main_flag": [ui.hud_mission_flag, "Red Mission Flag"],
         "mission_desc": [ui.hud_preview_desc, "Mission Description"],
         "mission_info": [ui.hud_preview_tasks, "Mission Tasks"],
@@ -432,3 +432,4 @@ if __name__ == "__main__":
     print(f"Active device: {config['device']}")
     main()
     head_log("EVERYTHING IS COOL")
+
