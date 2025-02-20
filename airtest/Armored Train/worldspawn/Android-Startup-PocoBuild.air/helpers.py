@@ -36,9 +36,9 @@ def poco_logger(note, type = "assert"):
 def poco_exists(img, note=""):
     if img.exists():
         poco_logger(note)
+        return True
     else:
         poco_exception(note)
-    sleep(0.5)
     
 def poco_swipe(pos1, pos2, duration=0.8):
     poco.swipe(pos1, pos2)
