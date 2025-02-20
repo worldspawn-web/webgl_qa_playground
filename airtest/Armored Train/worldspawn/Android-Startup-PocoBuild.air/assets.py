@@ -22,9 +22,13 @@ class Assets3D:
         
         # Loco & Wagons
         self.loco = poco(name="SM_ArmoredTrain_01")
+        self.wagon_machinegun = poco(name="SM_Wagon_MachineGun_01")
         self.wagon_tank = poco(name="SM_Wagon_TankGun_01")
-        # ...there will be more later
         
         # Mission Locations
+        self.location_kalinin_rain = poco(name="LOC_KalininRainLight")
         self.location_village_rain = poco(name="LOC_VillageRain")
+        
+        # Spinning Reward Models
+        self.turret_t34 = poco("Tank T-34(Clone)")
         

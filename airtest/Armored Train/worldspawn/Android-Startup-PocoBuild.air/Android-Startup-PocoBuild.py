@@ -319,8 +319,8 @@ def mission_2():
 
     screw_check(config['rewards']['level_2'])
     
-def mission_3():
-    head_log("MISSION 3 - COAL TUTORIAL")
+def mission_3_side():
+    head_log("MISSION 3 - COAL TUTORIAL (SIDE)")
     to_mission.click()
     
     mascot_img.wait_for_appearance()
@@ -351,18 +351,8 @@ def mission_3():
     ui.start_mission.click()
     
     ui.wave_notify.wait_for_appearance()
-    
-    mission_3_checks = {
-        "location_load": [assets.location_village_rain, "Village Rain (Location)"],
-         "handler": [ui.rotation_input, "Rotation Input"],
-         "city_name": [ui.city_name, "City Name"],
-         "goals_hud": [ui.goals_hud, "Mission Goals Widget"],
-         "hp_bars": [ui.hp_bars, "Loco HP Bars"],
-         "hp_bar_loco": [ui.hp_bar_loco, "Loco Main HP Bar"],
-         "pause_btn": [ui.pause_btn, "Pause Button"],
-         # TODO: add turret crossmarks, if possible
-    }
-    multiple_checker(mission_3_checks)
+    poco_exists(assets.location_village_rain, "Village Rain (Location)")
+    multiple_checker(mission_basechecks)
     
     cheats_toggle("win")
     sleep(3.0)
@@ -372,17 +362,69 @@ def mission_3():
     to_menu.click()
     
     asset.depot.wait_for_appearance()
+    
+def mission_3():
+    head_log("MISSION 3 - KALININ")
+    ui.to_mission.click()
+    
+    poco_exists(poco("MapWindow Variant(Clone)").offspring("MapMissionView"), "Kalinin (Map)")
+    poco("MapWindow Variant(Clone)").offspring("MapMissionView").click()
+    
+    mission_3_preview_checks = {
+        "kalinin_header": [poco("KALININ"), "Kalinin Header"],
+        "main_flag": [ui.hud_mission_flag, "Red Mission Flag"],
+        "mission_desc": [ui.hud_preview_desc, "Mission Description"],
+        "mission_info": [ui.hud_preview_tasks, "Mission Tasks"],
+        "mission_enemies": [ui.hud_preview_enemies, "Mission Enemies"],
+        "mission_reward": [ui.hud_preview_reward, "Mission Reward"],
+        "mission_price": [ui.hud_preview_price, "Mission Start Price"],
+        "infantry_icon": [ui.hud_enemy_infantry, "Infantry (Icon)"],
+        "lvehicles_icon": [ui.hud_enemy_lvehicles, "Light Vehicles (Icon)"]
+    }
 
-
+    multiple_checker(mission_3_preview_checks)
+    ui.start_mission.click()
+    
+    ui.mascot_img.wait_for_appearance()
+    poco_exists(assets.location_kalinin_rain, "Kalinin Rain (Location)") 
+    
+    # Skip Mascot Dialog
+    for i in range(3):
+        random_touch(3)
+        
+    multiple_checker(mission_basechecks)
+    
+    sleep(10)
+    cheats_toggle("win")
+    
+    ui.reward_image.wait_for_appearance()
+    poco_exists(assets.turret_t34, "Spinning Reward - T-34 (3D)")
+    random_touch(3)
+    
+    ui.victory_window.wait_for_appearance()
+    poco_exists(ui.icon_reward_nuts)
+    ui.to_menu.click()
+    
 def main():
-    global ui, assets
+    global ui, assets, mission_basechecks
     ui = UIElements()
     assets = Assets3D()
+    
+    mission_basechecks = {
+        "handler": [ui.rotation_input, "Rotation Input"],
+        "city_name": [ui.city_name, "City Name"],
+        "goals_hud": [ui.goals_hud, "Mission Goals Widget"],
+        "hp_bars": [ui.hp_bars, "Loco HP Bars"],
+        "hp_bar_loco": [ui.hp_bar_loco, "Loco Main HP Bar"],
+        "pause_btn": [ui.pause_btn, "Pause Button"],
+        # TODO: add turret crossmarks, if possible
+    }
     
     game_startup()
     main_checks()
     map_checks()
     mission_2()
+    mission_3_side()
     mission_3()
 
 if __name__ == "__main__":
@@ -390,4 +432,3 @@ if __name__ == "__main__":
     print(f"Active device: {config['device']}")
     main()
     head_log("EVERYTHING IS COOL")
-

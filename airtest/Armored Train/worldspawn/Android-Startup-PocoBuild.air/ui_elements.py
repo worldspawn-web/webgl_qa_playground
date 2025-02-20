@@ -44,11 +44,6 @@ class UIElements:
         self.main_goal_bar = poco("Battle HUD").offspring("ProgressBar")
         self.main_goal_progress = poco("Battle HUD").offspring("Progress")
         
-        # Victory/Defeat
-        self.reward_image = poco("RenderImage")
-        self.victory_window = poco("VictoryWindow(Clone)").offspring("Background1")
-        self.to_menu = poco(text="TO MAIN MENU")
-        
         # Pause & Settings
         self.pause_btn = poco(name="PauseButton")
         self.pause_settings_btn = poco(text="Settings")
@@ -117,8 +112,16 @@ class UIElements:
         self.hud_preview_tasks = poco(name="MissionInfo")
         self.hud_preview_enemies = poco(name="EnemiesInfo")
         self.hud_preview_reward = poco(name="Reward")
+        self.hud_preview_price = poco("MapWindow Variant(Clone)").offspring("PRice")
+        
+        # Enemy Preview Icons
+        self.hud_enemy_infantry = poco(name="Infantry_Icon")
+        self.hud_enemy_lvehicles = poco(name="LightVehicles_Icon")
         
         # Victory / Defeat Window
+        self.reward_image = poco("RenderImage")
+        self.victory_window = poco("VictoryWindow(Clone)").offspring("Background1")
+        self.to_menu = poco(text="TO MAIN MENU")
         self.victory_bg = poco(texture="S_darken")
         self.victory_flags_back = poco(name="FlagsBack")
         self.victory_vfx = poco(name="Wreath")
