@@ -57,6 +57,13 @@ class UIElements:
         self.settings_sound_h2 = poco(text="Sound")
         self.privacy_policy = poco(text="PRIVACY POLICY")
         
+        # Icons
+        self.icon_volume = poco(texture="S_icon_volume")
+        self.icon_music = poco(texture="S_icon_music")
+        self.icon_sounds = poco(texture="S_icon_sounds")
+        self.icon_graphics = poco(texture="S_icon_graphics")
+        self.icon_language = poco(texture="S_icon_language")
+        
         # Main Scene
         self.pause_btn_menu = poco(name="Settings")
         self.screwnuts_img = poco(texture="Nuts(Clone)")

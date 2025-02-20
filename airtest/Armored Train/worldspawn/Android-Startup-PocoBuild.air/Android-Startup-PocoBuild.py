@@ -12,7 +12,7 @@ from assets import Assets3D
 from helpers import (
     config, poco, poco_exception, poco_logger, poco_exists,
     assert_and_touch, random_touch, multiple_checker, close_ui,
-    snapshot_check, value_diff, screw_check, head_log
+    snapshot_check, value_diff, screw_check, head_log, poco_swipe
 )
 import logging
 
@@ -31,13 +31,13 @@ def game_startup():
     head_log("GAME STARTUP & FIRST LEVEL")
     
     # Scenes
-    assert_exists(Template(r"snapshots/tpl1739382112852.png", record_pos=(-0.003, -0.001), resolution=(2400, 1080)), "Post-Loader Screen")
+    snapshot_check(Template(r"snapshots/tpl1739382112852.png", record_pos=(-0.003, -0.001), resolution=(2400, 1080)), "Post-Loader Screen")
     assert_and_touch(ui.loader_play, "Post Loader Play Button", True)
-    assert_exists(Template(r"snapshots/tpl1739383777982.png", record_pos=(-0.0, -0.0), resolution=(2400, 1080)), "Tutorial Mascot Appeared")
+    snapshot_check(Template(r"snapshots/tpl1739383777982.png", record_pos=(-0.0, -0.0), resolution=(2400, 1080)), "Tutorial Mascot Appeared")
     random_touch()
-    assert_exists(Template(r"snapshots/tpl1739383067899.png", record_pos=(-0.0, -0.001), resolution=(2400, 1080)), "Tutorial Finger")
+    snapshot_check(Template(r"snapshots/tpl1739383067899.png", record_pos=(-0.0, -0.001), resolution=(2400, 1080)), "Tutorial Finger")
     assert_and_touch(ui.to_mission, "'To Mission' Button", True)
-    assert_exists(Template(r"snapshots/tpl1739458153564.png", record_pos=(0.0, 0.0), resolution=(2400, 1080)), "Global Map Appeared")
+    snapshot_check(Template(r"snapshots/tpl1739458153564.png", record_pos=(0.0, 0.0), resolution=(2400, 1080)), "Global Map Appeared")
     
     # Skip Dialog
     for _ in range(4):
@@ -51,9 +51,9 @@ def game_startup():
     
     # Waiting for Mascot (General)
     ui.mascot_header.wait_for_appearance()
-    assert_exists(Template(r"snapshots/tpl1739459007447.png", record_pos=(-0.001, 0.0), resolution=(2400, 1080)), "First Mission Tutorial")
+    snapshot_check(Template(r"snapshots/tpl1739459007447.png", record_pos=(-0.001, 0.0), resolution=(2400, 1080)), "First Mission Tutorial")
     assert_and_touch(ui.mascot_img, "Mascot", True, 3)
-    assert_exists(Template(r"snapshots/tpl1739459175444.png", record_pos=(-0.009, -0.172), resolution=(2400, 1080)), "City HP with Fade")
+    snapshot_check(Template(r"snapshots/tpl1739459175444.png", record_pos=(-0.009, -0.172), resolution=(2400, 1080)), "City HP with Fade")
 
     for _ in range(2):
         random_touch()
@@ -67,10 +67,15 @@ def game_startup():
     assert_and_touch(ui.rotation_input, "Wagon Input Handler", True)
     
     # Handler Functionality
-    poco.swipe([0.863, 0.625], [0.859, 0.883])
-    poco.swipe([0.859, 0.833], [0.849, 0.769])
+    handler_up_pos = [0.863, 0.625]
+    handler_down_pos = [0.859, 0.883]
+    handler_mid_pos = [0.849, 0.769]
+    poco_swipe(handler_up_pos, handler_down_pos)
+    poco_swipe(handler_down_pos, handler_mid_pos)
     poco_logger("Handler Swipes")
     
+    snapshot_check(Template(r"tpl1740053667938.png", record_pos=(-0.065, -0.154), resolution=(2400, 1080)), "Tutorial Stop-pos Glow.")
+
     ui.mascot_img.wait_for_appearance()
     random_touch(2.0)
     money_end = poco("Text (TMP)").get_text()
@@ -135,11 +140,11 @@ def game_startup():
     poco_exists(ui.settings_sound_h2, "Sounds Header")
     
     settings_icons = {
-        "volume": [poco(texture="S_icon_volume"), "Volume Icon"],
-        "music": [poco(texture="S_icon_music"), "Music Icon"],
-        "sounds": [poco(texture="S_icon_sounds"), "Sounds Icon"],
-        "graphics": [poco(texture="S_icon_graphics"), "Graphics Icon"],
-        "language": [poco(texture="S_icon_language"), "Language Icon"]
+        "volume": [ui.icon_volume, "Volume Icon"],
+        "music": [ui.icon_music, "Music Icon"],
+        "sounds": [ui.icon_sounds, "Sounds Icon"],
+        "graphics": [ui.icon_graphics, "Graphics Icon"],
+        "language": [ui.icon_language, "Language Icon"]
     }
     
     multiple_checker(settings_icons)
@@ -272,7 +277,9 @@ def mission_2():
     ui.start_mission.click()
     ui.mascot_img.wait_for_appearance()
     
-    for _ in range(4):
+    sleep(2.0)
+    
+    for _ in range(3):
         random_touch(3)
         
     # Checks if InputBlocker Works
@@ -281,16 +288,14 @@ def mission_2():
         poco_logger("Input Blocker")
     else:
         poco_exception("Input Blocker")
-        
-    sleep(3.0)
             
     # Follows Tutorial Fades & Pointer
     for _ in range(3):
         click_pos = poco("Cutscene").offspring("ProxyButton")
         click_pos.click()
-        sleep(2.0)
+        sleep(3.0)
     
-    random_touch(2.0)
+    random_touch(2)
     
     # Win through Cheats
     cheats_toggle("win")

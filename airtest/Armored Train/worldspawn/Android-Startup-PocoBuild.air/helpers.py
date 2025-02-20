@@ -12,7 +12,10 @@ poco = UnityPoco()
 log_tags = {
     "error": "- [ERROR]: ",
     "assert": "- [ASSERTION]: ",
-    "cheats": "- [CHEATS]: "
+    "cheats": "- [CHEATS]: ",
+    "touch": "- [TOUCH]: ",
+    "swipe": "- [SWIPE]: ",
+    "snapshot": "- [SNAPSHOT]: "
 }
 
 def head_log(msg):
@@ -25,8 +28,8 @@ def poco_exception(obj):
     raise Exception(f"{log_tags['error']}Requested Element has not been found!\nElement ID: {obj}")
 
 # Prints current assertions to console
-def poco_logger(note):
-    print(f"{log_tags['assert']}{note}...OK!")
+def poco_logger(note, type = "assert"):
+    print(f"{log_tags[type]}{note}...OK!")
 
 # Checks if an element exists
 def poco_exists(img, note=""):
@@ -35,6 +38,10 @@ def poco_exists(img, note=""):
     else:
         poco_exception(note)
     sleep(0.5)
+    
+def poco_swipe(pos1, pos2, duration=0.8):
+    poco.swipe(pos1, pos2)
+    poco_logger(f"pos_1: {pos1}, pos_2: {pos2}, Duration: {duration}", "swipe")
 
 # Checks if an element exists & touches/clicks it
 # if using with Poco -> pocoInstance=True
@@ -57,7 +64,9 @@ def assert_and_touch(img, note="", pocoInstance=False, delay=1.0):
 
 # Middle screen touch (It's random in terms of game design)
 def random_touch(delay=1.0):
-    touch((0.5, 0.5))
+    x, y = 0.5, 0.5
+    touch((x, y))
+    poco_logger(f"XY: ({x}, {y})", "touch")
     sleep(delay)
 
 # Checks if multiple elements exists on the current screen
@@ -95,7 +104,7 @@ def close_ui():
 def snapshot_check(snap, note):
     if exists(snap):
         sleep(1.0)
-        poco_logger(note)
+        poco_logger(note, "snapshot")
         return True
     else:
         raise Exception(f"{log_tags['error']}Snapshot has not been found!\nSnapshot Name: {note}")

@@ -23,14 +23,15 @@ def cheats_toggle(cheat):
             for start, end, i in swipes:
                 for _ in range(i):
                     poco.swipe(start, end, duration=c_swipe_speed)
+                    poco_logger(f"pos_1: {start}, pos_2: {end}, Duration: {c_swipe_speed}", "swipe")
             poco(name="CheatWindow(Clone)").wait_for_appearance()
-            poco_logger("Cheat Window Opened")
+            poco_logger("Cheat Window Opened", "cheats")
             return True
         # Closes cheat menu through crossmarks, if toggle = False
         else:
             if exists(c_cross):
                 touch(c_cross)
-                poco_logger("Cheat Window Closed")
+                poco_logger("Cheat Window Closed", "cheats")
                 for _ in range(2):
                     close_ui()
                 return True
@@ -42,10 +43,12 @@ def cheats_toggle(cheat):
     def set_value(value):
         poco("CheatWindow(Clone)").offspring("Give Resources").child("InputField (TMP)").focus().set_text(str(value))
         poco("CheatWindow(Clone)").offspring("Give Resources").child("Button").click()
+        poco_logger(f"Setted Value: {value}", "cheats")
     
     # Simply, kills all enemies
     def kill_enemies():
         poco("CheatWindow(Clone)").offspring("KillAllEnemies").child("Button").click()
+        poco_logger(f"Kill all enemy units", "cheats")
     
     # Sets desired resource type, then goes to set_value()
     def add_resource(resource, value):
@@ -53,6 +56,7 @@ def cheats_toggle(cheat):
             poco("CheatWindow(Clone)").offspring("Give Resources").child("Dropdown").click()
             poco("CheatWindow(Clone)").offspring("Scroll View").child("Viewport").offspring("Give Resources").offspring(f"Item {resource}").click()
         set_value(value)
+        poco_logger(f"Added resource {resource}: +{value}", "cheats")
     
     # Quick Win/Defeat
     def end_battle(result):
@@ -60,6 +64,8 @@ def cheats_toggle(cheat):
             poco(name="VictoryButton").click()
         else:
             poco(name="DefeatButton").click()
+        poco_logger(f"Ended battle with result: {result}", "cheats")
+        return
     
     # Toggles cheat menu before & after selected cheat activation
     def perform_cheat_action(action, *args):
