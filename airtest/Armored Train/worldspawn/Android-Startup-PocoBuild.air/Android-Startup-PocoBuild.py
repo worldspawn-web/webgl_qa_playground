@@ -12,7 +12,7 @@ from assets import Assets3D
 from helpers import (
     config, poco, poco_exception, poco_logger, poco_exists,
     assert_and_touch, random_touch, multiple_checker, close_ui,
-    snapshot_check, value_diff, screw_check, head_log, poco_swipe
+    snapshot_check, value_diff, screw_check, head_log, poco_swipe, touch_proxy
 )
 import logging
 
@@ -74,7 +74,7 @@ def game_startup():
     poco_swipe(handler_down_pos, handler_mid_pos)
     poco_logger("Handler Swipes")
     
-    snapshot_check(Template(r"tpl1740053667938.png", record_pos=(-0.065, -0.154), resolution=(2400, 1080)), "Tutorial Stop-pos Glow.")
+    snapshot_check(Template(r"snapshots/tpl1740053667938.png", record_pos=(-0.065, -0.154), resolution=(2400, 1080)), "Tutorial Stop-pos Glow.")
 
     ui.mascot_img.wait_for_appearance()
     random_touch(2.0)
@@ -290,11 +290,9 @@ def mission_2():
         poco_exception("Input Blocker")
             
     # Follows Tutorial Fades & Pointer
-    for _ in range(3):
-        click_pos = poco("Cutscene").offspring("ProxyButton")
-        click_pos.click()
-        sleep(3.0)
+    touch_proxy(3)
     
+    # Skips Mascot Once
     random_touch(2)
     
     # Win through Cheats
@@ -320,6 +318,61 @@ def mission_2():
     poco_exists(assets.wagon_tank, "Tank Wagon (3D)")
 
     screw_check(config['rewards']['level_2'])
+    
+def mission_3():
+    head_log("MISSION 3 - COAL TUTORIAL")
+    to_mission.click()
+    
+    mascot_img.wait_for_appearance()
+    sleep(3.0)
+    random_touch(2)
+    
+    poco_exists(ui.tutor_finger_0)
+    touch_proxy()
+    
+    random_touch()
+    
+    snapshot_check(Template(r"snapshots/tpl1740056067541.png", record_pos=(0.0, -0.003), resolution=(2400, 1080)), "Global Map - Mission 3 (Side).")
+    
+    coal_status = str(poco("MapWindow Variant(Clone)").offspring("Coal Counter").child("Text (TMP)").get_text())
+    coal_value = int(coal_status.split("/")[0])
+    
+    if (coal_value < 15):
+        poco_logger("Not enough coal to start Main Mission")
+    else:
+        poco_exception("Something is wrong with coal counter!")
+        
+    poco("MapWindow Variant(Clone)").offspring("MapMissionView").click()
+    ui.start_mission.click()
+    sleep(3.0)
+    snapshot_check(Template(r"snapshots/tpl1740056067541.png", record_pos=(0.0, -0.003), resolution=(2400, 1080)), "Main Mission haven't started (Not enough coal).")
+    
+    poco("MapWindow Variant(Clone)").offspring("Sides").child("SideMissionView(Clone)")[0].click()
+    ui.start_mission.click()
+    
+    ui.wave_notify.wait_for_appearance()
+    
+    mission_3_checks = {
+        "location_load": [assets.location_village_rain, "Village Rain (Location)"],
+         "handler": [ui.rotation_input, "Rotation Input"],
+         "city_name": [ui.city_name, "City Name"],
+         "goals_hud": [ui.goals_hud, "Mission Goals Widget"],
+         "hp_bars": [ui.hp_bars, "Loco HP Bars"],
+         "hp_bar_loco": [ui.hp_bar_loco, "Loco Main HP Bar"],
+         "pause_btn": [ui.pause_btn, "Pause Button"],
+         # TODO: add turret crossmarks, if possible
+    }
+    multiple_checker(mission_3_checks)
+    
+    cheats_toggle("win")
+    sleep(3.0)
+    
+    poco_exists(ui.icons_reward_coal, "Mission Reward - Coal")
+    poco_exists(ui.icons_reward_nuts, "Mission Reward - Screwnuts")
+    to_menu.click()
+    
+    asset.depot.wait_for_appearance()
+
 
 def main():
     global ui, assets
@@ -330,6 +383,7 @@ def main():
     main_checks()
     map_checks()
     mission_2()
+    mission_3()
 
 if __name__ == "__main__":
     head_log("RUNNING TESTS")

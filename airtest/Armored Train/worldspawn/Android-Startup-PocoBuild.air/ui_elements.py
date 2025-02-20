@@ -27,8 +27,8 @@ class UIElements:
         # Battle HUD
         self.wave_notify = poco(name="WaveNotify(Clone)")
         self.rotation_input = poco(name="RotationInput")
-        self.skip_waiting = poco("Text (TMP)")
-        self.wagons_btn = poco(name="ProxyButton")
+        self.skip_waiting = poco("Text (TMP)")      # TODO
+        self.wagons_btn = poco(name="ProxyButton")  # TODO
         self.exit_wagons = poco(name="ExitButton")
         self.buy_wagon = poco(text="Buy")
         self.city_name = poco(text="Defend the objective")
@@ -63,6 +63,8 @@ class UIElements:
         self.icon_sounds = poco(texture="S_icon_sounds")
         self.icon_graphics = poco(texture="S_icon_graphics")
         self.icon_language = poco(texture="S_icon_language")
+        self.icon_reward_coal = poco(texture="Coal(Clone)")
+        self.icon_reward_nuts = poco(texture="Nuts(Clone)")
         
         # Main Scene
         self.pause_btn_menu = poco(name="Settings")

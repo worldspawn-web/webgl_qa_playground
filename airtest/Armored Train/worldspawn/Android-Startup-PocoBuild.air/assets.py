@@ -24,3 +24,7 @@ class Assets3D:
         self.loco = poco(name="SM_ArmoredTrain_01")
         self.wagon_tank = poco(name="SM_Wagon_TankGun_01")
         # ...there will be more later
+        
+        # Mission Locations
+        self.location_village_rain = poco(name="LOC_VillageRain")
+        

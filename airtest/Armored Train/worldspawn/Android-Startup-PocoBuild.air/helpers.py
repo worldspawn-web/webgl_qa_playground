@@ -20,6 +20,7 @@ log_tags = {
 
 def head_log(msg):
     strings = "----------"
+    sleep(3.0)
     print(f"\n{strings} {msg.upper()} {strings}\n")
 
 # Raises an Exception if some element is not on the screen
@@ -128,3 +129,10 @@ def screw_check(value):
         poco_logger(f"Screwnuts updated to {value}")
     else:
         poco_exception("Something is wrong with rewards system!")
+
+def touch_proxy(n=1, delay=3.0):
+    for _ in range(n):
+        click_pos = poco("Cutscene").offspring("ProxyButton") # we need to define it again each time to work (unity tree updates)
+        click_pos.click()
+        sleep(delay)
+    return True
