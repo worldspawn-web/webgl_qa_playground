@@ -367,8 +367,8 @@ def mission_3():
     head_log("MISSION 3 - KALININ")
     ui.to_mission.click()
     
-    poco_exists(poco("MapWindow Variant(Clone)").offspring("MapMissionView"), "Kalinin (Map)")
-    poco("MapWindow Variant(Clone)").offspring("MapMissionView").click()
+    if poco_exists(ui.hud_mission_main, "Kalinin (Map)"):
+        ui.hud_mission_main.click()
     
     mission_3_preview_checks = {
         "kalinin_header": [poco(text="KALININ"), "Kalinin Header"],
@@ -405,6 +405,75 @@ def mission_3():
     poco_exists(ui.icon_reward_nuts)
     ui.to_menu.click()
     
+def mission_4():
+    head_log("MISSION 4 - KERCH")
+    ui.to_mission.click()
+    
+    if poco_exists(ui.hud_mission_main, "Kerch (Map)"):
+        ui.hud_mission_main.click()
+        
+    mission_4_preview_checks = {
+        "mission_header": [poco(text="KERCH"), "Kerch Header"],
+        "main_flag": [ui.hud_mission_flag, "Red Mission Flag"],
+        "mission_desc": [ui.hud_preview_desc, "Mission Description"],
+        "mission_info": [ui.hud_preview_tasks, "Mission Tasks"],
+        "mission_enemies": [ui.hud_preview_enemies, "Mission Enemies"],
+        "mission_reward": [ui.hud_preview_reward, "Mission Reward"],
+        "mission_price": [ui.hud_preview_price, "Mission Start Price"],
+        "infantry_icon": [ui.hud_enemy_infantry, "Infantry (Icon)"],
+        "lvehicles_icon": [ui.hud_enemy_lvehicles, "Light Vehicles (Icon)"],
+        "tanks_icon": [ui.hud_enemy_tanks, "Tanks (Icon)"]
+    }
+    multiple_checker(mission_4_preview_checks)
+    ui.start_mission.click()
+    
+    ui.mascot_img.wait_for_appearance()
+    for i in range(3):
+        random_touch(3)
+    
+    # Checking defeat window appearance
+    cheats_toggle("lose")
+    
+    ui.defeat_bg.wait_for_appearance()
+    sleep(2.0)
+    
+    defeat_checks = {
+        "defeat_bg": [ui.defeat_bg, "Defeat Background"],
+        "defeat_bg_effect": [ui.defeat_bg_effect, "Defeat Background Effect"],
+        "defeat_vfx_bg": [ui.defeat_vfx_bg, "Defeat VFX (Background)"],
+        "defeat_vfx": [ui.defeat_vfx, "Defeat VFX"],
+        "defeat_star": [ui.defeat_star, "Defeat Star"],
+        "defeat_effect": [ui.defeat_effect, "Defeat Effect"],
+        "defeat_flags_back": [ui.defeat_flags_back, "Defeat Flags"],
+        "defeat_author": [ui.defeat_author, "Defeat Quote Author"],
+        "defeat_quote": [ui.defeat_quote, "Defeat Quote"]
+    }
+    multiple_checker(defeat_checks)
+    ui.to_menu.click()
+    
+    assets.depot.wait_for_appearance()
+    
+    # Second launch but with win result
+    ui.to_mission.click()
+    
+    sleep(2.0)
+    
+    if poco_exists(ui.hud_mission_main, "Kerch (Map)"):
+        ui.hud_mission_main.click()
+        
+    ui.start_mission.click()
+    ui.wave_notify.wait_for_appearance(duration=30)
+    
+    if (ui.mascot_img.exists()):
+        poco_exception("BUG! Tutorial Repeated Itself!")
+    
+    cheats_toggle("win")
+    
+    ui.victory_window.wait_for_appearance()
+    ui.to_menu.click()
+    
+    assets.depot.wait_for_appearance()
+    
 def main():
     global ui, assets, mission_basechecks
     ui = UIElements()
@@ -426,6 +495,7 @@ def main():
     mission_2()
     mission_3_side()
     mission_3()
+    mission_4()
 
 if __name__ == "__main__":
     head_log("RUNNING TESTS")
