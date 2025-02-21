@@ -142,14 +142,15 @@ def isRZD_Banner():
     rzd_banner = poco("Banner Image")
     rzd_banner_cross = rzd_banner.child("Close Button")
     rzd_warn = "RZD Banner status - Active!"
-    rzd_note = "Launching RZD Checks..."
+    rzd_note = "Waiting for RZD timer..."
     rzd_success = "Successfully closed RZD Banner"
     
     if rzd_banner.exists():
         poco_logger(rzd_warn, "warn")
         poco_logger(rzd_note)
+        sleep(15.0)
         rzd_banner_cross.click()
-        sleep(3.0)
+        sleep(1.5)
         
         if not rzd_banner.exists():
             poco_logger(rzd_success)
