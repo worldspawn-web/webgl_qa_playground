@@ -15,7 +15,8 @@ log_tags = {
     "cheats": "- [CHEATS]: ",
     "touch": "- [TOUCH]: ",
     "swipe": "- [SWIPE]: ",
-    "snapshot": "- [SNAPSHOT]: "
+    "snapshot": "- [SNAPSHOT]: ",
+    "warn": "- [WARNING]: "
 }
 
 def head_log(msg):
@@ -136,3 +137,24 @@ def touch_proxy(n=1, delay=3.0):
         click_pos.click()
         sleep(delay)
     return True
+
+def isRZD_Banner():
+    rzd_banner = poco("Banner Image")
+    rzd_banner_cross = rzd_banner.child("Close Button")
+    rzd_warn = "RZD Banner status - Active!"
+    rzd_note = "Launching RZD Checks..."
+    rzd_success = "Successfully closed RZD Banner"
+    
+    if rzd_banner.exists():
+        poco_logger(rzd_warn, "warn")
+        poco_logger(rzd_note)
+        rzd_banner_cross.click()
+        sleep(3.0)
+        
+        if not rzd_banner.exists():
+            poco_logger(rzd_success)
+            return True
+        else:
+            poco_exception("Can't Close RZD Banner!")
+    else:
+        return False

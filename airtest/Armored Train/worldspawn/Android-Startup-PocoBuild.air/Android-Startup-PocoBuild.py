@@ -12,7 +12,7 @@ from assets import Assets3D
 from helpers import (
     config, poco, poco_exception, poco_logger, poco_exists,
     assert_and_touch, random_touch, multiple_checker, close_ui,
-    snapshot_check, value_diff, screw_check, head_log, poco_swipe, touch_proxy
+    snapshot_check, value_diff, screw_check, head_log, poco_swipe, touch_proxy, isRZD_Banner
 )
 import logging
 
@@ -315,6 +315,10 @@ def mission_2():
     
     ui.to_menu.click()
     assets.depot.wait_for_appearance() # making sure main scene loaded
+    
+    # RZD BANNER CHECK
+    isRZD_Banner()
+    
     poco_exists(ui.main_wagon_tank, "Tank Wagon Unlocked")
     ui.main_wagon_tank.click()
     sleep(1.0)
@@ -515,9 +519,3 @@ if __name__ == "__main__":
     print(f"Active device: {config['device']}")
     main()
     head_log("EVERYTHING IS COOL")
-
-
-
-
-
-
